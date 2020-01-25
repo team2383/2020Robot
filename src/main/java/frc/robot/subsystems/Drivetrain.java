@@ -39,8 +39,8 @@ public class Drivetrain extends SubsystemBase {
     // LEFT DRIVE //
     ////////////////
     
-    leftMaster = new WPI_TalonFX(2);
-	leftFollower = new WPI_TalonFX(4);
+    leftMaster = new WPI_TalonFX(Constants.leftMasterPort);
+	leftFollower = new WPI_TalonFX(Constants.leftFollowerPort);
 	
 	leftFollower.follow(leftMaster);
     leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
@@ -60,8 +60,8 @@ public class Drivetrain extends SubsystemBase {
     // RIGHT DRIVE //
 	/////////////////
 	
-    rightMaster = new WPI_TalonFX(1);
-    rightFollower = new WPI_TalonFX(3);
+    rightMaster = new WPI_TalonFX(Constants.rightMasterPort);
+    rightFollower = new WPI_TalonFX(Constants.rightFollowerPort);
 	
     rightFollower.follow(rightMaster);
     rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);

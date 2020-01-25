@@ -1,11 +1,5 @@
 package frc.robot;
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
 public class Constants {
 
   // DRIVETRAIN
@@ -43,7 +37,6 @@ public class Constants {
 
   // DIMENSIONS
   public static double kDrive_Motion_trackwidth = 2.16;
-  
   public static double kDrive_WheelDiameterInch = 6.25;
   public static double getWheelCircumference() { return (kDrive_WheelDiameterInch*Math.PI)/12.0; };
   
@@ -53,8 +46,7 @@ public class Constants {
   public static int kDrive_PeakCurrentLimit = 80;
   public static int kDrive_PeakCurrentTime_ms = 100;
   
- 
-  	//talon V and motio V are shared
+  //MOTION
 	public static double kDrive_Motion_Velocity = 6.0;		
 	public static double kDrive_Motion_Acceleration = 13.0;
 }

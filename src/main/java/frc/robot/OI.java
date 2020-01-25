@@ -38,6 +38,5 @@ public class OI {
   lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
   we_eatin.whenPressed(feeda.setStateCommand(Feeda.State.EATIN, Feeda.State.VIBIN, false));
   we_spittin.whenPressed(feeda.setStateCommand(Feeda.State.SPITTIN, Feeda.State.VIBIN, false));
-
   }
 }
