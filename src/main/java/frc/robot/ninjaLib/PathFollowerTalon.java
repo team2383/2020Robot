@@ -1,7 +1,6 @@
 package frc.robot.ninjaLib;
 
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Trajectory.Segment;
 
 /**
  * The DistanceFollower is an object designed to follow a trajectory based on distance covered input. This class can be used

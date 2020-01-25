@@ -8,9 +8,6 @@
 package frc.robot.ninjaLib;
 
 import java.io.File;
-import java.io.IOException;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;

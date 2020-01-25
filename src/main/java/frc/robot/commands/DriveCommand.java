@@ -15,7 +15,7 @@ public class DriveCommand extends CommandBase {
     // eg. requires(chassis);
     this.turn = turn;
     this.throttle = throttle;
-    addRequirements(Drivetrain);
+    //addRequirements(Drivetrain);
   }
 
   // Called just before this Command runs the first time

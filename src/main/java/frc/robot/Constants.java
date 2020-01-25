@@ -17,7 +17,7 @@ public class Constants {
   // SUBSYSTEM PORTS
   public static int turretPort = 5;
   public static int shooterMasterPort = 6;
-  public static int shooterFollowerPor = 7;
+  public static int shooterFollowerPort = 7;
   public static int transPort = 8;
   public static int shootanglePort = 9;
   public static int colorwheelPort = 10;

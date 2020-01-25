@@ -1,8 +1,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -11,108 +9,66 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.ninjaLib.MotionUtils;
-import frc.robot.ninjaLib.Values;
+
 import frc.robot.Constants;
+import frc.robot.OI;
+import frc.robot.commands.DriveCommand;
 
-import static frc.robot.HAL.navX;
 
-//import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-//import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.MatchType;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.Timer;
 
-import frc.robot.OI;
-import frc.robot.RobotMap;
-import frc.robot.commands.DriveCommand;
+
 
 public class Drivetrain extends SubsystemBase {
 
-  public final WPI_TalonSRX leftMaster;
-	public final BaseMotorController leftFollowerA;
-	// public final BaseMotorController leftFollowerB;
-	// public final BaseMotorController leftFollowerC;
+  	public final WPI_TalonFX leftMaster;
+	public final WPI_TalonFX leftFollower;
 
-	public final WPI_TalonSRX rightMaster;
-	public final BaseMotorController rightFollowerA;
-// 	public final BaseMotorController rightFollowerB;
-//   public final BaseMotorController rightFollowerC;
-  
-  public final DifferentialDrive drive;
+	public final WPI_TalonFX rightMaster;
+	public final WPI_TalonFX rightFollower;
 
-  public Drivetrain (){
-    super(Drivetrain);
+  	public final DifferentialDrive drive;
+
+  	public Drivetrain (){
 
     ////////////////
     // LEFT DRIVE //
     ////////////////
     
-    leftMaster = new WPI_TalonSRX(2);
-    // ALPHA BOT
-    leftFollowerA = new VictorSPX(4);
-	// leftFollowerB = new TalonSRX(69);
-    // leftFollowerC = new TalonSRX(42);
-
-    // OMEGA BOT
-    // leftFollowerA = new VictorSPX(2);
-	//   leftFollowerB = new VictorSPX(3);
-    // leftFollowerC = new VictorSPX(4);
-
-	leftFollowerA.follow(leftMaster);
-		// leftFollowerB.follow(leftMaster);
-		// leftFollowerC.follow(leftMaster);
-    
+    leftMaster = new WPI_TalonFX(2);
+	leftFollower = new WPI_TalonFX(4);
+	
+	leftFollower.follow(leftMaster);
     leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-		leftMaster.setNeutralMode(NeutralMode.Brake);
-		leftMaster.enableVoltageCompensation(true);
-		leftMaster.configVoltageCompSaturation(12, 10);
+	leftMaster.setNeutralMode(NeutralMode.Brake);
 
-		//clear options
-		leftMaster.configForwardSoftLimitEnable(false, 10);
-		leftMaster.configReverseSoftLimitEnable(false, 10);
+	leftMaster.enableVoltageCompensation(true);
+	leftMaster.configVoltageCompSaturation(12, 10);
+	leftMaster.configForwardSoftLimitEnable(false, 10);
+	leftMaster.configReverseSoftLimitEnable(false, 10);
 		
-		leftMaster.setControlFramePeriod(ControlFrame.Control_3_General, 5);
-		leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 10);
+	leftMaster.setControlFramePeriod(ControlFrame.Control_3_General, 5);
+	leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 5, 10);
 
-		leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_20Ms, 10);
+	leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_20Ms, 10);
 
     /////////////////
     // RIGHT DRIVE //
-    /////////////////
-    rightMaster = new WPI_TalonSRX(1);
-    // ALPHA BOT
-    rightFollowerA = new TalonSRX(3);
-	// rightFollowerB = new TalonSRX(7);
-    // rightFollowerC = new TalonSRX(8);
-    
-    // OMEGA BOT
-    // rightFollowerA = new VictorSPX(6);
-	// rightFollowerB = new VictorSPX(7);
-    // rightFollowerC = new VictorSPX(8);
-
-    rightFollowerA.follow(rightMaster);
-	// rightFollowerB.follow(rightMaster);
-    // rightFollowerC.follow(rightMaster);
-    
+	/////////////////
+	
+    rightMaster = new WPI_TalonFX(1);
+    rightFollower = new WPI_TalonFX(3);
+	
+    rightFollower.follow(rightMaster);
     rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 	rightMaster.setNeutralMode(NeutralMode.Brake);
+
 	rightMaster.enableVoltageCompensation(true);
 	rightMaster.configVoltageCompSaturation(12, 10);
-		
-		//clear options
 	rightMaster.configForwardSoftLimitEnable(false, 10);
 	rightMaster.configReverseSoftLimitEnable(false, 10);
 		
@@ -131,77 +87,57 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void configMotorControllers(int timeout) {
-		double kWheelCircumference = RobotMap.getWheelCircumference();
+		double kWheelCircumference = Constants.getWheelCircumference();
 
-		// ALPHA BOT
-	//	leftMaster.setSensorPhase(false);
-		leftMaster.setInverted(true); // change here
-		leftFollowerA.setInverted(true);
-		// leftFollowerB.setInverted(false);
-		// leftFollowerC.setInverted(false);
-
-		// OMEGA BOT
-		 leftMaster.setSensorPhase(false);
-		 //leftMaster.setSensorPhase(true);
-		// leftFollowerA.setInverted(true);
-		// leftFollowerB.setInverted(false);
-		// leftFollowerC.setInverted(true);
-
-		leftMaster.configSetParameter(ParamEnum.eContinuousCurrentLimitAmps, RobotMap.kDrive_ContinuousCurrentLimit, 0x00, 0x00, timeout);
-		leftMaster.configSetParameter(ParamEnum.ePeakCurrentLimitAmps, RobotMap.kDrive_PeakCurrentLimit, 0x00, 0x00, timeout);
-		leftMaster.configSetParameter(ParamEnum.ePeakCurrentLimitMs, RobotMap.kDrive_PeakCurrentTime_ms, 0x00, 0x00, timeout);
-		leftMaster.enableCurrentLimit(false);
+		leftMaster.setInverted(true);
+		leftFollower.setInverted(true);
+		leftMaster.setSensorPhase(false);
+		 
+		leftMaster.configSetParameter(ParamEnum.eContinuousCurrentLimitAmps, Constants.kDrive_ContinuousCurrentLimit, 0x00, 0x00, timeout);
+		leftMaster.configSetParameter(ParamEnum.ePeakCurrentLimitAmps, Constants.kDrive_PeakCurrentLimit, 0x00, 0x00, timeout);
+		leftMaster.configSetParameter(ParamEnum.ePeakCurrentLimitMs, Constants.kDrive_PeakCurrentTime_ms, 0x00, 0x00, timeout);
+		// leftMaster.enableCurrentLimit(false); // UNDEFINED FOR TALONFX
 		
-		leftMaster.configPeakOutputForward(RobotMap.kDrive_peakOutput, timeout);
-		leftMaster.configPeakOutputReverse(-RobotMap.kDrive_peakOutput, timeout);
+		leftMaster.configPeakOutputForward(Constants.kDrive_peakOutput, timeout);
+		leftMaster.configPeakOutputReverse(-Constants.kDrive_peakOutput, timeout);
 		leftMaster.configOpenloopRamp(0.0, timeout);
 		
 		
-		// ALPHA BOT
-		//rightMaster.setSensorPhase(false);
 		rightMaster.setInverted(true);
-		rightFollowerA.setInverted(true);
-		// rightFollowerB.setInverted(true);
-		// rightFollowerC.setInverted(true);
-
-		// OMEGA BOT
+		rightFollower.setInverted(true);
 		rightMaster.setSensorPhase(true);
-		// rightMaster.setInverted(true);
-		// rightFollowerA.setInverted(true);
-		// rightFollowerB.setInverted(true);
-		// rightFollowerC.setInverted(true);
+
+		rightMaster.configSetParameter(ParamEnum.eContinuousCurrentLimitAmps, Constants.kDrive_ContinuousCurrentLimit, 0x00, 0x00, timeout);
+		rightMaster.configSetParameter(ParamEnum.ePeakCurrentLimitAmps, Constants.kDrive_PeakCurrentLimit, 0x00, 0x00, timeout);
+		rightMaster.configSetParameter(ParamEnum.ePeakCurrentLimitMs, Constants.kDrive_PeakCurrentTime_ms, 0x00, 0x00, timeout);
+		// rightMaster.enableCurrentLimit(false); // UNDEFINED FOR TALONFX
 		
-		rightMaster.configSetParameter(ParamEnum.eContinuousCurrentLimitAmps, RobotMap.kDrive_ContinuousCurrentLimit, 0x00, 0x00, timeout);
-		rightMaster.configSetParameter(ParamEnum.ePeakCurrentLimitAmps, RobotMap.kDrive_PeakCurrentLimit, 0x00, 0x00, timeout);
-		rightMaster.configSetParameter(ParamEnum.ePeakCurrentLimitMs, RobotMap.kDrive_PeakCurrentTime_ms, 0x00, 0x00, timeout);
-		rightMaster.enableCurrentLimit(false);
-		
-		rightMaster.configPeakOutputForward(RobotMap.kDrive_peakOutput, timeout);
-		rightMaster.configPeakOutputReverse(-RobotMap.kDrive_peakOutput, timeout);
+		rightMaster.configPeakOutputForward(Constants.kDrive_peakOutput, timeout);
+		rightMaster.configPeakOutputReverse(-Constants.kDrive_peakOutput, timeout);
 		rightMaster.configOpenloopRamp(0.0, timeout);
 		
 		//PID
-		rightMaster.config_kP(0, -(RobotMap.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
-		rightMaster.config_kI(0, -RobotMap.kDrive_Motion_talonI, 10);
-		rightMaster.config_kD(0, -(RobotMap.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
-		rightMaster.config_kF(0, -(RobotMap.kDrive_Motion_V * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)),  10);
+		rightMaster.config_kP(0, -(Constants.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
+		rightMaster.config_kI(0, -Constants.kDrive_Motion_talonI, 10);
+		rightMaster.config_kD(0, -(Constants.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
+		rightMaster.config_kF(0, -(Constants.kDrive_Motion_V * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)),  10);
 		rightMaster.config_IntegralZone(0, 50, 10);
 
-		rightMaster.config_kP(1, -(RobotMap.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
-		rightMaster.config_kI(1, -RobotMap.kDrive_Motion_talonI, 10);
-		rightMaster.config_kD(1, -(RobotMap.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
+		rightMaster.config_kP(1, -(Constants.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
+		rightMaster.config_kI(1, -Constants.kDrive_Motion_talonI, 10);
+		rightMaster.config_kD(1, -(Constants.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
 		rightMaster.config_kF(1, 0,  10);
 		rightMaster.config_IntegralZone(1, 50, 10);
 
-		leftMaster.config_kP(0, (RobotMap.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
-		leftMaster.config_kI(0, RobotMap.kDrive_Motion_talonI, 10);
-		leftMaster.config_kD(0, (RobotMap.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
-		leftMaster.config_kF(0, (RobotMap.kDrive_Motion_V * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)),  10);
+		leftMaster.config_kP(0, (Constants.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
+		leftMaster.config_kI(0, Constants.kDrive_Motion_talonI, 10);
+		leftMaster.config_kD(0, (Constants.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
+		leftMaster.config_kF(0, (Constants.kDrive_Motion_V * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)),  10);
 		leftMaster.config_IntegralZone(0, 50, 10);
 		
-		leftMaster.config_kP(1, (RobotMap.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
-		leftMaster.config_kI(1, RobotMap.kDrive_Motion_talonI, 10);
-		leftMaster.config_kD(1, (RobotMap.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
+		leftMaster.config_kP(1, (Constants.kDrive_Motion_talonP * (1023.0/1.0) * (1.0/(kWheelCircumference)) * (1.0/4096.0)), 10);
+		leftMaster.config_kI(1, Constants.kDrive_Motion_talonI, 10);
+		leftMaster.config_kD(1, (Constants.kDrive_Motion_talonD * (1023.0/1.0) * (1.0/(1.0/kWheelCircumference)) * (1.0/4096.0) * (10.0)), 10);
 		leftMaster.config_kF(1, 0,  10);
 		leftMaster.config_IntegralZone(1, 50, 10);
 		
@@ -209,13 +145,13 @@ public class Drivetrain extends SubsystemBase {
 		 * ft/s -> ticks per 100ms
 		 * so ft/s * 1 rotation / circumference ft * 4096 / 1 rotation / 10
 		 */
-		int nativeVelocity = (int) (RobotMap.kDrive_Motion_Velocity * 1.0/RobotMap.getWheelCircumference() * 4096.0 / 10.0);
+		int nativeVelocity = (int) (Constants.kDrive_Motion_Velocity * 1.0/Constants.getWheelCircumference() * 4096.0 / 10.0);
 
 		/*
 		 * ft/s/s -> ticks per 100ms per s
 		 * so ft/s/s * 1 rotation / circumference ft * 4096 / 1 rotation / 10
 		 */
-		int nativeAcceleration = (int) (RobotMap.kDrive_Motion_Acceleration * 1.0/RobotMap.getWheelCircumference() * 4096.0 / 10.0);
+		int nativeAcceleration = (int) (Constants.kDrive_Motion_Acceleration * 1.0/Constants.getWheelCircumference() * 4096.0 / 10.0);
 		leftMaster.configMotionCruiseVelocity(nativeVelocity, timeout);
 		leftMaster.configMotionAcceleration(nativeAcceleration, timeout);
 		rightMaster.configMotionCruiseVelocity(nativeVelocity, timeout);
@@ -237,54 +173,54 @@ public class Drivetrain extends SubsystemBase {
   }
   
   public double getLeftVelocity() {
-		return leftMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
+		return leftMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * Constants.getWheelCircumference();
 	}
 	
 	public double getRightVelocity() {
-		return rightMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
+		return rightMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * Constants.getWheelCircumference();
   }
   
   public void positionPDauxF(double leftPos, double leftFF, double rightPos, double rightFF) {
 		leftMaster.selectProfileSlot(1, 0);
 		rightMaster.selectProfileSlot(1, 0);
 
-		leftMaster.set(ControlMode.Position, MotionUtils.distanceToRotations(leftPos, RobotMap.getWheelCircumference()) * 4096, DemandType.ArbitraryFeedForward, leftFF);
-		rightMaster.set(ControlMode.Position, MotionUtils.distanceToRotations(rightPos, RobotMap.getWheelCircumference()) * 4096, DemandType.ArbitraryFeedForward, -rightFF);
+		leftMaster.set(ControlMode.Position, MotionUtils.distanceToRotations(leftPos, Constants.getWheelCircumference()) * 4096, DemandType.ArbitraryFeedForward, leftFF);
+		rightMaster.set(ControlMode.Position, MotionUtils.distanceToRotations(rightPos, Constants.getWheelCircumference()) * 4096, DemandType.ArbitraryFeedForward, -rightFF);
   }
   public void periodic(){
   SmartDashboard.putNumber("LMPos", leftMaster.getSelectedSensorPosition());
   SmartDashboard.putNumber("RMPos", rightMaster.getSelectedSensorPosition());
 }
-  @Override
+  //@Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new DriveCommand(OI.throttle,OI.turn));
   }
 
   public double inches(int ticks) {
-		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(ticks, 4096, 1), RobotMap.getWheelCircumference());
+		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(ticks, 4096, 1), Constants.getWheelCircumference());
   }
   
   public boolean atTarget() {
-		return Math.abs(inches(leftMaster.getClosedLoopError(0))) < RobotMap.kDrive_Motion_Tolerance && Math.abs(inches(leftMaster.getClosedLoopError(0))) < RobotMap.kDrive_Motion_Tolerance;
+		return Math.abs(inches(leftMaster.getClosedLoopError(0))) < Constants.kDrive_Motion_Tolerance && Math.abs(inches(leftMaster.getClosedLoopError(0))) < Constants.kDrive_Motion_Tolerance;
   }
 
   public double getLeftPosition() {
-		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(leftMaster.getSelectedSensorPosition(0), 4096, 1), RobotMap.getWheelCircumference());
+		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(leftMaster.getSelectedSensorPosition(0), 4096, 1), Constants.getWheelCircumference());
 	}
 	
 	public double getRightPosition() {
-		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(rightMaster.getSelectedSensorPosition(0), 4096, 1), RobotMap.getWheelCircumference());
+		return MotionUtils.rotationsToDistance(MotionUtils.ticksToRotations(rightMaster.getSelectedSensorPosition(0), 4096, 1), Constants.getWheelCircumference());
   }
   
   public void setBrake(boolean brake) {
 	//	NeutralMode mode = brake ? NeutralMode.Brake : NeutralMode.Coast;
 		leftMaster.setNeutralMode(NeutralMode.Brake);
-		leftFollowerA.setNeutralMode(NeutralMode.Brake);
+		leftFollower.setNeutralMode(NeutralMode.Brake);
 		// leftFollowerB.setNeutralMode(mode);
 		// leftFollowerC.setNeutralMode(mode);
 		rightMaster.setNeutralMode(NeutralMode.Brake);
-		rightFollowerA.setNeutralMode(NeutralMode.Brake);
+		rightFollower.setNeutralMode(NeutralMode.Brake);
 		// rightFollowerB.setNeutralMode(mode);
 		// rightFollowerC.setNeutralMode(mode);
 	}
