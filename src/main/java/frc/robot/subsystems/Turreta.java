@@ -7,23 +7,23 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.*;
-// import edu.wpi.first.wpilibj.command.Subsystem;
 
-import frc.robot.OI;
+// import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants;
+
 import frc.robot.commands.*;
 
 
 
 public class Turreta extends Subsystem {
 
-  public TalonSRX Turreta = new TalonSRX(10);
+  public TalonSRX Turreta = new TalonSRX(Constants.turretPort);
 
  
   @Override
   public void initDefaultCommand() {  
     
-    setDefaultCommand(new HoldTurreta());
+    //setDefaultCommand(new HoldTurreta(true));
   }
   public void setSpeed(double speed){
     Turreta.set(ControlMode.PercentOutput, speed);
