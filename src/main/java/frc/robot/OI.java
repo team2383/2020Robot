@@ -27,16 +27,23 @@ public class OI {
  // SUBSYSTEM CONTROLS
 
   public static Button bigshoota = new JoystickButton(driver, Gamepad.BUTTON_Y);  
-  public static Button lilshoota = new JoystickButton(driver, Gamepad.BUTTON_A);  
+  public static Button lilshoota = new JoystickButton(driver, Gamepad.BUTTON_A); 
+  
+  public static Button turretaRight = new JoystickButton(driver, Gamepad.BUTTON_B);
+  public static Button turretaLeft = new JoystickButton(driver, Gamepad.BUTTON_X);
 
   public static Button we_eatin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_LEFT);  
   public static Button we_spittin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_RIGHT);  
 
 
   public OI(){
-  bigshoota.whenPressed(shoota.setStateCommand(Shoota.State.BIGSHOOTA,Shoota.State.COOLIN, false));
-  lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
-  we_eatin.whenPressed(feeda.setStateCommand(Feeda.State.EATIN, Feeda.State.VIBIN, false));
-  we_spittin.whenPressed(feeda.setStateCommand(Feeda.State.SPITTIN, Feeda.State.VIBIN, false));
+    bigshoota.whenPressed(shoota.setStateCommand(Shoota.State.BIGSHOOTA,Shoota.State.COOLIN, false));
+    lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
+
+    turretaRight.whileHeld(new HoldTurreta());
+
+
+    we_eatin.whenPressed(feeda.setStateCommand(Feeda.State.EATIN, Feeda.State.VIBIN, false));
+    we_spittin.whenPressed(feeda.setStateCommand(Feeda.State.SPITTIN, Feeda.State.VIBIN, false));
   }
 }
