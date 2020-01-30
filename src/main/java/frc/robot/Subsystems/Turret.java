@@ -5,13 +5,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class Turret{
 
-  WPI_TalonSRX turret = new WPI_TalonSRX(14);
+  WPI_TalonSRX turret = new WPI_TalonSRX(RobotMap.turretPort);
 
   public Turret(){
 

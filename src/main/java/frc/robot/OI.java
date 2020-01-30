@@ -13,7 +13,7 @@ import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Trigger;
-import frc.robot.ninjalib.Gamepad;
+import frc.robot.ninjaLib.Gamepad;
 import java.util.function.DoubleSupplier;
 import frc.robot.Pathfinding;
 import edu.wpi.first.vision.VisionRunner.Listener;

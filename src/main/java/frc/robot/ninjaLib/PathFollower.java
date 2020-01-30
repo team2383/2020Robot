@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.ninjalib;
+package frc.robot.ninjaLib;
 
 /**
  * Add your docs here.

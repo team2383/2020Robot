@@ -14,7 +14,7 @@ package frc.robot;
 
 import jaci.pathfinder.*;
 import jaci.pathfinder.modifiers.TankModifier;
-import frc.robot.ninjalib.PathFollower;
+import frc.robot.ninjaLib.PathFollower;
 
 import com.ctre.phoenix.CANifier.LEDChannel;
 

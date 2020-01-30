@@ -15,6 +15,8 @@ import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.OI;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
@@ -25,10 +27,10 @@ public class Drivetrain{
   
   DifferentialDrive drive;
 
-  WPI_TalonFX rightMaster = new WPI_TalonFX(3);
-  WPI_TalonFX rightSlave = new WPI_TalonFX(4);
-  WPI_TalonFX leftMaster = new WPI_TalonFX(2);
-  WPI_TalonFX leftSlave = new WPI_TalonFX(1);
+  WPI_TalonFX rightMaster = new WPI_TalonFX(RobotMap.rightmasterPort);
+  WPI_TalonFX rightSlave = new WPI_TalonFX(RobotMap.rightfollowerPort);
+  WPI_TalonFX leftMaster = new WPI_TalonFX(RobotMap.leftmasterPort);
+  WPI_TalonFX leftSlave = new WPI_TalonFX(RobotMap.leftfollowerPort);
 
   public Drivetrain (){
     rightSlave.follow(rightMaster);

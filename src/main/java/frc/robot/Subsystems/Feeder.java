@@ -12,13 +12,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class Feeder{
 
-  WPI_VictorSPX feeder = new WPI_VictorSPX(5);
+  WPI_VictorSPX feeder = new WPI_VictorSPX(RobotMap.feedPort);
 
   public Feeder(){
 

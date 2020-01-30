@@ -9,6 +9,7 @@ package frc.robot.Subsystems;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -16,8 +17,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Launcher{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  CANSparkMax launchMaster = new CANSparkMax(12, MotorType.kBrushless);
-  CANSparkMax launchFollower = new CANSparkMax(11, MotorType.kBrushless);
+  CANSparkMax launchMaster = new CANSparkMax(RobotMap.shooterMasterPort, MotorType.kBrushless);
+  CANSparkMax launchFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
 
   public void out(){
     launchMaster.set(-0.75);
