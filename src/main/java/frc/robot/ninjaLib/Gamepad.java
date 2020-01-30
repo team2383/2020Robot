@@ -1,7 +1,14 @@
-package frc.robot.ninjaLib;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.ninjalib;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.*;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * Contains functions for use with the Logitech F310 controller.
@@ -25,8 +32,8 @@ public class Gamepad extends Joystick {
 	public static final int BUTTON_SHOULDER_RIGHT = 6;
 	public static final int BUTTON_TRIGGER_LEFT = 7;
 	public static final int BUTTON_TRIGGER_RIGHT = 8;
-	//public static final int BUTTON_BACK = 7;
-	//public static final int BUTTON_START = 8;	
+	public static final int BUTTON_BACK = 7;
+	public static final int BUTTON_START = 8;
 	public static final int BUTTON_LEFT_STICK = 9;
 	public static final int BUTTON_RIGHT_STICK = 10;
 
@@ -43,10 +50,10 @@ public class Gamepad extends Joystick {
 	public double getLeftX() {
 		return getRawAxis(AXIS_LEFT_X);
 	}
-
 	/**
 	 * Returns the X position of the right stick.
 	 */
+	
 	public double getRightX() {
 		return getRawAxis(AXIS_RIGHT_X);
 	}
@@ -106,6 +113,20 @@ public class Gamepad extends Joystick {
 	}
 
 	/**
+	 * Checks whether the Right Bumper is being pressed and returns true if it is.
+	 */
+	public boolean getButtonStateRightBumper() {
+		return getRawButton(BUTTON_SHOULDER_RIGHT);
+	}
+
+	/**
+	 * Checks whether the Left Bumper is being pressed and returns true if it is.
+	 */
+	public boolean getButtonStateLeftBumper() {
+		return getRawButton(BUTTON_SHOULDER_LEFT);
+	}
+
+	/**
 	 * Returns an object of Button A.
 	 */
 	public JoystickButton getButtonA() {
@@ -154,13 +175,13 @@ public class Gamepad extends Joystick {
 	 *
 	 * @return the state of the Start button
 	 */
-	// public JoystickButton getStartButton() {
-	// 	return new JoystickButton(this, BUTTON_START);
-	// }
+	public JoystickButton getStartButton() {
+		return new JoystickButton(this, BUTTON_START);
+	}
 
-	// public JoystickButton getBackButton() {
-	// 	return new JoystickButton(this, BUTTON_BACK);
-	// }
+	public JoystickButton getBackButton() {
+		return new JoystickButton(this, BUTTON_BACK);
+	}
 
 	/**
 	 * Gets the state of the left shoulder
@@ -188,7 +209,11 @@ public class Gamepad extends Joystick {
 		return new JoystickButton(this, BUTTON_RIGHT_STICK);
 	}
 
-	public JoystickButton rightTrigger(){
-		return new JoystickButton(this, BUTTON_TRIGGER_RIGHT);
+	public boolean getLeftTriggerClick() {
+		 return getRawAxis(AXIS_SHOULDER_L) > 0.7;
+	}
+
+	public boolean getRightTriggerClick() {
+		return getRawAxis(AXIS_SHOULDER_R) > 0.7;
 	}
 }

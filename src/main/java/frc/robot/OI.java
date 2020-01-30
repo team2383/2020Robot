@@ -1,51 +1,159 @@
-package frc.robot;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
+package frc.robot;
+import frc.robot.Robot;
+import frc.robot.Loop;
+import frc.robot.Grain;
+import frc.robot.Procedure;
+import frc.robot.TC;
+import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Trigger;
+import frc.robot.ninjalib.Gamepad;
+import java.util.function.DoubleSupplier;
+import frc.robot.Pathfinding;
+import edu.wpi.first.vision.VisionRunner.Listener;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import java.util.function.DoubleSupplier;
 
-import frc.robot.commands.*;
-import frc.robot.ninjaLib.Gamepad;
-import frc.robot.ninjaLib.StatefulSubsystem;
-import frc.robot.subsystems.*;
-//import static frc.robot.HAL.shoota;
-import static frc.robot.HAL.feeda;;
-
+/**
+ * Add your docs here.
+ */
 public class OI {
 
-  public static Gamepad driver = new Gamepad(0);
+    // Procedure feedIn = () -> {HAL.feeder.on();};
+    // Procedure stopFeed = () -> {HAL.feeder.off();};
+    // TC released = () -> {return !driver.getButtonStateA();};
 
-  
-  public static DoubleSupplier turn = () -> (driver.getRightX());
-  public static DoubleSupplier throttle = () -> -(driver.getLeftY()); 
+    Gamepad driver = new Gamepad(0);
+    Gamepad driver2 = new Gamepad(1);
+    
+    
+    
 
-  // DRIVE (SWITCH)
-  // public static DoubleSupplier turn = () -> (driver.getRightTrigger());
-  // public static DoubleSupplier throttle = () -> -(driver.getLeftY());
+    //Procedure shoot = () -> {HAL.shooter.shooterOn();};
 
- // SUBSYSTEM CONTROLS
+    public OI(){
+        //these are active listeners
+        //make procedures and conditions
+        TC noTC = ()->{return false;};
+        Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+        Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger()*.5)-driver.getRightTrigger()*0.5);};
+        //Procedure turretmanualback = () -> {HAL.turret.move(driver.getLeftTrigger()*.5);};
+        // TC encoder = () -> {return HAL.drivetrain.getRightPosition() >= 10;};
+        // Procedure stop = () ->{HAL.drivetrain.arcade(0,0);};
+        // Procedure move = () ->{HAL.drivetrain.arcade(0.3,0);System.out.println(HAL.drivetrain.getRightPosition());};
 
-  public static Button bigshoota = new JoystickButton(driver, Gamepad.BUTTON_Y);  
-  public static Button lilshoota = new JoystickButton(driver, Gamepad.BUTTON_A); 
-  
-  public static Button turretaRight = new JoystickButton(driver, Gamepad.BUTTON_B);
-  public static Button turretaLeft = new JoystickButton(driver, Gamepad.BUTTON_X);
+        // Procedure feedIn = () -> {HAL.feeder.on();};
+        // Procedure stopFeed = () -> {HAL.feeder.off();};
+        
+        //make and add grain
 
-  public static Button we_eatin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_LEFT);  
-  public static Button we_spittin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_RIGHT);  
+        Grain e = new Grain(drive,noTC,drive);
+        Robot.mill.addGrain(e);
 
-  //DriveCommand driveCommand;
+        Grain t = new Grain(turretmanual,noTC,turretmanual);
+        Robot.mill.addGrain(t);
 
-  public OI(){
-    //  bigshoota.whenPressed(shoota.setStateCommand(Shoota.State.BIGSHOOTA,Shoota.State.COOLIN, false));
-    //  lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
-    //driveCommand = new DriveCommand(throttle, turn);
-    turretaRight.whileHeld(new HoldTurreta());
+
+        
+
+    }
+
+    public void periodic(){
+        
+    }
+    public void listener(){
+        // FEED IN
+        Procedure feed = () ->{HAL.feeder.feed();};
+        Procedure stopFeed = () -> {HAL.feeder.off();};
+        TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
+        Grain GFeed = new Grain(feed, releasedRBump, stopFeed);
+        
+        // FEED OUT
+        Procedure unfeed = () -> {HAL.feeder.unfeed();};
+        TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
+        Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
+        // LAUNCH
+        Procedure launcher = () -> {HAL.launch.out();};
+        Procedure stop = () -> {HAL.launch.stop();};
+        TC releasedA = ()->{return !(driver.getButtonStateA());};
+        Grain launch = new Grain(launcher, releasedA,stop);
+        // CONVEYOR
+        Procedure conveyor1 = () -> {HAL.conveyor1.pull();};
+        Procedure off = () -> {HAL.conveyor1.off();};
+        TC releasedRBump2 = ()->{return !(driver.getButtonStateRightBumper());};
+        Grain conveyin = new Grain(conveyor1, releasedRBump2,off);
+        
+        // CONVEYOR (OUT)
+        Procedure conveyor1out = () -> {HAL.conveyor1.out();};
+ //Procedure off = () -> {HAL.conveyor1.off();};
+        TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
+        Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
+
+        //Trigger
+        Procedure trigger = () -> {HAL.triggered.spinHigh();};
+        Procedure trigOff = () -> {HAL.triggered.off();};
+        TC releasedBBump = () ->{return !(driver.getButtonStateB());};
+        Grain triglow = new Grain (trigger, releasedBBump, trigOff);
+
+        Procedure arctrig = () -> {HAL.triggered.spinOut();};
+        TC releasedXBump = () ->{return !driver.getButtonStateX();};
+        Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
+        
+        // TURRET(MANUAL)
+        // Procedure turretmanual = () -> {HAL.turret.move(driver2.getRightX());};
+        // Procedure still = () -> {HAL.turret.off();};
+        // TC releasedRBump2 = ()->{return !(driver.getButtonStateRightBumper());};
+        // Grain conveyin = new Grain(conveyor1, releasedRBump2,off);
+
+        Procedure hoodmanual = () -> {HAL.hoodie.slowMoveUP();};
+        TC releasedDUP = () ->{return driver.getDPadUp();};
+        Procedure hoodoff = () -> {HAL.hoodie.off();};
+        Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
+
+        Procedure hoodmanualdown = () -> {HAL.hoodie.slowMoveDown();};
+        TC releasedDDown = () ->{return driver.getDPadDown();};
+        Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
+
+        
+        
+        //button groups
+        if(driver.getButtonStateA()){
+            Robot.mill.addGrain(launch);
+        }
+        
+        if(driver.getButtonStateB()){
+           Robot.mill.addGrain(triglow);
+        }
+
+        if(driver.getButtonStateX()){
+            Robot.mill.addGrain(trigout);
+        }
+
+        if(driver.getDPadUp()){
+            Robot.mill.addGrain(hoodUp);
+        }
+
+        if(driver.getDPadDown()){
+            Robot.mill.addGrain(hoodDown);
+        }
+
+        if(driver.getButtonStateLeftBumper()){
+            Robot.mill.addGrain(GUnfeed);
+            Robot.mill.addGrain(conveyout);
+        }
+
+        if(driver.getButtonStateRightBumper()){
+            Robot.mill.addGrain(GFeed); 
+            Robot.mill.addGrain(conveyin);
+        }
+    }
    
 
-
-    we_eatin.whenPressed(feeda.setStateCommand(Feeda.State.EATIN, Feeda.State.VIBIN, false));
-    we_spittin.whenPressed(feeda.setStateCommand(Feeda.State.SPITTIN, Feeda.State.VIBIN, false));
-  }
 }

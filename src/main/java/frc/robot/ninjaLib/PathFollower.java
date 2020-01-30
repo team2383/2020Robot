@@ -1,4 +1,15 @@
-package frc.robot.ninjaLib;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.ninjalib;
+
+/**
+ * Add your docs here.
+ */
 
 import jaci.pathfinder.Trajectory;
 
@@ -116,7 +127,7 @@ public class PathFollower {
             
             double calculated_value =
                     kp * error +                                    // Proportional
-                    kd * ((error - last_error) / seg.dt - seg.velocity) +          // Derivative
+                    kd * ((error - last_error) / seg.dt) +          // Derivative
                     (kv * seg.velocity + ka * seg.acceleration);    // V and A Terms
             last_error = error;
             heading = seg.heading;
@@ -133,13 +144,6 @@ public class PathFollower {
         return heading;
     }
 
-    /**
-     * @return the last error of the PID loop
-     */
-    public double getError() {
-    	return last_error;
-    }
-    
     /**
      * @return the current segment being operated on
      */
