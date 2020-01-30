@@ -10,20 +10,12 @@ package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.*;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.OI;
-import frc.robot.Robot;
+
 import frc.robot.RobotMap;
-/**
- * Add your docs here.
- */
+
 public class Drivetrain{
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  
   
   DifferentialDrive drive;
 
@@ -32,7 +24,7 @@ public class Drivetrain{
   WPI_TalonFX leftMaster = new WPI_TalonFX(RobotMap.leftmasterPort);
   WPI_TalonFX leftSlave = new WPI_TalonFX(RobotMap.leftfollowerPort);
 
-  public Drivetrain (){
+  public Drivetrain () {
     rightSlave.follow(rightMaster);
     leftSlave.follow(leftMaster);
     drive = new DifferentialDrive(leftMaster, rightMaster);

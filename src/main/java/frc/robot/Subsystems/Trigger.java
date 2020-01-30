@@ -6,9 +6,9 @@ import frc.robot.RobotMap;
 public class Trigger {
     WPI_VictorSPX trigger = new WPI_VictorSPX(RobotMap.triggerPort);
 
-    public Trigger() {
-
-    }
+    public Trigger() 
+    {}
+    
     public void spinLow (){
         trigger.set(ControlMode.PercentOutput, -0.15);
     }
@@ -28,5 +28,4 @@ public class Trigger {
     public void off (){
         trigger.set(ControlMode.PercentOutput, 0);
     }
-
 }

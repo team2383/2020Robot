@@ -21,22 +21,10 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
-/**
- * Add your docs here.
- */
 public class OI {
-
-    // Procedure feedIn = () -> {HAL.feeder.on();};
-    // Procedure stopFeed = () -> {HAL.feeder.off();};
-    // TC released = () -> {return !driver.getButtonStateA();};
 
     Gamepad driver = new Gamepad(0);
     Gamepad driver2 = new Gamepad(1);
-    
-    
-    
-
-    //Procedure shoot = () -> {HAL.shooter.shooterOn();};
 
     public OI(){
         //these are active listeners
@@ -44,25 +32,12 @@ public class OI {
         TC noTC = ()->{return false;};
         Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
         Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger()*.5)-driver.getRightTrigger()*0.5);};
-        //Procedure turretmanualback = () -> {HAL.turret.move(driver.getLeftTrigger()*.5);};
-        // TC encoder = () -> {return HAL.drivetrain.getRightPosition() >= 10;};
-        // Procedure stop = () ->{HAL.drivetrain.arcade(0,0);};
-        // Procedure move = () ->{HAL.drivetrain.arcade(0.3,0);System.out.println(HAL.drivetrain.getRightPosition());};
-
-        // Procedure feedIn = () -> {HAL.feeder.on();};
-        // Procedure stopFeed = () -> {HAL.feeder.off();};
-        
-        //make and add grain
 
         Grain e = new Grain(drive,noTC,drive);
         Robot.mill.addGrain(e);
 
         Grain t = new Grain(turretmanual,noTC,turretmanual);
         Robot.mill.addGrain(t);
-
-
-        
-
     }
 
     public void periodic(){
@@ -74,29 +49,29 @@ public class OI {
         Procedure stopFeed = () -> {HAL.feeder.off();};
         TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
         Grain GFeed = new Grain(feed, releasedRBump, stopFeed);
-        
+    
         // FEED OUT
         Procedure unfeed = () -> {HAL.feeder.unfeed();};
         TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
+
         // LAUNCH
         Procedure launcher = () -> {HAL.launch.out();};
         Procedure stop = () -> {HAL.launch.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain launch = new Grain(launcher, releasedA,stop);
+
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor1.pull();};
         Procedure off = () -> {HAL.conveyor1.off();};
         TC releasedRBump2 = ()->{return !(driver.getButtonStateRightBumper());};
         Grain conveyin = new Grain(conveyor1, releasedRBump2,off);
         
-        // CONVEYOR (OUT)
         Procedure conveyor1out = () -> {HAL.conveyor1.out();};
- //Procedure off = () -> {HAL.conveyor1.off();};
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
 
-        //Trigger
+        //TRIGGER
         Procedure trigger = () -> {HAL.triggered.spinHigh();};
         Procedure trigOff = () -> {HAL.triggered.off();};
         TC releasedBBump = () ->{return !(driver.getButtonStateB());};
@@ -105,13 +80,8 @@ public class OI {
         Procedure arctrig = () -> {HAL.triggered.spinOut();};
         TC releasedXBump = () ->{return !driver.getButtonStateX();};
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
-        
-        // TURRET(MANUAL)
-        // Procedure turretmanual = () -> {HAL.turret.move(driver2.getRightX());};
-        // Procedure still = () -> {HAL.turret.off();};
-        // TC releasedRBump2 = ()->{return !(driver.getButtonStateRightBumper());};
-        // Grain conveyin = new Grain(conveyor1, releasedRBump2,off);
 
+        // HOOD
         Procedure hoodmanual = () -> {HAL.hoodie.slowMoveUP();};
         TC releasedDUP = () ->{return driver.getDPadUp();};
         Procedure hoodoff = () -> {HAL.hoodie.off();};
@@ -120,8 +90,12 @@ public class OI {
         Procedure hoodmanualdown = () -> {HAL.hoodie.slowMoveDown();};
         TC releasedDDown = () ->{return driver.getDPadDown();};
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
-
         
+        //SLIMELIGHT
+        Procedure slimeon = () -> {HAL.turret.slimelight(1);};
+        TC releasedStartButton = () ->{return driver.getRawButton(Gamepad.BUTTON_START);};
+        Procedure notmyslime = () -> {HAL.turret.off();};
+        Grain Gslimelight = new Grain (slimeon, releasedStartButton, notmyslime);
         
         //button groups
         if(driver.getButtonStateA()){
@@ -152,6 +126,10 @@ public class OI {
         if(driver.getButtonStateRightBumper()){
             Robot.mill.addGrain(GFeed); 
             Robot.mill.addGrain(conveyin);
+        }
+
+        if(driver.getRawButton(Gamepad.BUTTON_START)){
+            Robot.mill.addGrain(Gslimelight); 
         }
     }
    

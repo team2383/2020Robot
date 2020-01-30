@@ -26,4 +26,5 @@ public class HAL {
    // public static Pathifinnding finder = new Pathifinnding(); 
     public static Turret turret = new Turret();
     public static Hood hoodie = new Hood();
+    public static LimelightSubsystem slimelight = new LimelightSubsystem();
 }
