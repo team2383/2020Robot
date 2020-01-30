@@ -9,7 +9,7 @@ import frc.robot.commands.*;
 import frc.robot.ninjaLib.Gamepad;
 import frc.robot.ninjaLib.StatefulSubsystem;
 import frc.robot.subsystems.*;
-import static frc.robot.HAL.shoota;
+//import static frc.robot.HAL.shoota;
 import static frc.robot.HAL.feeda;;
 
 public class OI {
@@ -35,12 +35,14 @@ public class OI {
   public static Button we_eatin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_LEFT);  
   public static Button we_spittin = new JoystickButton(driver, Gamepad.BUTTON_SHOULDER_RIGHT);  
 
+  //DriveCommand driveCommand;
 
   public OI(){
-    bigshoota.whenPressed(shoota.setStateCommand(Shoota.State.BIGSHOOTA,Shoota.State.COOLIN, false));
-    lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
-
+    //  bigshoota.whenPressed(shoota.setStateCommand(Shoota.State.BIGSHOOTA,Shoota.State.COOLIN, false));
+    //  lilshoota.whenPressed(shoota.setStateCommand(Shoota.State.LILSHOOTA,Shoota.State.COOLIN, false));
+    //driveCommand = new DriveCommand(throttle, turn);
     turretaRight.whileHeld(new HoldTurreta());
+   
 
 
     we_eatin.whenPressed(feeda.setStateCommand(Feeda.State.EATIN, Feeda.State.VIBIN, false));

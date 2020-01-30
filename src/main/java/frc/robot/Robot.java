@@ -26,6 +26,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.HAL;
 import frc.robot.OI;
+import frc.robot.ninjaLib.*;
 
 import java.lang.reflect.Field;
 
@@ -40,7 +41,8 @@ import java.lang.reflect.Field;
 
 public class Robot extends TimedRobot {
 
-  //public static OI m_oi;
+  public static OI m_oi;
+  //public static Gamepad driver = new Gamepad(0);
 
   Command autoCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -66,7 +68,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
 
     SmartDashboard.putData("AUTO CHOOSER", autoChooser);
-    // SmartDashboard.putNumber("RMpos", rig)
+     //SmartDashboard.putNumber("RMpos", driver.getRightTrigger());
   }
 
   /**
@@ -79,6 +81,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //SmartDashboard.putNumber('R', driver.getRightTrigger());
   }
 
   /**

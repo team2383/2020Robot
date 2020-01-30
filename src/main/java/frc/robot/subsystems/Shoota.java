@@ -22,13 +22,13 @@ public class Shoota extends StatefulSubsystem<Shoota.State> {
   public CANPIDController shootafpid = new CANPIDController(shootaFollower);
 
   public void configMotorController(int timeout){
-    shootampid.setP(0);
+    shootampid.setP(1);
     shootampid.setI(0);
     shootampid.setD(0);
 
-    shootampid.setP(0);
-    shootampid.setI(0);
-    shootampid.setD(0);
+    shootafpid.setP(1);
+    shootafpid.setI(0);
+    shootafpid.setD(0);
   }
 
   public static enum State{
