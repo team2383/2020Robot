@@ -61,8 +61,4 @@ public class Drivetrain{
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
 	}
-public void setBrake() {
-  //leftMaster.configAllSettings(allConfigs, timeoutMs)
-}
-
 }
