@@ -83,12 +83,12 @@ public class OI {
 
         // HOOD
         Procedure hoodmanual = () -> {HAL.hoodie.slowMoveUP();};
-        TC releasedDUP = () ->{return driver.getDPadUp();};
+        TC releasedDUP = () ->{return !driver.getDPadUp();};
         Procedure hoodoff = () -> {HAL.hoodie.off();};
         Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
 
         Procedure hoodmanualdown = () -> {HAL.hoodie.slowMoveDown();};
-        TC releasedDDown = () ->{return driver.getDPadDown();};
+        TC releasedDDown = () ->{return !driver.getDPadDown();};
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
         
         //SLIMELIGHT
@@ -96,6 +96,11 @@ public class OI {
         TC releasedStartButton = () ->{return driver.getRawButton(Gamepad.BUTTON_START);};
         Procedure notmyslime = () -> {HAL.turret.off();};
         Grain Gslimelight = new Grain (slimeon, releasedStartButton, notmyslime);
+
+        //Shifter
+        Procedure shifton = () -> {HAL.selfClimb.prepClimb();};
+        TC releasedYButton = () -> {return !driver.getButtonStateY();};
+        Grain shiftNow = new Grain (shifton, releasedYButton, shifton);
         
         //button groups
         if(driver.getButtonStateA()){
@@ -130,6 +135,10 @@ public class OI {
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             Robot.mill.addGrain(Gslimelight); 
+        }
+
+        if(driver.getButtonStateY()){
+            Robot.mill.addGrain(shiftNow);
         }
     }
    

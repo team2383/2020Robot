@@ -27,4 +27,6 @@ public class HAL {
     public static Turret turret = new Turret();
     public static Hood hoodie = new Hood();
     public static LimelightSubsystem slimelight = new LimelightSubsystem();
+    public static Arm shift = new Arm();
+    public static SelfClimb selfClimb = new SelfClimb()
 }

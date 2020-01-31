@@ -2,6 +2,7 @@ package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import frc.robot.RobotMap;
 
 public class Hood {
@@ -16,6 +17,10 @@ public class Hood {
     public void slowMoveDown (){
         hood.set(ControlMode.PercentOutput, -0.15);
     }
+
+    public void moveto(double pos){
+        hood.set(ControlMode.MotionMagic, pos);
+      }
 
     public void off (){
         hood.set(ControlMode.PercentOutput, 0);
