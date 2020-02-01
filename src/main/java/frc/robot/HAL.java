@@ -22,4 +22,5 @@ public class HAL {
     public static LimelightSubsystem limelight = new LimelightSubsystem();
     public static Arm shift = new Arm();
     public static SelfClimb selfClimb = new SelfClimb();
+    public static WheelofFortune wheelofFortune = new WheelofFortune();
 }

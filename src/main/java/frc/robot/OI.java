@@ -56,10 +56,10 @@ public class OI {
         Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
         // LAUNCH
-        Procedure shoot = () -> {HAL.shoot.manualorlime();};
+        Procedure shooter = () -> {HAL.shoot.manualorlime();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
-        Grain launch = new Grain(launcher, releasedA,stop);
+        Grain launch = new Grain(shooter, releasedA,stop);
 
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor.pull();};
@@ -101,6 +101,12 @@ public class OI {
         Procedure shifton = () -> {HAL.selfClimb.prepClimb();};
         TC releasedYButton = () -> {return !driver.getButtonStateY();};
         Grain shiftNow = new Grain (shifton, releasedYButton, shifton);
+
+        //Wheelie
+        Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
+        TC releasedBackButton = () -> {return driver.getRawButton(Gamepad.BUTTON_BACK);};
+        Procedure wheelno = () -> {HAL.wheelofFortune.off();};
+        Grain wheelNow = new Grain (wheelon, releasedBackButton, wheelno);
         
         //button groups
         if(driver.getButtonStateA()){
@@ -140,6 +146,10 @@ public class OI {
         if(driver.getButtonStateY()){
             Robot.mill.addGrain(shiftNow);
         }
+        if(driver.getRawButton(Gamepad.BUTTON_BACK)){
+            Robot.mill.addGrain(wheelNow);
+        }
+        
     }
    
 

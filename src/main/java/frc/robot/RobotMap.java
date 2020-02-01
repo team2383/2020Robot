@@ -20,4 +20,6 @@ public class RobotMap{
     public static int s1rchannel = 1;
     public static int s2fchannel = 2;
     public static int s2rchannel = 3;
+
+    public static int wheelPort = 00;
 }
