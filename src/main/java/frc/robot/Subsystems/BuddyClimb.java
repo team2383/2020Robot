@@ -8,9 +8,8 @@ public class BuddyClimb{
 
     DoubleSolenoid solenoid4 = new DoubleSolenoid(6,7);
 
-    public BuddyClimb(){
-
-    }
+    public BuddyClimb()
+    {}
 
     public void prepClimb(){
 

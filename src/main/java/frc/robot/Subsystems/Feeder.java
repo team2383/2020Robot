@@ -15,16 +15,13 @@ public class Feeder{
   
   public void feed(){
     feeder.set(ControlMode.PercentOutput, -1.0);
-
   }
 
   public void off(){
     feeder.set(ControlMode.PercentOutput, 0);
-
   }
 
   public void unfeed(){
     feeder.set(ControlMode.PercentOutput, 1.0);
-
   }
 }

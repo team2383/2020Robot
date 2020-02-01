@@ -56,18 +56,18 @@ public class OI {
         Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
         // LAUNCH
-        Procedure launcher = () -> {HAL.launch.out();};
-        Procedure stop = () -> {HAL.launch.stop();};
+        Procedure shoot = () -> {HAL.shoot.manualorlime();};
+        Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain launch = new Grain(launcher, releasedA,stop);
 
         // CONVEYOR
-        Procedure conveyor1 = () -> {HAL.conveyor1.pull();};
-        Procedure off = () -> {HAL.conveyor1.off();};
+        Procedure conveyor1 = () -> {HAL.conveyor.pull();};
+        Procedure off = () -> {HAL.conveyor.off();};
         TC releasedRBump2 = ()->{return !(driver.getButtonStateRightBumper());};
         Grain conveyin = new Grain(conveyor1, releasedRBump2,off);
         
-        Procedure conveyor1out = () -> {HAL.conveyor1.out();};
+        Procedure conveyor1out = () -> {HAL.conveyor.out();};
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
 
@@ -82,17 +82,17 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // HOOD
-        Procedure hoodmanual = () -> {HAL.hoodie.slowMoveUP();};
+        Procedure hoodmanual = () -> {HAL.hood.slowMoveUP();};
         TC releasedDUP = () ->{return !driver.getDPadUp();};
-        Procedure hoodoff = () -> {HAL.hoodie.off();};
+        Procedure hoodoff = () -> {HAL.hood.off();};
         Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
 
-        Procedure hoodmanualdown = () -> {HAL.hoodie.slowMoveDown();};
+        Procedure hoodmanualdown = () -> {HAL.hood.slowMoveDown();};
         TC releasedDDown = () ->{return !driver.getDPadDown();};
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
         
         //SLIMELIGHT
-        Procedure slimeon = () -> {HAL.turret.slimelight(1);};
+        Procedure slimeon = () -> {HAL.turret.limeT(1);};
         TC releasedStartButton = () ->{return driver.getRawButton(Gamepad.BUTTON_START);};
         Procedure notmyslime = () -> {HAL.turret.off();};
         Grain Gslimelight = new Grain (slimeon, releasedStartButton, notmyslime);

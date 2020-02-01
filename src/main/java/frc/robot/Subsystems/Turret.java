@@ -17,26 +17,22 @@ public class Turret{
     turret.set(ControlMode.PercentOutput, stick);
   }
 
-  public void slimelight(double height){
+  public void limeT(double pipeline){
     double output;
-    double xOffset = HAL.slimelight.xOffset();
-    double kP = 1;
+    double xOffset = HAL.limelight.xOffset();
     double stop = 0;
-
-    if(height == 1){
-    output = kP * ((xOffset - 8.5-2.5)/27); 
+    double dividend = 27;
+    output = (xOffset/dividend); 
+    if (HAL.limelight.hasTargets()){
+      HAL.limelight.setPipeline(pipeline);
+      turret.set(ControlMode.PercentOutput, output);
     }
     else{
-      output = kP * ((xOffset - 12.8)/27); //was 13
-    }
-
-    if (HAL.slimelight.hasTargets()){
-      turret.set(output);
-    }
-    else{
-      turret.set(stop);
+      HAL.limelight.setPipeline(pipeline);
+      turret.set(ControlMode.PercentOutput, stop);
     }
   }
+
   public void off(){
     turret.set(ControlMode.PercentOutput, 0);
 

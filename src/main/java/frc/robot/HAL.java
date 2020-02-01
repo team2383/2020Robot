@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import frc.robot.Subsystems.*;
@@ -14,19 +7,19 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 /**
- * Hardware abstraction layer
+ * (HAL) Hardware Abstraction Layer
  */
 public class HAL {
     public static Drivetrain drivetrain = new Drivetrain();
     public static Feeder feeder = new Feeder();
     public static AHRS navX = new AHRS(SPI.Port.kMXP);
-    public static Launcher launch = new Launcher();
-    public static Conveyor1 conveyor1 = new Conveyor1();
+    public static Shooter shoot = new Shooter();
+    public static Conveyor conveyor = new Conveyor();
     public static Trigger triggered = new Trigger();
    // public static Pathifinnding finder = new Pathifinnding(); 
     public static Turret turret = new Turret();
-    public static Hood hoodie = new Hood();
-    public static LimelightSubsystem slimelight = new LimelightSubsystem();
+    public static Hood hood = new Hood();
+    public static LimelightSubsystem limelight = new LimelightSubsystem();
     public static Arm shift = new Arm();
-    public static SelfClimb selfClimb = new SelfClimb()
+    public static SelfClimb selfClimb = new SelfClimb();
 }
