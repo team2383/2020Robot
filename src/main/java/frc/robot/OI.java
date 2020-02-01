@@ -19,17 +19,18 @@ public class OI {
     Gamepad driver2 = new Gamepad(1);
 
     public OI(){
-        //these are active listeners
-        //make procedures and conditions
-        TC noTC = ()->{return false;};
-        Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
-        Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger()*.5)-driver.getRightTrigger()*0.5);};
+    //these are active listeners
+    //make procedures and conditions
 
-        Grain e = new Grain(drive,noTC,drive);
-        Robot.mill.addGrain(e);
+    TC noTC = ()->{return false;};
+    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
 
-        Grain t = new Grain(turretmanual,noTC,turretmanual);
-        Robot.mill.addGrain(t);
+    Grain e = new Grain(drive,noTC,drive);
+    Robot.mill.addGrain(e);
+
+    Grain t = new Grain(turretmanual,noTC,turretmanual);
+    Robot.mill.addGrain(t);
     }
 
     public void periodic(){

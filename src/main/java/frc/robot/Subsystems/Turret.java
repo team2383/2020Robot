@@ -21,9 +21,9 @@ public class Turret{
     double output;
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
-    double dividend = 27;
+    double divisor = 27;
 
-    output = (xOffset/dividend); 
+    output = (xOffset/divisor); 
     
     if (HAL.limelight.hasTargets()){
       HAL.limelight.setPipeline(pipeline);
