@@ -1,13 +1,12 @@
 package frc.robot.Subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-
 import frc.robot.RobotMap;
+
 
 public class Drivetrain{
   

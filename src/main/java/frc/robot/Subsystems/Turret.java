@@ -22,7 +22,9 @@ public class Turret{
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
     double dividend = 27;
+
     output = (xOffset/dividend); 
+    
     if (HAL.limelight.hasTargets()){
       HAL.limelight.setPipeline(pipeline);
       turret.set(ControlMode.PercentOutput, output);

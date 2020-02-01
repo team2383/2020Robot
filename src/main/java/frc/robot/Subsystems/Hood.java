@@ -1,13 +1,13 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import frc.robot.RobotMap;
 import frc.robot.HAL;
+
 
 public class Hood {
     WPI_TalonSRX hood = new WPI_TalonSRX(RobotMap.hoodPort);
@@ -38,16 +38,12 @@ public class Hood {
     
     public void limeH(){
         double area = HAL.limelight.area();
-        double factor = 5;
+        double factor = 5; //random value
         double height;
         height = area*factor;
-        if(isangled()){
             moveto(height);
         }
-        else{
-            off();
-        }
-}
+
 
 public boolean isangledY (){
     double toleranceY = 100; //random value

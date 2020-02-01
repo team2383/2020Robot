@@ -2,6 +2,8 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class LimelightSubsystem extends Subsystem {
 
@@ -66,4 +68,9 @@ public class LimelightSubsystem extends Subsystem {
 		NetworkTableEntry pipelineEntry = NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline");
     	pipelineEntry.setNumber(pipeline);
     }
+
+  public void periodic(){
+  SmartDashboard.putNumber("Area", area());
+  SmartDashboard.putNumber("xOffset", xOffset());
+}
 }

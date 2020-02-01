@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
 //great reference ->
 //https://github.com/team2383/2018Kappa/blob/5ff1b0afae8c319719aa4fdfe2d89dc8e98971cd/src/
 //com/team2383/robot/commands/FollowTrajectory.java
@@ -22,10 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.HAL;
 import frc.robot.Subsystems.Drivetrain;
 
-
-/**
- * Add your docs here.
- */
 
 public class Pathfinding {
     Waypoint[] points = new Waypoint[] {
