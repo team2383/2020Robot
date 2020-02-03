@@ -12,6 +12,8 @@ import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 public class WheelofFortune{
 
@@ -42,53 +44,90 @@ public class WheelofFortune{
   public void wheelie(){
     wheelGo.set(ControlMode.PercentOutput, 0.5);
   }
-  public void wheelieRotationControl() throws InterruptedException {
-    //String colorString;
-    //double IR = m_colorSensor.getIR();
+
+
+  public void wheelieControl() throws InterruptedException {
+    //sensor control
+    String gameData;
+    String colorString;
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
     Color detectedColorPrimer = m_colorSensor.getColor();
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColorPrimer);
-    
 
     
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+      colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+      colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
+    }
+    
+    if(gameData.length() > 0)
+    {
+      switch (gameData.charAt(0))
+      {
+        case 'B' :
+          if(colorString == "Blue"){
+            break;
+          }
+          else{
+            wheelGo.set(ControlMode.PercentOutput, 0.5);
+          }
+          
+        case 'G' :
+          if(colorString == "Green"){
+            break;
+          }
+          else{
+            wheelGo.set(ControlMode.PercentOutput, 0.5);
+          }
+          
+        case 'R' :
+          if(colorString == "Red"){
+            break;
+          }
+          else{
+            wheelGo.set(ControlMode.PercentOutput, 0.5);
+          }
+          
+        case 'Y' :
+          if(colorString == "Yellow"){
+            break;
+          }
+          else{
+          wheelGo.set(ControlMode.PercentOutput, 0.5);
+        }
 
-    // if (match.color == kBlueTarget) {
-    //   colorString = "Blue";
-    // } else if (match.color == kRedTarget) {
-    //   colorString = "Red";
-    // } else if (match.color == kGreenTarget) {
-    //   colorString = "Green";
-    // } else if (match.color == kYellowTarget) {
-    //   colorString = "Yellow";
-    // } else {
-    //   colorString = "Unknown";
-    // }
-
-    for(int x=0; x<8;){
-      Color detectedColorDos = m_colorSensor.getColor();
-      ColorMatchResult match2 = m_colorMatcher.matchClosestColor(detectedColorDos);
-
-      wheelGo.set(ControlMode.PercentOutput, 0.5);
-      if(match.color == match2.color){
-        wait(300);
-        x = x + 1;
-        
+        default :
+          //This is corrupt data
+          break;
       }
-
+    } else {
+      //Rotation Control
+      for(int x = 0; x < 8;){
+        Color detectedColorDos = m_colorSensor.getColor();
+        ColorMatchResult match2 = m_colorMatcher.matchClosestColor(detectedColorDos);
+  
+        wheelGo.set(ControlMode.PercentOutput, 0.5);
+        if(match.color == match2.color){
+          wait(300);
+          x = x + 1;
+          
+        }
+  
+        break;
+      }
       
+
     }
-
-    // SmartDashboard.putNumber("Red", detectedColor.red);
-    // SmartDashboard.putNumber("Green", detectedColor.green);
-    // SmartDashboard.putNumber("Blue", detectedColor.blue);
-    // SmartDashboard.putNumber("Confidence", match.confidence);
-    // SmartDashboard.putString("Detected Color", colorString);
-
-    //int proximity = m_colorSensor.getProximity();
-    //SmartDashboard.putNumber("Proximity", proximity);
-
     
 
-    }
+  }
     
   
   public void off(){
