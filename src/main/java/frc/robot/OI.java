@@ -98,9 +98,10 @@ public class OI {
         Grain GlimelightH = new Grain (limelightH, withinrangeY, limeoffH);
 
         //SHIFTER
-        Procedure shifton = () -> {HAL.selfClimb.prepClimb();};
-        TC releasedYButton = () -> {return !driver.getButtonStateY();};
-        Grain shiftNow = new Grain (shifton, releasedYButton, shifton);
+        Procedure armOut = () -> {HAL.arm.deployArm();};
+        TC releasedYButton = () -> {return !driver2.getButtonStateA();};
+        Procedure armcease = () -> {HAL.arm.stopArm();};
+        Grain armNow = new Grain (armOut, releasedYButton, armcease);
 
         //WHEELIE
         Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
@@ -108,13 +109,26 @@ public class OI {
         Procedure wheelno = () -> {HAL.wheelofFortune.off();};
         Grain wheelNow = new Grain (wheelon, releasedBackButton, wheelno);
 
+
+        //SELFCLIMB
+        Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
+        TC releasedRightBumper2 = () -> {return !driver2.getButtonStateY();};
+        Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
+        Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
+
+        //BUDDYCLIMB
+        Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
+        TC releasedLeftBumper2 = () -> {return !driver2.getButtonStateX();};
+        Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
+        Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
+
         //TELESCOPE
         Procedure telego = () -> {HAL.telescope.TelescopeGo();};
         TC releasedA2 = () -> {return !(driver3.getButtonStateA());};
         Procedure telestop = () -> {HAL.telescope.off();
         };
         Grain teleNow = new Grain (telego, releasedA2, telestop);
-        
+
         //button groups + initializing conditionals
 
         if(driver.getButtonStateA()){
@@ -158,8 +172,8 @@ public class OI {
             Robot.mill.addGrain(GlimelightT);
         }
 
-        if(driver.getButtonStateY()){
-            Robot.mill.addGrain(shiftNow);
+        if(driver2.getButtonStateA()){
+            Robot.mill.addGrain(armNow);
         }
         if(driver.getRawButton(Gamepad.BUTTON_BACK)){
             Robot.mill.addGrain(wheelNow);
@@ -167,6 +181,14 @@ public class OI {
 
         if(driver3.getButtonStateA()){
             Robot.mill.addGrain(teleNow);
+        } 
+        
+        if(driver2.getButtonStateX()){
+            Robot.mill.addGrain(buddy);
+        }
+
+        if(driver2.getButtonStateY()){
+            Robot.mill.addGrain(self);
         }
     }
 }

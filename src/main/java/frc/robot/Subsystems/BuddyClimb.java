@@ -16,7 +16,11 @@ public class BuddyClimb{
     public void prepClimb(){
 
 
-        solenoid4.set(Value.kOff);
+        solenoid4.set(Value.kForward);
+    }
+
+    public void stopClimb(){
+        solenoid4.set(Value.kReverse);
     }
 
 }
