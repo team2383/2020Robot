@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 import frc.robot.HAL;
 import static frc.robot.Subsystems.Hood.hoodc;
+import static frc.robot.Subsystems.Motor.motor;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -31,14 +32,16 @@ public class Robot extends TimedRobot{
 
   public void teleopInit() {
     SmartDashboard.putNumber("Is on", 10);
-    SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
-    SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
-
-  }
+    }
 
   public void teleopPeriodic(){
     mill.seed();
     oi.listener();
+    SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
+    SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Mpos", motor.getSelectedSensorPosition());
+    SmartDashboard.putBoolean("Greater than 2000", motor.getSelectedSensorPosition() > 2000);
+ 
   }
   public void test() {
   }

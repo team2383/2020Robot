@@ -15,9 +15,16 @@ public class Arm {
   {}
 
   public void deployArm() {
-    solenoid1.set(Value.kOff);
-    solenoid2.set(Value.kOff);
+    solenoid1.set(Value.kForward);
+    solenoid2.set(Value.kForward);
   }
+
+  public void stopArm() {
+    solenoid1.set(Value.kReverse);
+    solenoid2.set(Value.kReverse);
+  }
+
+
 
 
 
