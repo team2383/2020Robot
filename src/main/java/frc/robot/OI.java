@@ -13,10 +13,13 @@ import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
 
 
+
 public class OI {
 
     Gamepad driver = new Gamepad(0);
     Gamepad driver2 = new Gamepad(1);
+    Gamepad driver3 = new Gamepad(2);
+    Gamepad driver4 = new Gamepad(3);
 
     public OI(){
     //these are active listeners
@@ -104,6 +107,13 @@ public class OI {
         TC releasedBackButton = () -> {return driver.getRawButton(Gamepad.BUTTON_BACK);};
         Procedure wheelno = () -> {HAL.wheelofFortune.off();};
         Grain wheelNow = new Grain (wheelon, releasedBackButton, wheelno);
+
+        //TELESCOPE
+        Procedure telego = () -> {HAL.telescope.TelescopeGo();};
+        TC releasedA2 = () -> {return !(driver3.getButtonStateA());};
+        Procedure telestop = () -> {HAL.telescope.off();
+        };
+        Grain teleNow = new Grain (telego, releasedA2, telestop);
         
         //button groups + initializing conditionals
 
@@ -154,5 +164,9 @@ public class OI {
         if(driver.getRawButton(Gamepad.BUTTON_BACK)){
             Robot.mill.addGrain(wheelNow);
         }  
+
+        if(driver3.getButtonStateA()){
+            Robot.mill.addGrain(teleNow);
+        }
     }
 }

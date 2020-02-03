@@ -22,4 +22,5 @@ public class HAL {
     public static SelfClimb selfClimb = new SelfClimb();
     public static BuddyClimb buddyClimb = new BuddyClimb();
     public static WheelofFortune wheelofFortune = new WheelofFortune();
+    public static Telescope telescope = new Telescope();
 }
