@@ -10,24 +10,24 @@ import frc.robot.HAL;
 
 
 public class Hood {
-    WPI_TalonSRX hood = new WPI_TalonSRX(RobotMap.hoodPort);
+   public static WPI_TalonSRX hoodc = new WPI_TalonSRX(RobotMap.hoodPort);
     public Hood() 
     {}
 
     public void slowMoveUP (){
-        hood.set(ControlMode.PercentOutput, 0.15);
+        hoodc.set(ControlMode.PercentOutput, 0.15);
     }
 
     public void slowMoveDown (){
-        hood.set(ControlMode.PercentOutput, -0.15);
+        hoodc.set(ControlMode.PercentOutput, -0.15);
     }
 
     public void moveto(double pos){
-        hood.set(ControlMode.MotionMagic, pos);
+        hoodc.set(ControlMode.MotionMagic, pos);
       }
 
     public void off (){
-        hood.set(ControlMode.PercentOutput, 0);
+        hoodc.set(ControlMode.PercentOutput, 0);
     }
 
     public boolean isangled (){
@@ -38,7 +38,7 @@ public class Hood {
     
     public void limeH(){
         double area = HAL.limelight.area();
-        double factor = 5; //random value
+        double factor = 8; //random value
         double height;
         height = area*factor;
             moveto(height);
@@ -47,10 +47,9 @@ public class Hood {
 
 public boolean isangledY (){
     double toleranceY = 100; //random value
-    return ((hood.getSelectedSensorPosition()) - (HAL.limelight.area()*5)) < toleranceY;
+    return ((hoodc.getSelectedSensorPosition()) - (HAL.limelight.area()*8)) < toleranceY;
 }
 
 public void periodic() {
-    SmartDashboard.putBoolean("Ready to Shoot?", isangledY());
-}
+    }
 }

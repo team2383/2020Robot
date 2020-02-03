@@ -1,10 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.hal.HAL;
+//import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
 
-
+import frc.robot.HAL;
+import static frc.robot.Subsystems.Hood.hoodc;
+import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +31,9 @@ public class Robot extends TimedRobot{
 
   public void teleopInit() {
     SmartDashboard.putNumber("Is on", 10);
+    SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
+    SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
+
   }
 
   public void teleopPeriodic(){

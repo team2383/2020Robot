@@ -144,6 +144,9 @@ public class OI {
         if((HAL.hood.isangled())){
             Robot.mill.addGrain(GlimelightT);
         }
+        if((driver.getRawButton(Gamepad.BUTTON_BACK))){
+            Robot.mill.addGrain(GlimelightT);
+        }
 
         if(driver.getButtonStateY()){
             Robot.mill.addGrain(shiftNow);
