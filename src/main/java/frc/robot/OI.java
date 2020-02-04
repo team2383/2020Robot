@@ -18,15 +18,14 @@ public class OI {
 
     Gamepad driver = new Gamepad(0);
     Gamepad driver2 = new Gamepad(1);
-    Gamepad driver3 = new Gamepad(2);
-    Gamepad driver4 = new Gamepad(3);
+
 
     public OI(){
     //these are active listeners
     //make procedures and conditions
 
     TC noTC = ()->{return false;};
-    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*1));};
     Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
 
     Grain e = new Grain(drive,noTC,drive);
@@ -124,7 +123,7 @@ public class OI {
 
         //TELESCOPE
         Procedure telego = () -> {HAL.telescope.TelescopeGo();};
-        TC releasedA2 = () -> {return !(driver3.getButtonStateA());};
+        TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
         Procedure telestop = () -> {HAL.telescope.off();
         };
         Grain teleNow = new Grain (telego, releasedA2, telestop);
@@ -179,7 +178,7 @@ public class OI {
             Robot.mill.addGrain(wheelNow);
         }  
 
-        if(driver3.getButtonStateA()){
+        if(driver2.getButtonStateA()){
             Robot.mill.addGrain(teleNow);
         } 
         
