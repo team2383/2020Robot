@@ -1,11 +1,12 @@
 package frc.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.HAL;
 
 
-public class LimelightSubsystem extends Subsystem {
+public class LimelightSubsystem {
 
   private double get(String name) {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry(name).getDouble(0);
@@ -59,18 +60,11 @@ public class LimelightSubsystem extends Subsystem {
   {
     return get("camtran");
   }
-
-  @Override
-  public void initDefaultCommand() {
-  }
-
+  
   public void setPipeline(double pipeline) {
 		NetworkTableEntry pipelineEntry = NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline");
     	pipelineEntry.setNumber(pipeline);
     }
 
-  public void periodic(){
-  SmartDashboard.putNumber("Area", area());
-  SmartDashboard.putNumber("xOffset", xOffset());
-}
+
 }

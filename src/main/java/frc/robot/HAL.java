@@ -12,6 +12,7 @@ public class HAL {
     public static Drivetrain drivetrain = new Drivetrain();
     public static Feeder feeder = new Feeder();
     public static AHRS navX = new AHRS(SPI.Port.kMXP);
+    public static AHRS TnavX = new AHRS(SPI.Port.kMXP);
     public static Shooter shoot = new Shooter();
     public static Conveyor conveyor = new Conveyor();
     public static Trigger triggered = new Trigger();
