@@ -32,6 +32,10 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
+    SmartDashboard.putNumber("Turret Position", HAL.turret.getTurretPosition());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getYaw());
+    SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
     int proximity = m_colorSensor.getProximity();
 
     SmartDashboard.putNumber("Proximity", proximity);

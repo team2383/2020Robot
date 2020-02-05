@@ -24,7 +24,8 @@ public class OI {
     //these are active listeners
     //make procedures and conditions
 
-    TC noTC = ()->{return false;};
+    // DRIVE
+    TC noTC = ()->{return false;}; 
     Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*1));};
     Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
 
@@ -33,11 +34,16 @@ public class OI {
 
     Grain t = new Grain(turretmanual,noTC,turretmanual);
     Robot.mill.addGrain(t);
+
+    // TURRET VISION
+    Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};
+    Grain GzeroTurret = new Grain (zeroTurret, noTC, zeroTurret);
+    Robot.mill.addGrain(GzeroTurret);
     }
 
-    public void periodic(){
-        
+    public void periodic(){    
     }
+
     public void listener(){
         // FEEDER
         Procedure feed = () ->{HAL.feeder.feed();};
@@ -85,12 +91,14 @@ public class OI {
         TC releasedDDown = () ->{return !driver.getDPadDown();};
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
         
-        //LIMELIGHT
+        //LIMELIGHT TURRET
         Procedure limelightT = () -> {HAL.turret.limeT(1);};
         TC withinrange = () ->{return HAL.hood.isangled();};
+        TC isTarget = () -> {return !(HAL.limelight.hasTargets());};
         Procedure limeoffT = () -> {HAL.turret.off();};
-        Grain GlimelightT = new Grain (limelightT, withinrange, limeoffT);
+        Grain GlimelightT = new Grain (limelightT, isTarget, limeoffT);
         
+        //LIMELIGHT HOOD
         Procedure limelightH = () -> {HAL.hood.limeH();};
         Procedure limeoffH = () -> {HAL.hood.off();};
         TC withinrangeY = () ->{return HAL.hood.isangledY();};
