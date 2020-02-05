@@ -44,13 +44,21 @@ public class Turret{
     double xOffset = HAL.limelight.xOffset();
     if (xOffset > -3 && xOffset < 3){
       turret.setSelectedSensorPosition(0);
-      HAL.navX.reset();
+      HAL.TnavX.reset();
     }
+  }
+
+  public void angular(){
+    setPosition((143360/360) * HAL.TnavX.getAngle());
   }
 
   public int getTurretPosition(){
     return turret.getSelectedSensorPosition();
   }
+  public void setPosition(double pos){
+    turret.set(ControlMode.MotionMagic, pos);
+  }
+
 
   // public void periodic(){
   //   SmartDashboard.putNumber("Turret Position", turret.getSelectedSensorPosition());
