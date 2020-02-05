@@ -25,7 +25,7 @@ public class Trigger {
     }
 
     public void spinOut (){
-        trigger.set(ControlMode.PercentOutput, 0.4);
+        trigger.set(ControlMode.PercentOutput, 1);
     }
 
     public void off (){

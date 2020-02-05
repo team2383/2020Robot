@@ -14,7 +14,7 @@ public class Conveyor{
   {}
   
   public void pull(){
-    conveyor.set(ControlMode.PercentOutput, -0.95);
+    conveyor.set(ControlMode.PercentOutput, .80);
   }
 
   public void off(){
@@ -22,7 +22,7 @@ public class Conveyor{
   }
 
   public void out(){
-    conveyor.set(ControlMode.PercentOutput, 0.95);
+    conveyor.set(ControlMode.PercentOutput, -0.80);
   }
 
 }

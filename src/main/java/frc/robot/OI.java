@@ -70,7 +70,7 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        Procedure shooter = () -> {HAL.shoot.manualorlime();};
+        Procedure shooter = () -> {HAL.shoot.out();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);
@@ -121,13 +121,14 @@ public class OI {
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
 
-        
+
         //TELESCOPE
         Procedure telego = () -> {HAL.telescope.TelescopeGo();};
         TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
         Procedure telestop = () -> {HAL.telescope.off();
         };
         Grain teleNow = new Grain (telego, releasedA2, telestop);
+
 
         //button groups + initializing conditionals
 

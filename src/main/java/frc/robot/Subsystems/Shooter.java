@@ -13,8 +13,8 @@ public class Shooter{
   CANSparkMax shootFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
 
   public void out(){
-    shootMaster.set(-0.75);
-    shootFollower.set(-0.75);
+    shootMaster.set(-0.65);
+    shootFollower.set(-0.65);
   }
 
   public void stop(){
