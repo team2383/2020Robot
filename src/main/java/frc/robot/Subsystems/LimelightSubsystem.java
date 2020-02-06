@@ -66,5 +66,29 @@ public class LimelightSubsystem {
     	pipelineEntry.setNumber(pipeline);
     }
 
+    public double getDistanceFromTarget()
+    {
+      //Units: Inches
+      double h1 = 30; //need to confirm
+      double h2 = 60; //need to confirm
+      double netHeight = h2-h1;
+      //Unit: Degrees
+      double a1 = yOffset();
+      double a2 = 30; //need to confirm
+      double netAngle = a1+a2;
+    
+      double distance = netHeight/(Math.tan(netAngle));
+    
+      if(hasTargets() == true)
+      {
+        return distance;
+      }
+      else
+      {
+        return 0.0;
+      }
+    }
+
+
 
 }
