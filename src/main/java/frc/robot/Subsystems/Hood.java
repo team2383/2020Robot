@@ -11,8 +11,12 @@ import frc.robot.HAL;
 
 public class Hood {
    public static WPI_TalonSRX hoodc = new WPI_TalonSRX(RobotMap.hoodPort);
+   
     public Hood() 
-    {}
+    {
+        hoodc.setSensorPhase(true);
+        
+    }
 
     public void slowMoveUP (){
         hoodc.set(ControlMode.PercentOutput, 0.15);
@@ -41,15 +45,28 @@ public class Hood {
         double factor = 8; //random value
         double height;
         height = area*factor;
-            moveto(height);
+       
+        
+
+        if(hoodc.getSelectedSensorPosition()>4900 || hoodc.getSelectedSensorPosition()<0){
+            hoodc.set(ControlMode.PercentOutput, 0);
         }
-
-
-public boolean isangledY (){
-    double toleranceY = 100; //random value
-    return ((hoodc.getSelectedSensorPosition()) - (HAL.limelight.area()*8)) < toleranceY;
-}
-
-public void periodic() {
+        else{
+           moveto(height); 
+        }
     }
+
+
+    public boolean isangledY (){
+        double toleranceY = 100; //random value
+        return ((hoodc.getSelectedSensorPosition()) - (HAL.limelight.area()*8)) < toleranceY;
+    }
+
+    public int getCurrentPosition(){
+        return hoodc.getSelectedSensorPosition();
+    }
+
+    public void periodic() {
+        SmartDashboard.putNumber("height", HAL.limelight.area() * 8);
+        }
 }

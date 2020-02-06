@@ -11,6 +11,7 @@ import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -47,7 +48,8 @@ public class OI {
     Robot.mill.addGrain(GzeroTurret);
     }
 
-    public void periodic(){    
+    public void periodic(){  
+        SmartDashboard.putNumber("Hood Value", HAL.hood.getCurrentPosition());  
     }
 
     public void listener(){
@@ -107,8 +109,9 @@ public class OI {
         //LIMELIGHT HOOD
         Procedure limelightH = () -> {HAL.hood.limeH();};
         Procedure limeoffH = () -> {HAL.hood.off();};
-        TC withinrangeY = () ->{return HAL.hood.isangledY();};
-        Grain GlimelightH = new Grain (limelightH, withinrangeY, limeoffH);
+        //TC withinrangeY = () ->{return HAL.hood.off();};
+        TC releasedStart = () -> {return driver.getRawButton(8);};
+        Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
         //SHIFTER
         Procedure armOut = () -> {HAL.arm.deployArm();};
