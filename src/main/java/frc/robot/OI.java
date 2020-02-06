@@ -28,12 +28,18 @@ public class OI {
     TC noTC = ()->{return false;}; 
     Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*1));};
     Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
-
+    Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
+    Procedure positionTurret = () -> {HAL.turret.angular();};
+    TC hasTarget = () -> {return HAL.limelight.hasTargets();};
+    
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
-
+    Grain turretReseter = new Grain(resetTurret,noTC,resetTurret);
+    Grain turretSetter = new Grain(positionTurret,hasTarget,positionTurret);
     Grain t = new Grain(turretmanual,noTC,turretmanual);
     Robot.mill.addGrain(t);
+    Robot.mill.addGrain(turretReseter);
+    Robot.mill.addGrain(turretSetter);
 
     // TURRET VISION
     Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};

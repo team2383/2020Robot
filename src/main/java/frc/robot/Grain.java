@@ -22,6 +22,12 @@ public class Grain {
         this.checkmark = checkmark;
     }
 
+    public Grain(Procedure procedure, TC tCondition){
+        this.procedure = procedure;
+        this.tCondition = tCondition;
+        this.tProcedure = procedure;
+    }
+
     public void run(){
         if(checkmark){
             if(!tCondition.ask()) {

@@ -11,6 +11,7 @@ import frc.robot.RobotMap;
 public class Drivetrain{
   
   DifferentialDrive drive;
+  double limeDegree;
 
   WPI_TalonFX rightMaster = new WPI_TalonFX(RobotMap.rightmasterPort);
   WPI_TalonFX rightSlave = new WPI_TalonFX(RobotMap.rightfollowerPort);
@@ -49,7 +50,12 @@ public class Drivetrain{
   public double getLeftPosition(){
     return rightSlave.getSelectedSensorPosition();
   }
-
+  public double getLimeDegree(){
+    return limeDegree;
+  }
+  public void setLimeDegree(double degree){
+    this.limeDegree = degree;
+  }
   public void resetEncoders() {
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
