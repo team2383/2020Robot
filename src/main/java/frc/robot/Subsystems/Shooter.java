@@ -13,8 +13,12 @@ public class Shooter{
   CANSparkMax shootFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
 
   public void out(){
-    shootMaster.set(-0.65);
-    shootFollower.set(-0.65);
+    shootMaster.set(-.60);
+    shootFollower.set(-.60);
+  }
+
+  public double getShooterRpm(){
+    return shootMaster.get();
   }
 
   public void stop(){
@@ -30,7 +34,7 @@ public class Shooter{
     shootMaster.set(output);
     shootFollower.set(output);
   }
-  
+
   public void LimeS(){
   double area = HAL.limelight.area();
   double zone1areathreshold = 20; //random
