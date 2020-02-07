@@ -70,11 +70,11 @@ public class LimelightSubsystem {
     {
       //Units: Inches
       double h1 = 21; //need to confirm
-      double h2 = 83; //need to confirm
+      double h2 = 81; //need to confirm
       double netHeight = h2-h1;
       //Unit: Degrees
       double a1 = yOffset();
-      double a2 = 30; //need to confirm
+      double a2 = 57.6; //need to confirm
       double netAngle = a1+a2;
     
       double distance = netHeight/(Math.tan(netAngle));
