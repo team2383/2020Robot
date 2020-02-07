@@ -30,6 +30,7 @@ public class Shooter{
     shootMaster.set(output);
     shootFollower.set(output);
   }
+  
   public void LimeS(){
   double area = HAL.limelight.area();
   double zone1areathreshold = 20; //random

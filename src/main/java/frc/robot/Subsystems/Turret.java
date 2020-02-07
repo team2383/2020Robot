@@ -60,12 +60,12 @@ public class Turret{
   }
 
 
-  // public void periodic(){
-  //   SmartDashboard.putNumber("Turret Position", turret.getSelectedSensorPosition());
-  //   SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getYaw());
-  //   SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
-  //   SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
-  // }
+  public void periodic(){
+    SmartDashboard.putNumber("Turret Position", turret.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getYaw());
+    SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
+  }
 }
 
 

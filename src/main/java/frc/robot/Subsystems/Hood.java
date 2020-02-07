@@ -42,18 +42,29 @@ public class Hood {
     
     public void limeH(){
         double area = HAL.limelight.area();
+        boolean hasTarget = HAL.limelight.hasTargets();
         double factor = 8; //random value
         double height;
         height = area*factor;
-       
-        
 
-        if(hoodc.getSelectedSensorPosition()>4900 || hoodc.getSelectedSensorPosition()<0){
-            hoodc.set(ControlMode.PercentOutput, 0);
+        if(hoodc.getSelectedSensorPosition()>4900) {
+            moveto(4850);
         }
+
+        else if(hoodc.getSelectedSensorPosition()<0){
+            moveto(50);
+        }
+
         else{
-           moveto(height); 
+            if(hasTarget){
+                moveto(height); 
+            }
+            else{
+                moveto(0);
+            }
         }
+
+        
     }
 
 

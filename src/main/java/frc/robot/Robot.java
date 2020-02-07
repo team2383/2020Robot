@@ -35,12 +35,14 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Is on", 10);
     SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
     SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
+    
 
   }
 
   public void teleopPeriodic(){
     mill.seed();
     oi.listener();
+    SmartDashboard.putNumber("turretbith", HAL.turret.getTurretPosition());
   }
   public void test() {
   }

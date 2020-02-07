@@ -14,7 +14,7 @@ public class RobotMap{
     public static int shooterFollowerPort = 11;
 
     public static int hoodPort = 10;
-    public static int turretPort = 14;
+    public static int turretPort = 13;
 
     public static int s1fchannel = 0; 
     public static int s1rchannel = 1;
