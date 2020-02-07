@@ -35,8 +35,17 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Is on", 10);
     SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
     SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
+    HAL.limelight.setPipeline(1);
     
 
+  }
+  @Override
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("Turret Position", HAL.turret.getTurretPosition());
+    SmartDashboard.putNumber("Hood Position", HAL.hood.getHoodPosition());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getYaw());
+    SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
+    SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
   }
 
   public void teleopPeriodic(){

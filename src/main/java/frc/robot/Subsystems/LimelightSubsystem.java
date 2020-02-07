@@ -69,8 +69,8 @@ public class LimelightSubsystem {
     public double getDistanceFromTarget()
     {
       //Units: Inches
-      double h1 = 30; //need to confirm
-      double h2 = 60; //need to confirm
+      double h1 = 21; //need to confirm
+      double h2 = 83; //need to confirm
       double netHeight = h2-h1;
       //Unit: Degrees
       double a1 = yOffset();

@@ -26,21 +26,22 @@ public class OI {
     //make procedures and conditions
 
     // DRIVE
+    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
     TC noTC = ()->{return false;}; 
-    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*1));};
-    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
-    Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
-    Procedure positionTurret = () -> {HAL.turret.angular();};
-    TC hasTarget = () -> {return HAL.limelight.hasTargets();};
-    
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
-    Grain turretReseter = new Grain(resetTurret,noTC,resetTurret);
-    Grain turretSetter = new Grain(positionTurret,hasTarget,positionTurret);
+
+    // TURRET
+    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+    //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
+    //Procedure positionTurret = () -> {HAL.turret.angular();};
+    TC hasTarget = () -> {return HAL.limelight.hasTargets();};
+    //Grain turretReseter = new Grain(resetTurret,noTC,resetTurret);
+    //Grain turretSetter = new Grain(positionTurret,hasTarget,positionTurret);
     Grain t = new Grain(turretmanual,noTC,turretmanual);
     Robot.mill.addGrain(t);
-    Robot.mill.addGrain(turretReseter);
-    Robot.mill.addGrain(turretSetter);
+    //Robot.mill.addGrain(turretReseter);
+    //Robot.mill.addGrain(turretSetter);
 
     // TURRET VISION
     Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};
@@ -48,9 +49,11 @@ public class OI {
     Robot.mill.addGrain(GzeroTurret);
     }
 
-    public void periodic(){  
-        SmartDashboard.putNumber("Hood Value", HAL.hood.getCurrentPosition());  
-    }
+    // HOOD
+    
+    // public void periodic(){  
+    //     SmartDashboard.putNumber("Hood Value", HAL.hood.getHoodPosition());  
+    // }
 
     public void listener(){
         // FEEDER

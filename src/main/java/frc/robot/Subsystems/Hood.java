@@ -73,7 +73,7 @@ public class Hood {
         return ((hoodc.getSelectedSensorPosition()) - (HAL.limelight.area()*8)) < toleranceY;
     }
 
-    public int getCurrentPosition(){
+    public int getHoodPosition(){
         return hoodc.getSelectedSensorPosition();
     }
 

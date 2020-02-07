@@ -18,20 +18,32 @@ public class Turret{
     turret.set(ControlMode.PercentOutput, stick);
   }
 
+  public void moveto(double pos){
+    turret.set(ControlMode.MotionMagic, pos);
+  }
+
   public void limeT(double pipeline){
     double output;
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
-    double divisor = 27*2;
+    double divisor = 27;
 
     output = (xOffset/divisor); 
     
     if (HAL.limelight.hasTargets()){
-      HAL.limelight.setPipeline(pipeline);
+      if (getTurretPosition() < -26000){
+        moveto(-25500);
+      }
+      else if (getTurretPosition() > 36000){
+        moveto(-35500);
+      }
+      else{
+      //HAL.limelight.setPipeline(pipeline);
       turret.set(ControlMode.PercentOutput, -output);
+      }
     }
     else{
-      HAL.limelight.setPipeline(pipeline);
+      //HAL.limelight.setPipeline(pipeline);
       turret.set(ControlMode.PercentOutput, stop);
     }
   }
@@ -42,19 +54,20 @@ public class Turret{
 
   public void zeroTurret(){
     double xOffset = HAL.limelight.xOffset();
-    if (xOffset > -3 && xOffset < 3){
-      turret.setSelectedSensorPosition(0);
-      HAL.TnavX.reset();
+    if (xOffset > -3 && xOffset < 3 && HAL.limelight.hasTargets()){
+      //turret.setSelectedSensorPosition(0);
+     //HAL.TnavX.reset();
     }
   }
 
   public void angular(){
-    setPosition((143360/360) * HAL.TnavX.getAngle());
+    setPosition((331776/360) * HAL.TnavX.getAngle());
   }
 
   public int getTurretPosition(){
     return turret.getSelectedSensorPosition();
   }
+
   public void setPosition(double pos){
     turret.set(ControlMode.MotionMagic, pos);
   }
