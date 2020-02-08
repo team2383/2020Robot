@@ -8,7 +8,7 @@ import frc.robot.RobotMap;
 public class BuddyClimb{
 
 
-    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s4fchannel,RobotMap.s4rchannel);
+    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s2fchannel,RobotMap.s2rchannel);
 
     public BuddyClimb()
     {}

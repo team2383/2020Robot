@@ -124,9 +124,9 @@ public class OI {
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
         //SHIFTER
-        Procedure armOut = () -> {HAL.arm.deployArm();};
+        Procedure armOut = () -> {HAL.shifty.shift();};
         TC releasedYButton = () -> {return !driver2.getButtonStateA();};
-        Procedure armcease = () -> {HAL.arm.stopArm();};
+        Procedure armcease = () -> {HAL.shifty.unShift();};
         Grain armNow = new Grain (armOut, releasedYButton, armcease);
 
         //WHEELIE
