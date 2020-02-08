@@ -26,13 +26,20 @@ public class OI {
     //make procedures and conditions
 
     // DRIVE
-    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    //--old drive
+    //Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    //Dylan's race car drive he wanted to try
+    Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
+
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
 
     // TURRET
-    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+    //--old turret
+    //Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+    //Dylan's race car drive he wanted to try
+    Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
     //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
     //Procedure positionTurret = () -> {HAL.turret.angular();};
     TC hasTarget = () -> {return HAL.limelight.hasTargets();};
