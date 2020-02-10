@@ -7,20 +7,31 @@ import frc.robot.RobotMap;
 
 public class BuddyClimb{
 
-
-    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s4fchannel,RobotMap.s4rchannel);
+    int toggle=1;
+    public boolean run=false;
+    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s2fchannel,RobotMap.s2rchannel);
+    DoubleSolenoid solenoid3 = new DoubleSolenoid(RobotMap.s3fchannel,RobotMap.s3rchannel);
 
     public BuddyClimb()
-    {}
+    {
+        solenoid4.set(Value.kForward);
+        solenoid3.set(Value.kForward);
+    }
 
     public void prepClimb(){
-
-
-        solenoid4.set(Value.kForward);
+        if (toggle>0){
+            solenoid4.set(Value.kForward);
+            solenoid3.set(Value.kForward);
+        }else{
+            solenoid4.set(Value.kReverse);
+            solenoid3.set(Value.kReverse);
+        }
+        run=true;
+        toggle*=-1;
     }
 
     public void stopClimb(){
-        solenoid4.set(Value.kReverse);
+        run=false;
     }
 
 }
