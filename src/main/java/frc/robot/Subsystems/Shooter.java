@@ -6,19 +6,43 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.HAL;
 import frc.robot.RobotMap;
 
+import com.revrobotics.CANAnalog.AnalogMode;
+
 
 public class Shooter{
 
   CANSparkMax shootMaster = new CANSparkMax(RobotMap.shooterMasterPort, MotorType.kBrushless);
   CANSparkMax shootFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
 
-  public void out(){
-    shootMaster.set(-.60);
-    shootFollower.set(-.60);
+  CANEncoder shooterz = new CANEncoder(shootMaster);
+  // public CANPIDController shootController = new CANPIDController(shootMaster);
+  // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
+//uncomment
+  public Shooter(){
+    // configMotorController();
+    // shootFollower.follow(shootMaster);
   }
+  public void out(double power){
+    //configMotorController();
+    //shootFollower.follow(shootMaster);
+    shootMaster.set(power);
+    shootFollower.set(power);
+  }
+  public void configMotorController(){
+    // shootController.setP(0.002);
+    // shootController.setI(0);
+    // shootController.setD(0);
 
-  public double getShooterRpm(){
-    return shootMaster.get();
+    // shootController.setIZone(0);
+    // shootController.setFF(0);
+
+    // int smartMotionSlot = 0;
+    // shootController.setSmartMotionMaxVelocity(12000, smartMotionSlot);
+    // shootController.setSmartMotionMaxAccel(8000, smartMotionSlot);
+    }
+
+  public double getShooterVelocity(){
+    return shooterz.getVelocity();
   }
 
   public void stop(){

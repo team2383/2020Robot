@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
+
 public class OI {
 
     Gamepad driver = new Gamepad(0);
@@ -27,9 +28,9 @@ public class OI {
 
     // DRIVE
     //--old drive
-    //Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
     //Dylan's race car drive he wanted to try
-    Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
+    //Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
 
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
@@ -37,9 +38,9 @@ public class OI {
 
     // TURRET
     //--old turret
-    //Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
     //Dylan's race car drive he wanted to try
-    Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
+    //Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
     //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
     //Procedure positionTurret = () -> {HAL.turret.angular();};
     TC hasTarget = () -> {return HAL.limelight.hasTargets();};
@@ -94,7 +95,9 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        Procedure shooter = () -> {HAL.shoot.out();};
+        double shooterPower = SmartDashboard.getNumber("Shooter Power", -.7);
+        Procedure shooter = () -> {HAL.shoot.out(shooterPower);};
+        //Procedure shooter = () -> {HAL.shoot.out();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);
@@ -110,7 +113,7 @@ public class OI {
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
         
         //LIMELIGHT TURRET
-        Procedure limelightT = () -> {HAL.turret.limeT(1);};
+        Procedure limelightT = () -> {HAL.turret.limeT(6);};
         TC withinrange = () ->{return HAL.hood.isangled();};
         TC isTarget = () -> {return !(HAL.limelight.hasTargets());};
         Procedure limeoffT = () -> {HAL.turret.off();};
@@ -190,7 +193,7 @@ public class OI {
         }
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
-            Robot.mill.addGrain(GlimelightH); 
+         //   Robot.mill.addGrain(GlimelightH); 
         }
         
         // if((HAL.hood.isangled())){

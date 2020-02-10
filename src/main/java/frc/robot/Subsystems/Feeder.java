@@ -14,7 +14,7 @@ public class Feeder{
   {}
   
   public void feed(){
-    feeder.set(ControlMode.PercentOutput, -0.70);
+    feeder.set(ControlMode.PercentOutput, -0.250);
   }
 
   public void off(){
