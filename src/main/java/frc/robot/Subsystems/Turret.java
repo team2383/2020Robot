@@ -15,8 +15,20 @@ public class Turret{
   {}
   
   public void move(double stick){
-    turret.set(ControlMode.PercentOutput, stick);
+    if (getTurretPosition() > 37000){
+      turret.set(ControlMode.PercentOutput, stick*-.01);
+    }
+    else if (getTurretPosition() < -27000){
+      turret.set(ControlMode.PercentOutput, stick*-.01); //*-.5
+    }
+    else{
+      turret.set(ControlMode.PercentOutput, stick);
+    }
   }
+
+  // public void move(double stick){
+  //     turret.set(ControlMode.PercentOutput, stick);
+  // }
 
   public void moveto(double pos){
     turret.set(ControlMode.MotionMagic, pos);

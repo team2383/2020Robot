@@ -27,9 +27,9 @@ public class OI {
 
     // DRIVE
     //--old drive
-    //Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
     //Dylan's race car drive he wanted to try
-    Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
+    //Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
 
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
@@ -37,9 +37,9 @@ public class OI {
 
     // TURRET
     //--old turret
-    //Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
     //Dylan's race car drive he wanted to try
-    Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
+    //Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
     //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
     //Procedure positionTurret = () -> {HAL.turret.angular();};
     TC hasTarget = () -> {return HAL.limelight.hasTargets();};
@@ -73,6 +73,9 @@ public class OI {
         TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
+        // Procedure interval_feed = () ->{HAL.feeder.interval_feed(0.5);};
+        // Grain GIntervalFeed = new Grain(interval_feed, releasedRBump, stopFeed);
+
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor.pull();};
         Procedure off = () -> {HAL.conveyor.off();};
@@ -82,7 +85,10 @@ public class OI {
         Procedure conveyor1out = () -> {HAL.conveyor.out();};
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
-
+        
+        // Procedure interval_conveyor = () -> {HAL.conveyor.interval_conveyor(0.5);};
+        // Grain GIntervalConveyor = new Grain(interval_conveyor, releasedRBump2, off);
+       
         //TRIGGER
         Procedure trigger = () -> {HAL.triggered.spinHigh();};
         Procedure trigOff = () -> {HAL.triggered.off();};
@@ -188,6 +194,11 @@ public class OI {
             Robot.mill.addGrain(GFeed); 
             Robot.mill.addGrain(conveyin);
         }
+
+        // if(driver.getButtonStateRightBumper()){
+        //     Robot.mill.addGrain(GIntervalFeed);
+        //     Robot.mill.addGrain(GIntervalConveyor);
+        // }
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             Robot.mill.addGrain(GlimelightH); 
