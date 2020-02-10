@@ -143,9 +143,9 @@ public class OI {
         Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);*/
 
         //BUDDYCLIMB
-        Procedure buddyclimb = () -> {};
-        TC releasedLeftBumper2 = () -> {return !driver2.getButtonStateX();};
-        Procedure buddycease = () -> {HAL.buddyClimb.prepClimb();};
+        Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
+        TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
+        Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
 
 
@@ -218,6 +218,6 @@ public class OI {
 
         /*if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
-        }
+        }*/
     }
 }

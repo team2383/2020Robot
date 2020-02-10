@@ -8,6 +8,7 @@ import frc.robot.RobotMap;
 public class BuddyClimb{
 
     int toggle=1;
+    public boolean run=false;
     DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s2fchannel,RobotMap.s2rchannel);
     DoubleSolenoid solenoid3 = new DoubleSolenoid(RobotMap.s3fchannel,RobotMap.s3rchannel);
 
@@ -25,10 +26,12 @@ public class BuddyClimb{
             solenoid4.set(Value.kReverse);
             solenoid3.set(Value.kReverse);
         }
+        run=true;
         toggle*=-1;
     }
 
     public void stopClimb(){
+        run=false;
     }
 
 }
