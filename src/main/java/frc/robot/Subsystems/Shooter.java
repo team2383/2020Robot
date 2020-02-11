@@ -1,7 +1,7 @@
 package frc.robot.Subsystems;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.HAL;
 import frc.robot.RobotMap;
@@ -11,38 +11,39 @@ import com.revrobotics.CANAnalog.AnalogMode;
 
 public class Shooter{
 
-  CANSparkMax shootMaster = new CANSparkMax(RobotMap.shooterMasterPort, MotorType.kBrushless);
-  CANSparkMax shootFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
+  WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
+  WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
 
-  CANEncoder shooterz = new CANEncoder(shootMaster);
+  //CANEncoder shooterz = new CANEncoder(shootMaster);
   // public CANPIDController shootController = new CANPIDController(shootMaster);
   // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
 //uncomment
   public Shooter(){
-    // configMotorController();
-    // shootFollower.follow(shootMaster);
+    configMotorController();
+    shootFollower.follow(shootMaster);
   }
   public void out(double power){
     //configMotorController();
     //shootFollower.follow(shootMaster);
     shootMaster.set(power);
-    shootFollower.set(power);
+    //shootFollower.set(power);
   }
   public void configMotorController(){
-    // shootController.setP(0.002);
-    // shootController.setI(0);
-    // shootController.setD(0);
+    shootMaster.config_kP(0, 0);
+    shootMaster.config_kI(0,0);
+    shootMaster.config_kD(0,0);
 
-    // shootController.setIZone(0);
-    // shootController.setFF(0);
+    shootMaster.config_IntegralZone(0,0);
+    shootMaster.config_kF(0,0);
 
-    // int smartMotionSlot = 0;
-    // shootController.setSmartMotionMaxVelocity(12000, smartMotionSlot);
-    // shootController.setSmartMotionMaxAccel(8000, smartMotionSlot);
+    int smartMotionSlot = 0;
+    shootMaster.configMotionCruiseVelocity(12000, smartMotionSlot);
+    shootMaster.configMotionAcceleration(8000, smartMotionSlot);
+    
     }
 
   public double getShooterVelocity(){
-    return shooterz.getVelocity();
+    return shootMaster.getSelectedSensorVelocity();
   }
 
   public void stop(){

@@ -14,7 +14,7 @@ public class Turret{
   public Turret()
   {}
   //We make it return an int so it can exit if a certain condition is reached
-  int move(double stick){
+  public int move(double stick){
     if (getTurretPosition() > 37000 && stick>0){
       return 0;
     }
