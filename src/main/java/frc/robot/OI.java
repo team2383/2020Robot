@@ -101,7 +101,7 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        double shooterPower = SmartDashboard.getNumber("Shooter Power", -.7);
+        double shooterPower = SmartDashboard.getNumber("Shooter Power", -1.0);
         Procedure shooter = () -> {HAL.shoot.out(shooterPower);};
         //Procedure shooter = () -> {HAL.shoot.out();};
         Procedure stop = () -> {HAL.shoot.stop();};
@@ -175,8 +175,7 @@ public class OI {
         //button groups + initializing conditionals
 
         if(driver.getButtonStateA()){
-           // Robot.mill.addGrain(shoot);
-           // Robot.mill.addGrain(e);
+            Robot.mill.addGrain(shoot);
         }
         
         if(driver.getButtonStateB()){
@@ -237,7 +236,7 @@ public class OI {
         if(driver2.getButtonStateX()){
             Robot.mill.addGrain(buddy);
         }
-        
+
 
         /*if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);

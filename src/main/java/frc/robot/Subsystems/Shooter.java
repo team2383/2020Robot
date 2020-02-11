@@ -14,6 +14,8 @@ public class Shooter{
   WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
   WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
 
+  
+
   //CANEncoder shooterz = new CANEncoder(shootMaster);
   // public CANPIDController shootController = new CANPIDController(shootMaster);
   // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
@@ -25,8 +27,8 @@ public class Shooter{
   public void out(double power){
     //configMotorController();
     //shootFollower.follow(shootMaster);
-    shootMaster.set(power);
-    //shootFollower.set(power);
+    shootMaster.set(-power);
+    shootFollower.set(power);
   }
   public void configMotorController(){
     //random value
