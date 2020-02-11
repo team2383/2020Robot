@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
+
 public class OI {
 
     Gamepad driver = new Gamepad(0);
@@ -100,7 +101,9 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        Procedure shooter = () -> {HAL.shoot.out();};
+        double shooterPower = SmartDashboard.getNumber("Shooter Power", -.7);
+        Procedure shooter = () -> {HAL.shoot.out(shooterPower);};
+        //Procedure shooter = () -> {HAL.shoot.out();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);
@@ -116,7 +119,7 @@ public class OI {
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
         
         //LIMELIGHT TURRET
-        Procedure limelightT = () -> {HAL.turret.limeT(1);};
+        Procedure limelightT = () -> {HAL.turret.limeT(6);};
         TC withinrange = () ->{return HAL.hood.isangled();};
         TC isTarget = () -> {return !(HAL.limelight.hasTargets());};
         Procedure limeoffT = () -> {HAL.turret.off();};
@@ -209,7 +212,7 @@ public class OI {
         // }
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
-            Robot.mill.addGrain(GlimelightH); 
+         //   Robot.mill.addGrain(GlimelightH); 
         }
         
         // if((HAL.hood.isangled())){
