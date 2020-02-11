@@ -13,6 +13,20 @@ public class Telescope{
   public Telescope(){
 
   }
+  public static enum TelescopePreset{
+    //random values
+    TOP(0),
+    BOTTOM(0);
+
+    public double telescopePosition;
+    private TelescopePreset(double telescopePosition){
+      this.telescopePosition = telescopePosition;
+    }
+  }
+  public void setPosition(TelescopePreset position){
+    TelescopeDeploy.set(ControlMode.MotionMagic, position.telescopePosition);
+
+  }
 
   public void TelescopeGo(){
     TelescopeDeploy.set(ControlMode.PercentOutput, 0.5);

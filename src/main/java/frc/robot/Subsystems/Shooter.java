@@ -29,6 +29,7 @@ public class Shooter{
     //shootFollower.set(power);
   }
   public void configMotorController(){
+    //random value
     shootMaster.config_kP(0, 0);
     shootMaster.config_kI(0,0);
     shootMaster.config_kD(0,0);
