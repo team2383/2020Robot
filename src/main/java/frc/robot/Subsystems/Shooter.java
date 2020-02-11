@@ -19,7 +19,7 @@ public class Shooter{
   // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
 //uncomment
   public Shooter(){
-    configMotorController();
+    //configMotorController();
     shootFollower.follow(shootMaster);
   }
   public void out(double power){
