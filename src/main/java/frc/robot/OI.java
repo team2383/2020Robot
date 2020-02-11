@@ -37,16 +37,16 @@ public class OI {
 
     // TURRET
     //--old turret
-    Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
+   // Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
     //Dylan's race car drive he wanted to try
     //Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
-    //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
+    Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
     //Procedure positionTurret = () -> {HAL.turret.angular();};
     TC hasTarget = () -> {return HAL.limelight.hasTargets();};
     //Grain turretReseter = new Grain(resetTurret,noTC,resetTurret);
     //Grain turretSetter = new Grain(positionTurret,hasTarget,positionTurret);
-    Grain t = new Grain(turretmanual,noTC,turretmanual);
-    Robot.mill.addGrain(t);
+   // Grain t = new Grain(turretmanual,noTC,turretmanual);
+   // Robot.mill.addGrain(t);
     //Robot.mill.addGrain(turretReseter);
     //Robot.mill.addGrain(turretSetter);
 
@@ -129,6 +129,12 @@ public class OI {
         TC releasedStart = () -> {return driver.getRawButton(8);};
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
+        //MOTIONMAGIC HOOD
+        Procedure hood2000 = () -> {HAL.hood.moveto(2000);};
+        //TC withinrangeY = () ->{return HAL.hood.off();};
+        TC releasedB = () -> {return !driver.getButtonStateB();};
+        Grain G2000 = new Grain (hood2000, releasedB, limeoffH);
+
         //SHIFTER
         Procedure shift = () -> {HAL.shifty.shift();};
         TC releasedYButton = () -> {return !driver2.getButtonStateA();};
@@ -166,11 +172,13 @@ public class OI {
         //button groups + initializing conditionals
 
         if(driver.getButtonStateA()){
-            Robot.mill.addGrain(shoot);
+           // Robot.mill.addGrain(shoot);
+           // Robot.mill.addGrain(e);
         }
         
         if(driver.getButtonStateB()){
-           Robot.mill.addGrain(triglow);
+         //  Robot.mill.addGrain(triglow);
+         Robot.mill.addGrain(G2000);
         }
 
         if(driver.getButtonStateX()){
@@ -226,6 +234,7 @@ public class OI {
         if(driver2.getButtonStateX()){
             Robot.mill.addGrain(buddy);
         }
+        
 
         /*if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
