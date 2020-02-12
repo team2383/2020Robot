@@ -222,9 +222,9 @@ public class OI {
             Robot.mill.addGrain(GlimelightT);
         }
 
-        if(driver2.getButtonStateA()){
-            Robot.mill.addGrain(shifting);
-        }
+        // if(driver2.getButtonStateA()){
+        //     Robot.mill.addGrain(shifting);
+        // }
         // if(driver.getRawButton(Gamepad.BUTTON_BACK)){
         //     Robot.mill.addGrain(wheelNow);
         // }  
