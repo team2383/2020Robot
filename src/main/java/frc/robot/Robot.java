@@ -48,6 +48,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
     SmartDashboard.putNumber("Distance from target in feet", HAL.limelight.getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterVelocity());
+    SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
   }
 
   public void teleopPeriodic(){

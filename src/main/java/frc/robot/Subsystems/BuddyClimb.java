@@ -9,29 +9,26 @@ public class BuddyClimb{
 
     int toggle=1;
     public boolean run=false;
-    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s2fchannel,RobotMap.s2rchannel);
-    DoubleSolenoid solenoid3 = new DoubleSolenoid(RobotMap.s3fchannel,RobotMap.s3rchannel);
+    DoubleSolenoid solenoid1 = new DoubleSolenoid(RobotMap.s1fchannel,RobotMap.s1rchannel);
+    
 
     public BuddyClimb()
     {
-        solenoid4.set(Value.kForward);
-        solenoid3.set(Value.kForward);
-    }
-
-    public void prepClimb(){
-        if (toggle>0){
-            solenoid4.set(Value.kForward);
-            solenoid3.set(Value.kForward);
-        }else{
-            solenoid4.set(Value.kReverse);
-            solenoid3.set(Value.kReverse);
-        }
-        run=true;
-        toggle*=-1;
+        solenoid1.set(Value.kForward);
     }
 
     public void stopClimb(){
+        if (toggle>0){
+            solenoid1.set(Value.kForward);
+        }else{
+            solenoid1.set(Value.kReverse);
+        }
         run=false;
+        toggle*=-1;
+    }
+
+    public void prepClimb(){
+        run=true;
     }
 
 }

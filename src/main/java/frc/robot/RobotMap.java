@@ -26,5 +26,5 @@ public class RobotMap{
     public static int s4rchannel = 7;
 
     public static int wheelPort = 00;
-    public static int telescopePort = 000; 
+    public static int telescopePort = 15; 
 }
