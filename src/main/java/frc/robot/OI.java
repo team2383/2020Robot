@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
     Gamepad driver = new Gamepad(0);
-    Gamepad driver2 = new Gamepad(1);
+    static Gamepad driver2 = new Gamepad(1);
 
 
     public OI(){
@@ -35,7 +35,8 @@ public class OI {
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
-
+    // Procedure telescopeu = () -> {HAL.telescope.TelescopeGo(driver2.getLeftTrigger());};
+    // Procedure telestop = () -> {HAL.telescope.off();};
     // TURRET
     //--old turret
    // Procedure turretmanual = () -> {HAL.turret.move((driver.getLeftTrigger())-driver.getRightTrigger());};
@@ -54,7 +55,8 @@ public class OI {
     // TURRET VISION
     Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};
     Grain GzeroTurret = new Grain (zeroTurret, noTC, zeroTurret);
-    Robot.mill.addGrain(GzeroTurret);
+    // Robot.mill.addGrain(GzeroTurret);
+    // Grain Gteleu = new Grain (telescopeu, noTC, telestop);
     }
 
     // HOOD
@@ -102,8 +104,8 @@ public class OI {
 
         // SHOOTER
         double shooterPower = SmartDashboard.getNumber("Shooter Power", -1.0);
-        Procedure shooter = () -> {HAL.shoot.out(shooterPower);};
-        //Procedure shooter = () -> {HAL.shoot.out();};
+        // Procedure shooter = () -> {HAL.shoot.out(shooterPower);};
+        Procedure shooter = () -> {HAL.shoot.Run();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);
@@ -165,7 +167,7 @@ public class OI {
 
 
         //TELESCOPE
-        Procedure telego = () -> {HAL.telescope.TelescopeGo();};
+        Procedure telego = () -> {HAL.telescope.TelescopeGo(0.7);};
         TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
         Procedure telestop = () -> {HAL.telescope.off();
         };

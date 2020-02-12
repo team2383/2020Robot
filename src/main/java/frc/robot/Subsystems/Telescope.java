@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.RobotMap;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -30,22 +31,28 @@ public class Telescope{
     }
   }
   public void setPosition(TelescopePreset position){
-    //TelescopeDeploy.set(ControlMode.MotionMagic, position.telescopePosition);
     //TelescopeDeploy.
   }
 
-  public void TelescopeGo(){
-    TelescopeDeploy.set(0.75);
+  public void TelescopeGo(double stick){
+    if (teleEncoder.getPosition() < 5.5){
+    TelescopeDeploy.set(stick);}
+    else TelescopeDeploy.set(0);
   }
   public void off(){
     TelescopeDeploy.set(0);
   }
+
 
   //@Override
   public double getPosition() {
     // SmartDashboard.putNumber("ep", teleEncoder.getPosition());
     return teleEncoder.getPosition();
   }
+  // @Override
+  // public void telePeriodic(){
+  //   TelescopeDeploy.setPeriodicFrameRate(PeriodicFrame.kStatus2,10);
+  // }
 
-
+  
 }
