@@ -129,11 +129,11 @@ public class OI {
         TC releasedStart = () -> {return driver.getRawButton(8);};
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
-        //SHIFTER
+        //ARM
         Procedure extend = () -> {HAL.arm.activate();};
-        TC releasedAButton = () -> {return !driver2.getButtonStateA();};
+        TC releasedB2 = () -> {return !driver2.getButtonStateB();};
         Procedure cease = () -> {HAL.arm.prepClimb();};
-        Grain shifting = new Grain (extend, releasedAButton, cease);
+        Grain armed = new Grain (extend, releasedB2, cease);
 
         //WHEELIE
         // Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
@@ -150,9 +150,9 @@ public class OI {
 
         //BUDDYCLIMB
         Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
-        TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
+        TC releasedX2 = () -> {return (HAL.buddyClimb.run);};
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
-        Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
+        Grain buddy = new Grain (buddyclimb, releasedX2, buddycease); 
 
 
         //TELESCOPE
@@ -229,6 +229,10 @@ public class OI {
 
         if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
+        }
+
+        if(driver2.getButtonStateB()){
+            Robot.mill.addGrain(armed);
         }
     }
 }
