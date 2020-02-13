@@ -15,7 +15,7 @@ public class Feeder{
   {}
   
   public void feed(){
-    feeder.set(ControlMode.PercentOutput, -0.70);
+    feeder.set(ControlMode.PercentOutput, 1.0);
   }
 
   public void off(){
@@ -23,7 +23,7 @@ public class Feeder{
   }
 
   public void unfeed(){
-    feeder.set(ControlMode.PercentOutput, 0.70);
+    feeder.set(ControlMode.PercentOutput, -0.25);
   }
 
   public void interval_feed(double interval){

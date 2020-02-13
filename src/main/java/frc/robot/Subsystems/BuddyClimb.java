@@ -11,23 +11,24 @@ public class BuddyClimb{
     public boolean run=false;
     DoubleSolenoid solenoid1 = new DoubleSolenoid(RobotMap.s1fchannel,RobotMap.s1rchannel);
 
+
     public BuddyClimb()
     {
         solenoid1.set(Value.kForward);
     }
 
-    public void prepClimb(){
+    public void stopClimb(){
         if (toggle>0){
             solenoid1.set(Value.kForward);
         }else{
             solenoid1.set(Value.kReverse);
         }
-        run=true;
+        run=false;
         toggle*=-1;
     }
 
-    public void stopClimb(){
-        run=false;
+    public void prepClimb(){
+        run=true;
     }
 
 }

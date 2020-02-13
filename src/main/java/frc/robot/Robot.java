@@ -8,6 +8,8 @@ import frc.robot.HAL;
 import static frc.robot.Subsystems.Hood.hoodc;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.TimedRobot;
+//import frc.robot.OI.driver2;
+import frc.robot.ninjaLib.Gamepad;
 
 /**
  * The VM is configured to automatically run this class. If you change the name
@@ -47,7 +49,11 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
     SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
     SmartDashboard.putNumber("Distance from target in feet", HAL.limelight.getDistanceFromTarget());
-    SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterRpm());
+    SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterVelocity());
+    SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
+    //SmartDashboard.putNumber("LTPos", driver2.getLeftTrigger());
+    SmartDashboard.putNumber("Shooter RPM", HAL.shoot.getRPM());
+    SmartDashboard.putNumber("Differential", HAL.shoot.differential());
   }
 
   public void teleopPeriodic(){

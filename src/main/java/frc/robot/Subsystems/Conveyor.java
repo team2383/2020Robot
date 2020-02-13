@@ -23,7 +23,7 @@ public class Conveyor{
   }
 
   public void out(){
-    conveyor.set(ControlMode.PercentOutput, -0.80);
+    conveyor.set(ControlMode.PercentOutput, -0.50);
   }
 
   public void interval_conveyor(double interval){

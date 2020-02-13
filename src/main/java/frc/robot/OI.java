@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
     Gamepad driver = new Gamepad(0);
-    Gamepad driver2 = new Gamepad(1);
+    public Gamepad driver2 = new Gamepad(1);
 
 
     public OI(){
@@ -100,7 +100,7 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        Procedure shooter = () -> {HAL.shoot.out();};
+        Procedure shooter = () -> {HAL.shoot.out(1);};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);
@@ -156,7 +156,7 @@ public class OI {
 
 
         //TELESCOPE
-        Procedure telego = () -> {HAL.telescope.TelescopeGo();};
+        Procedure telego = () -> {HAL.telescope.TelescopeGo(1);};
         TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
         Procedure telestop = () -> {HAL.telescope.off();
         };

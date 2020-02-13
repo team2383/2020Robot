@@ -10,8 +10,8 @@ public class RobotMap{
     public static int conveyPort = 7;
 
     public static int triggerPort = 9;
-    public static int shooterMasterPort = 12;
-    public static int shooterFollowerPort = 11;
+    public static int shooterMasterPort = 11;
+    public static int shooterFollowerPort = 12;
 
     public static int hoodPort = 10;
     public static int turretPort = 13;
@@ -26,5 +26,5 @@ public class RobotMap{
     public static int s4rchannel = 7;
 
     public static int wheelPort = 00;
-    public static int telescopePort = 000; 
+    public static int telescopePort = 15; 
 }

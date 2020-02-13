@@ -6,19 +6,70 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.HAL;
 import frc.robot.RobotMap;
 
+import com.revrobotics.CANAnalog.AnalogMode;
+
 
 public class Shooter{
 
   WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
   WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
 
-  public void out(){
-    shootMaster.set(-.60);
-    shootFollower.set(-.60);
-  }
+  
 
-  public double getShooterRpm(){
-    return shootMaster.get();
+  //CANEncoder shooterz = new CANEncoder(shootMaster);
+  // public CANPIDController shootController = new CANPIDController(shootMaster);
+  // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
+//uncomment
+  public Shooter(){
+    configMotorController();
+    shootFollower.follow(shootMaster);
+  }
+  public void out(double power){
+    configMotorController();
+    shootFollower.follow(shootMaster);
+    shootMaster.set(-power);
+    //shootFollower.set(power);
+  }
+  public double desiredRPM = 4000;
+  public void Run() {
+    configMotorController();
+    shootFollower.follow(shootMaster);
+    double velocity = desiredRPM * 2048 / 600;
+    shootMaster.set(ControlMode.Velocity, velocity);
+
+
+  }
+  public double differential(){
+    double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
+    return desiredRPM - currentRPM;
+  }
+  public static double nativeToRPM(double nativeUnits, double countsPerRevolution) {
+    return nativeUnits * 600 / 2048;
+  }
+  public double getRPM() {
+    double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
+    return currentRPM;
+  }
+  public void configMotorController(){
+    //random value
+    shootMaster.config_kP(0, .1);
+    shootMaster.config_kI(0,.00014);
+    shootMaster.config_kD(0,0);
+    shootMaster.configClosedloopRamp(.25);
+
+    shootMaster.config_IntegralZone(0,0);
+    shootMaster.config_kF(0,0);
+
+    int smartMotionSlot = 0;
+    shootMaster.configMotionCruiseVelocity(200, smartMotionSlot);
+    shootMaster.configMotionAcceleration(200, smartMotionSlot);
+
+    shootFollower.setInverted(true);
+    
+    }
+
+  public double getShooterVelocity(){
+    return shootMaster.getSelectedSensorVelocity();
   }
 
   public void stop(){
