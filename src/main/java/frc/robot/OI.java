@@ -130,10 +130,10 @@ public class OI {
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
         //SHIFTER
-        Procedure shift = () -> {HAL.shifty.shift();};
-        TC releasedYButton = () -> {return !driver2.getButtonStateA();};
-        Procedure stopShift = () -> {HAL.shifty.unShift();};
-        Grain shifting = new Grain (shift, releasedYButton, stopShift);
+       // Procedure shift = () -> {HAL.shifty.shift();};
+        //TC releasedYButton = () -> {return !driver2.getButtonStateA();};
+        //Procedure stopShift = () -> {HAL.shifty.unShift();};
+        //Grain shifting = new Grain (shift, releasedYButton, stopShift);
 
         //WHEELIE
         // Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
@@ -143,10 +143,10 @@ public class OI {
 
 
         //SELFCLIMB
-       /* Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
+       Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
         TC releasedRightBumper2 = () -> {return !driver2.getButtonStateY();};
         Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
-        Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);*/
+        Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
 
         //BUDDYCLIMB
         Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
@@ -212,9 +212,9 @@ public class OI {
             Robot.mill.addGrain(GlimelightT);
         }
 
-        if(driver2.getButtonStateA()){
+        /*if(driver2.getButtonStateA()){
             Robot.mill.addGrain(shifting);
-        }
+        }*/
         // if(driver.getRawButton(Gamepad.BUTTON_BACK)){
         //     Robot.mill.addGrain(wheelNow);
         // }  
@@ -227,8 +227,8 @@ public class OI {
             Robot.mill.addGrain(buddy);
         }
 
-        /*if(driver2.getButtonStateY()){
+        if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
-        }*/
+        }
     }
 }

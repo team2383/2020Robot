@@ -6,9 +6,9 @@ import frc.robot.RobotMap;
 
 
 public class SelfClimb{
-    /*
+    
 
-    DoubleSolenoid solenoid3 = new DoubleSolenoid(RobotMap.s3fchannel, RobotMap.s3rchannel);
+    DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s4fchannel, RobotMap.s4rchannel);
 
 
     public SelfClimb(){
@@ -17,12 +17,12 @@ public class SelfClimb{
 
     public void prepClimb(){
 
-        solenoid3.set(Value.kForward);
+        solenoid4.set(Value.kForward);
 
     }
 
     public void stopClimb(){
-        solenoid3.set(Value.kReverse);
-    }*/
+        solenoid4.set(Value.kReverse);
+    }
 
 }

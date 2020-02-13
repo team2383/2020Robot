@@ -1,7 +1,7 @@
 package frc.robot.Subsystems;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.HAL;
 import frc.robot.RobotMap;
@@ -9,8 +9,8 @@ import frc.robot.RobotMap;
 
 public class Shooter{
 
-  CANSparkMax shootMaster = new CANSparkMax(RobotMap.shooterMasterPort, MotorType.kBrushless);
-  CANSparkMax shootFollower = new CANSparkMax(RobotMap.shooterFollowerPort, MotorType.kBrushless);
+  WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
+  WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
 
   public void out(){
     shootMaster.set(-.60);
