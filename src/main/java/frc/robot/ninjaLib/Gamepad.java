@@ -9,6 +9,7 @@ package frc.robot.ninjaLib;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * Contains functions for use with the Logitech F310 controller.

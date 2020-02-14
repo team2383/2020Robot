@@ -131,10 +131,10 @@ public class OI {
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
         //SHIFTER
-       // Procedure shift = () -> {HAL.shifty.shift();};
-        //TC releasedYButton = () -> {return !driver2.getButtonStateA();};
-        //Procedure stopShift = () -> {HAL.shifty.unShift();};
-        //Grain shifting = new Grain (shift, releasedYButton, stopShift);
+        Procedure armed = () -> {HAL.arm.activate();};
+        TC releasedB2 = () -> {return !driver2.getButtonStateB();};
+        Procedure disarm = () -> {HAL.arm.prepClimb();};
+        Grain arming = new Grain (armed, releasedB2, disarm);
 
         //WHEELIE
         // Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
@@ -236,6 +236,10 @@ public class OI {
 
         if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
+        }
+
+        if(driver2.getButtonStateB()){
+            Robot.mill.addGrain(arming);
         }
     
     }
