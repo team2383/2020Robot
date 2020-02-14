@@ -11,6 +11,7 @@ import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
+import frc.robot.Subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -129,11 +130,11 @@ public class OI {
         TC releasedStart = () -> {return driver.getRawButton(8);};
         Grain GlimelightH = new Grain (limelightH, releasedStart, limeoffH);
 
-        //ARM
-        Procedure extend = () -> {HAL.arm.activate();};
-        TC releasedB2 = () -> {return !driver2.getButtonStateB();};
-        Procedure cease = () -> {HAL.arm.prepClimb();};
-        Grain armed = new Grain (extend, releasedB2, cease);
+        //SHIFTER
+       // Procedure shift = () -> {HAL.shifty.shift();};
+        //TC releasedYButton = () -> {return !driver2.getButtonStateA();};
+        //Procedure stopShift = () -> {HAL.shifty.unShift();};
+        //Grain shifting = new Grain (shift, releasedYButton, stopShift);
 
         //WHEELIE
         // Procedure wheelon = () -> {HAL.wheelofFortune.wheelie();};
@@ -144,23 +145,25 @@ public class OI {
 
         //SELFCLIMB
        Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
-        TC releasedY2 = () -> {return !driver2.getButtonStateY();};
+        TC releasedRightBumper2 = () -> {return !driver2.getButtonStateY();};
         Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
-        Grain self = new Grain (selfclimb, releasedY2, selfcease);
+        Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
 
         //BUDDYCLIMB
         Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
-        TC releasedX2 = () -> {return (HAL.buddyClimb.run);};
+        TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
-        Grain buddy = new Grain (buddyclimb, releasedX2, buddycease); 
+        Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
 
 
         //TELESCOPE
-        Procedure telego = () -> {HAL.telescope.TelescopeGo(1);};
-        TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
-        Procedure telestop = () -> {HAL.telescope.off();
-        };
-        Grain teleNow = new Grain (telego, releasedA2, telestop);
+        Procedure telego = () -> {HAL.telescope.TelescopeGo(3, 0.9);};
+        TC releasedDUP2 = () -> {return !(driver2.getDPadUp());};
+        TC releasedDDOWN2 = () -> {return !(driver2.getDPadDown());};
+        Procedure telestop = () -> {HAL.telescope.off();};
+        Procedure teledown = () -> {HAL.telescope.TelescopeGo(3, -0.9);};
+        Grain teleNow = new Grain (telego, releasedDUP2, telestop);
+        Grain Gteledown = new Grain(teledown, releasedDDOWN2, telestop);
 
 
         //button groups + initializing conditionals
@@ -219,8 +222,12 @@ public class OI {
         //     Robot.mill.addGrain(wheelNow);
         // }  
 
-        if(driver2.getButtonStateA()){
+        if(driver2.getDPadUp()){
             Robot.mill.addGrain(teleNow);
+        } 
+
+        if(driver2.getDPadDown()){
+            Robot.mill.addGrain(Gteledown);
         } 
         
         if(driver2.getButtonStateX()){
@@ -230,9 +237,6 @@ public class OI {
         if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
         }
-
-        if(driver2.getButtonStateB()){
-            Robot.mill.addGrain(armed);
-        }
+    
     }
 }
