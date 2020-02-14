@@ -26,22 +26,21 @@ public class Shooter{
   }
   public void out(double power){
     configMotorController();
-    shootFollower.follow(shootMaster);
+    // shootFollower.follow(shootMaster);
     shootMaster.set(-power);
     //shootFollower.set(power);
   }
-  public double desiredRPM = 4000;
+  public double desiredRPM = 6000;
   public void Run() {
     configMotorController();
-    shootFollower.follow(shootMaster);
-    double velocity = desiredRPM * 2048 / 600;
+    double velocity = desiredRPM * 2048 / 600 / (48/38);
     shootMaster.set(ControlMode.Velocity, velocity);
 
 
   }
   public double differential(){
     double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
-    return desiredRPM - currentRPM;
+    return desiredRPM + currentRPM;
   }
   public static double nativeToRPM(double nativeUnits, double countsPerRevolution) {
     return nativeUnits * 600 / 2048;
@@ -52,19 +51,28 @@ public class Shooter{
   }
   public void configMotorController(){
     //random value
-    shootMaster.config_kP(0, .1);
-    shootMaster.config_kI(0,.00014);
-    shootMaster.config_kD(0,0);
-    shootMaster.configClosedloopRamp(.25);
+    shootMaster.config_kP(0, 1);
+    //0.0005
+    shootMaster.config_kI(0,0.75);
+    shootMaster.config_kD(0,1);
+    //.000069
 
-    shootMaster.config_IntegralZone(0,0);
-    shootMaster.config_kF(0,0);
+    //shootMaster.config_kF(0,0.0472);
+    shootMaster.config_IntegralZone(0, 9);
+
+    shootMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+    shootFollower.follow(shootMaster);
+    // shootMaster.configClosedloopRamp(.25);
 
     int smartMotionSlot = 0;
-    shootMaster.configMotionCruiseVelocity(200, smartMotionSlot);
-    shootMaster.configMotionAcceleration(200, smartMotionSlot);
+    shootMaster.configMotionCruiseVelocity(100, smartMotionSlot);
+    shootMaster.configMotionAcceleration(100, smartMotionSlot);
 
-    shootFollower.setInverted(true);
+
+    shootMaster.setInverted(true);
+    // shootFollower.setInverted(false);
+    // shootMaster.setSensorPhase(false);
     
     }
 
