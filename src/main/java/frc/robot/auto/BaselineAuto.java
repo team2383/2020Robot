@@ -18,7 +18,7 @@ public class BaselineAuto extends CommandGroup {
 
 	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
 			0.02, 	//delta time
-			1.0,		//max velocity in ft/s for the motion profile
+			2.0,		//max velocity in ft/s for the motion profile
 			0.8,		//max acceleration in ft/s/s for the motion profile
 			500);	//max jerk in ft/s/s/s for the motion profile
 

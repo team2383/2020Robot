@@ -30,35 +30,44 @@ public class Shooter{
     shootMaster.set(-power);
     //shootFollower.set(power);
   }
-  public double desiredRPM = 6000;
+  public double desiredRPM = 6000; //Max RPM is around 5800
+
   public void Run() {
     configMotorController();
-    double velocity = desiredRPM * 2048 / 600 / (48/38);
-    shootMaster.set(ControlMode.Velocity, velocity);
-
-
+    double velocity = desiredRPM * 2048.0 / 600.0 * (38.0/48.0);
+    shootMaster.set(ControlMode.Velocity, -velocity);
   }
+
+  public static double rpmToNative(double rpm, double countsPerRevolution){
+    return rpm * countsPerRevolution / 600.0;
+}
+
   public double differential(){
     double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
     return desiredRPM + currentRPM;
   }
   public static double nativeToRPM(double nativeUnits, double countsPerRevolution) {
-    return nativeUnits * 600 / 2048;
+    return nativeUnits * 600.0 / 2048;
   }
   public double getRPM() {
     double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
     return currentRPM;
   }
+
+  public double getPercentageOutput(){
+    return shootMaster.getMotorOutputPercent();
+  }
   public void configMotorController(){
     //random value
-    shootMaster.config_kP(0, 1);
+    //shootMaster.configFactoryDefault();
+    shootMaster.config_kP(0, 1); //2048
     //0.0005
-    shootMaster.config_kI(0,0.75);
-    shootMaster.config_kD(0,1);
+    shootMaster.config_kI(0,0.0);
+    shootMaster.config_kD(0,0.0);
     //.000069
 
     //shootMaster.config_kF(0,0.0472);
-    shootMaster.config_IntegralZone(0, 9);
+    //shootMaster.config_IntegralZone(0, 9);
 
     shootMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
@@ -66,12 +75,12 @@ public class Shooter{
     // shootMaster.configClosedloopRamp(.25);
 
     int smartMotionSlot = 0;
-    shootMaster.configMotionCruiseVelocity(100, smartMotionSlot);
-    shootMaster.configMotionAcceleration(100, smartMotionSlot);
+    //shootMaster.configMotionCruiseVelocity(100, smartMotionSlot);
+    //shootMaster.configMotionAcceleration(100, smartMotionSlot);
 
 
     shootMaster.setInverted(true);
-    // shootFollower.setInverted(false);
+   //shootFollower.setInverted(false);
     // shootMaster.setSensorPhase(false);
     
     }
