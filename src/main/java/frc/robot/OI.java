@@ -230,7 +230,7 @@ public class OI {
             Robot.mill.addGrain(Gteledown);
         } 
         
-        if(driver2.getButtonStateX()){
+        if(driver2.getRawButtonPressed(driver2.BUTTON_X)){
             Robot.mill.addGrain(buddy);
         }
 
@@ -238,7 +238,7 @@ public class OI {
             Robot.mill.addGrain(self);
         }
 
-        if(driver2.getButtonStateB()){
+        if(driver2.getRawButtonPressed(driver2.BUTTON_B)){
             Robot.mill.addGrain(arming);
         }
     
