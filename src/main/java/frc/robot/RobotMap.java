@@ -27,4 +27,32 @@ public class RobotMap{
 
     public static int wheelPort = 00;
     public static int telescopePort = 15; 
+
+    
+  // CONSTANTS
+  public static double kDrive_Motion_P = 1.4;				// %/ft
+  public static double kDrive_Motion_D = 0.0;	
+  public static double kDrive_Motion_A = 0.0;	
+  public static double kDrive_Motion_V = 0.058;
+
+  public static double kDrive_Motion_trackwidth = 2.16;
+  public static double kDrive_Motion_turnP = 0.0175;
+  
+  public static double kDrive_Motion_Tolerance = 0.05;// ft
+  public static double kDrive_WheelDiameterInch = 6.25;
+  public static double getWheelCircumference() { return (kDrive_WheelDiameterInch*Math.PI)/12.0; };
+
+  public static int kDrive_ContinuousCurrentLimit = 60;
+	public static int kDrive_PeakCurrentLimit = 80;
+  public static int kDrive_PeakCurrentTime_ms = 100;
+  
+  public static double kDrive_peakOutput = 0.8;
+  public static double kDrive_Motion_talonP = 0.7;			// %/ft
+	public static double kDrive_Motion_talonI = 0.002;			//natives
+  public static double kDrive_Motion_talonD = 15;
+  
+  	//talon V and motio V are shared
+	public static double kDrive_Motion_Velocity = 6.0;		// for turn
+	public static double kDrive_Motion_Acceleration = 13.0;
+
 }

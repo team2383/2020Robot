@@ -59,5 +59,11 @@ public class Drivetrain{
   public void resetEncoders() {
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
+  }
+  public double getLeftVelocity() {
+		return leftMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
 	}
+	public double getRightVelocity() {
+		return rightMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
+  }
 }

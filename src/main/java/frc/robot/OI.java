@@ -28,7 +28,7 @@ public class OI {
 
     // DRIVE
     //--old drive
-    Procedure drive = () ->{HAL.drivetrain.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
     //Dylan's race car drive he wanted to try
     //Procedure drive = () ->{HAL.drivetrain.arcade(driver.getLeftX()*.6,driver.getRightTrigger()-driver.getLeftTrigger()*.6);};
 

@@ -66,7 +66,7 @@ public class Pathfinding {
 		leftFollower.reset();
         rightFollower.reset();
         
-        HAL.drivetrain.resetEncoders();
+        HAL.drive.resetEncoders();
         HAL.navX.zeroYaw();
         
         
@@ -114,7 +114,7 @@ public class Pathfinding {
 	
 			//forwards
 		
-		HAL.drivetrain.tank(leftOutput - turn, rightOutput + turn);
+		HAL.drive.tank(leftOutput - turn, rightOutput + turn);
 		
 			//backwards
 			/*.tank is forwards, so (fwd_left, fwd_right)
