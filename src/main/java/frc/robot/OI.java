@@ -11,6 +11,7 @@ import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
+import frc.robot.Subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -156,11 +157,13 @@ public class OI {
 
 
         //TELESCOPE
-        Procedure telego = () -> {HAL.telescope.TelescopeGo(1);};
-        TC releasedA2 = () -> {return !(driver2.getButtonStateA());};
-        Procedure telestop = () -> {HAL.telescope.off();
-        };
-        Grain teleNow = new Grain (telego, releasedA2, telestop);
+        Procedure telego = () -> {HAL.telescope.TelescopeGo(3, 0.9);};
+        TC releasedDUP2 = () -> {return !(driver2.getDPadUp());};
+        TC releasedDDOWN2 = () -> {return !(driver2.getDPadDown());};
+        Procedure telestop = () -> {HAL.telescope.off();};
+        Procedure teledown = () -> {HAL.telescope.TelescopeGo(3, -0.9);};
+        Grain teleNow = new Grain (telego, releasedDUP2, telestop);
+        Grain Gteledown = new Grain(teledown, releasedDDOWN2, telestop);
 
 
         //button groups + initializing conditionals
@@ -219,8 +222,12 @@ public class OI {
         //     Robot.mill.addGrain(wheelNow);
         // }  
 
-        if(driver2.getButtonStateA()){
+        if(driver2.getDPadUp()){
             Robot.mill.addGrain(teleNow);
+        } 
+
+        if(driver2.getDPadDown()){
+            Robot.mill.addGrain(Gteledown);
         } 
         
         if(driver2.getButtonStateX()){
@@ -230,5 +237,6 @@ public class OI {
         if(driver2.getButtonStateY()){
             Robot.mill.addGrain(self);
         }
+    
     }
 }
