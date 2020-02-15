@@ -6,26 +6,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.HAL;
 import frc.robot.RobotMap;
 
-import com.revrobotics.CANAnalog.AnalogMode;
-
 
 public class Shooter{
 
   WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
   WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
 
-  
-
-  //CANEncoder shooterz = new CANEncoder(shootMaster);
-  // public CANPIDController shootController = new CANPIDController(shootMaster);
-  // public CANPIDController shootControllerFollower = new CANPIDController(shootFollower);
-//uncomment
   public Shooter(){
-    configMotorController();
+    //configMotorController(output);
     shootFollower.follow(shootMaster);
   }
   public void out(double power){
-    configMotorController();
+    //configMotorController();
     // shootFollower.follow(shootMaster);
     shootMaster.set(-power);
     //shootFollower.set(power);
@@ -33,8 +25,8 @@ public class Shooter{
   public double desiredRPM = 6000; //Max RPM is around 5800
 
   public void Run() {
-    configMotorController();
-    double velocity = desiredRPM * 2048.0 / 600.0 * (38.0/48.0);
+    //configMotorController();
+    double velocity = desiredRPM * 2048.0 / 600.0 * (38.0/48.0); //was 2048
     shootMaster.set(ControlMode.Velocity, -velocity);
   }
 
@@ -57,29 +49,32 @@ public class Shooter{
   public double getPercentageOutput(){
     return shootMaster.getMotorOutputPercent();
   }
-  public void configMotorController(){
-    //random value
-    //shootMaster.configFactoryDefault();
-    shootMaster.config_kP(0, 1); //2048
-    //0.0005
-    shootMaster.config_kI(0,0.0);
-    shootMaster.config_kD(0,0.0);
-    //.000069
+public double getClosedLoopError(){
+  return shootMaster.getClosedLoopError();
+}
 
-    //shootMaster.config_kF(0,0.0472);
+  public void configMotorController(double nativeoutput){
+    double maxvel = 21000.0;
+    double currentvel = shootMaster.getSelectedSensorVelocity();
+    double error = ((maxvel*nativeoutput) - currentvel);
+    double clerror = shootMaster.getClosedLoopError();
+    shootMaster.config_kP(0, 1/(Math.pow(clerror, 2)));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+  //  shootMaster.config_kI(0,0.0);
+    shootMaster.config_kD(0,0.0);
+ //   shootMaster.config_kF(0, (nativeoutput * 1023)/maxvel);
     //shootMaster.config_IntegralZone(0, 9);
 
     shootMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    shootFollower.follow(shootMaster);
+    // shootFollower.follow(shootMaster);
     // shootMaster.configClosedloopRamp(.25);
 
-    int smartMotionSlot = 0;
+  //  int smartMotionSlot = 0;
     //shootMaster.configMotionCruiseVelocity(100, smartMotionSlot);
     //shootMaster.configMotionAcceleration(100, smartMotionSlot);
 
 
-    shootMaster.setInverted(true);
+    //shootMaster.setInverted(true);
    //shootFollower.setInverted(false);
     // shootMaster.setSensorPhase(false);
     
@@ -99,8 +94,9 @@ public class Shooter{
   }  
 
   public void shoot(double output){
+    configMotorController(output);
     shootMaster.set(output);
-    shootFollower.set(output);
+    shootFollower.set(-output);
   }
 
   public void LimeS(){

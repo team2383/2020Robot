@@ -57,6 +57,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Shooter RPM", HAL.shoot.getRPM());
     SmartDashboard.putNumber("Differential", HAL.shoot.differential());
     SmartDashboard.putNumber("Shooter % Output", HAL.shoot.getPercentageOutput());
+    SmartDashboard.putNumber("CL Error", HAL.shoot.getClosedLoopError());
   }
 @Override
  public void disabledInit() {
