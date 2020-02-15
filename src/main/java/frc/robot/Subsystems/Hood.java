@@ -19,11 +19,14 @@ public class Hood {
     }
 
     public void slowMoveUP (){
-        hoodc.set(ControlMode.PercentOutput, 0.15);
+        //if(this.getHoodPosition()<1000){
+        if(this.getHoodPosition()<3500){
+            hoodc.set(ControlMode.PercentOutput, -0.15);
+        }
     }
 
     public void slowMoveDown (){
-        hoodc.set(ControlMode.PercentOutput, -0.15);
+        hoodc.set(ControlMode.PercentOutput, 0.15);
     }
 
     public void moveto(double pos){
