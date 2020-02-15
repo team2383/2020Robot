@@ -101,7 +101,7 @@ public class OI {
         Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
 
         // SHOOTER
-        Procedure shooter = () -> {HAL.shoot.shoot(0.85);};
+        Procedure shooter = () -> {HAL.shoot.Run();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA,stop);

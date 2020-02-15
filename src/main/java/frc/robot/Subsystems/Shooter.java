@@ -8,6 +8,12 @@ import frc.robot.RobotMap;
 
 
 public class Shooter{
+  public double currentRPM=0;
+  public double pastRPM=0;
+  public double maxRPM=0;
+  public double minRPM;//=maxRPM;
+  public boolean minSet=false;
+  public int timesRun=0;
 
   WPI_TalonFX shootMaster = new WPI_TalonFX(RobotMap.shooterMasterPort);
   WPI_TalonFX shootFollower = new WPI_TalonFX(RobotMap.shooterFollowerPort);
@@ -15,6 +21,10 @@ public class Shooter{
   public Shooter(){
     //configMotorController(output);
     shootFollower.follow(shootMaster);
+    shootMaster.setInverted(true);
+    shootFollower.setInverted(false);
+    shootMaster.setSensorPhase(false);
+    configMotorController();
   }
   public void out(double power){
     //configMotorController();
@@ -22,10 +32,10 @@ public class Shooter{
     shootMaster.set(-power);
     //shootFollower.set(power);
   }
-  public double desiredRPM = 6000; //Max RPM is around 5800
+  public double desiredRPM = 5000; //Max RPM is around 5800
 
   public void Run() {
-    //configMotorController();
+    
     double velocity = desiredRPM * 2048.0 / 600.0 * (38.0/48.0); //was 2048
     shootMaster.set(ControlMode.Velocity, -velocity);
   }
@@ -53,20 +63,23 @@ public double getClosedLoopError(){
   return shootMaster.getClosedLoopError();
 }
 
-  public void configMotorController(double nativeoutput){
-    double maxvel = 21000.0;
-    double currentvel = shootMaster.getSelectedSensorVelocity();
-    double error = ((maxvel*nativeoutput) - currentvel);
-    double clerror = shootMaster.getClosedLoopError();
-    shootMaster.config_kP(0, 1/(Math.pow(clerror, 2)));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-  //  shootMaster.config_kI(0,0.0);
-    shootMaster.config_kD(0,0.0);
- //   shootMaster.config_kF(0, (nativeoutput * 1023)/maxvel);
+
+  public void configMotorController(){ //double nativeoutput
+    //desired RPM : 5040
+    // double maxvel = 21000.0;
+    // double currentvel = shootMaster.getSelectedSensorVelocity();
+    // double error = ((maxvel*nativeoutput) - currentvel);
+    // double clerror = shootMaster.getClosedLoopError();
+    //shootMaster.configClosedloopRamp(0.25);
+    shootMaster.config_kP(0, 0.1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    shootMaster.config_kI(0, 0.0);
+    shootMaster.config_kD(0, 0.0);
+    shootMaster.config_kF(0, 0.065); //0.0434775
     //shootMaster.config_IntegralZone(0, 9);
 
     shootMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    // shootFollower.follow(shootMaster);
+    
     // shootMaster.configClosedloopRamp(.25);
 
   //  int smartMotionSlot = 0;
@@ -74,9 +87,7 @@ public double getClosedLoopError(){
     //shootMaster.configMotionAcceleration(100, smartMotionSlot);
 
 
-    //shootMaster.setInverted(true);
-   //shootFollower.setInverted(false);
-    // shootMaster.setSensorPhase(false);
+    
     
     }
 
@@ -87,6 +98,10 @@ public double getClosedLoopError(){
   public void stop(){
     shootMaster.set(0);
     shootFollower.set(0);
+    System.out.println("MAX RPM: "+maxRPM);
+    System.out.println("MIN RPM: " + minRPM);
+    System.out.println("Min was set: "+minSet);
+    System.out.println("Times run: "+timesRun);
   }
   public void in(){
     shootFollower.set(0.75);
@@ -94,9 +109,33 @@ public double getClosedLoopError(){
   }  
 
   public void shoot(double output){
-    configMotorController(output);
+    //configMotorController(output);
     shootMaster.set(output);
     shootFollower.set(-output);
+  }
+
+  //desired RPM : 5040
+  public void shootInfoDrop(double output){
+    timesRun++;
+    currentRPM=this.getRPM();
+    System.out.println("CR "+currentRPM);
+    System.out.println("PR "+pastRPM);
+    if(currentRPM>maxRPM){
+      maxRPM=currentRPM;
+    } 
+    if((Math.abs(currentRPM-pastRPM)<50)&&(!minSet)){
+      minRPM=currentRPM;
+      minSet=true;
+    }
+    if((currentRPM<minRPM)&&minSet){
+      minRPM=currentRPM;
+    }
+    //System.out.println(this.getRPM());
+    shootMaster.set(output);
+    shootFollower.set(-output);
+    System.out.println("Speed difference: "+(currentRPM-pastRPM));
+    pastRPM=currentRPM;
+    
   }
 
   public void LimeS(){
