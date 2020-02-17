@@ -1,6 +1,6 @@
 package frc.robot.auto;
 
-import frc.robot.auto.FollowTrajectory2;
+import frc.robot.ninjaLib.*;
 import frc.robot.ninjaLib.PathLoader;
 
 import edu.wpi.first.wpilibj.command.Command;

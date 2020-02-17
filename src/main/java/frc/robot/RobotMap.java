@@ -30,12 +30,12 @@ public class RobotMap{
 
     
   // CONSTANTS
-  public static double kDrive_Motion_P = 1.4;				// %/ft
+  public static double kDrive_Motion_P = 0.5;				// %/ft
   public static double kDrive_Motion_D = 0.0;	
   public static double kDrive_Motion_A = 0.0;	
   public static double kDrive_Motion_V = 0.058;
 
-  public static double kDrive_Motion_trackwidth = 2.16;
+  public static double kDrive_Motion_trackwidth = 2.29;
   public static double kDrive_Motion_turnP = 0.0175;
   
   public static double kDrive_Motion_Tolerance = 0.05;// ft

@@ -28,8 +28,12 @@ public class Drivetrain{
   public void configMotorController(){
     leftMaster.setInverted(false);
     leftSlave.setInverted(false);
+    leftMaster.setSensorPhase(true);
+    leftSlave.setSensorPhase(true);
     rightMaster.setInverted(true);
     rightSlave.setInverted(true);
+    rightMaster.setSensorPhase(true);
+    rightSlave.setSensorPhase(true);
     leftMaster.setNeutralMode(NeutralMode.Brake);
     leftSlave.setNeutralMode(NeutralMode.Brake);
     rightMaster.setNeutralMode(NeutralMode.Brake);
@@ -44,11 +48,11 @@ public class Drivetrain{
   }
 
   public double getRightPosition() {
-    return leftSlave.getSelectedSensorPosition();
+    return rightMaster.getSelectedSensorPosition(0)/16384.0*RobotMap.getWheelCircumference();
   }
 
   public double getLeftPosition(){
-    return rightSlave.getSelectedSensorPosition();
+    return leftMaster.getSelectedSensorPosition(0)/16384.0*RobotMap.getWheelCircumference();
   }
   public double getLimeDegree(){
     return limeDegree;
@@ -58,12 +62,13 @@ public class Drivetrain{
   }
   public void resetEncoders() {
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
-		rightMaster.setSelectedSensorPosition(0, 0, 0);
+    rightMaster.setSelectedSensorPosition(0, 0, 0);
+    
   }
   public double getLeftVelocity() {
-		return leftMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
+		return leftMaster.getSelectedSensorVelocity(0); // 16384.0 * RobotMap.getWheelCircumference();
 	}
 	public double getRightVelocity() {
-		return rightMaster.getSelectedSensorVelocity(0) / 4096.0 * 10.0 * RobotMap.getWheelCircumference();
+		return rightMaster.getSelectedSensorVelocity(0); // 16384.0 * RobotMap.getWheelCircumference();
   }
 }

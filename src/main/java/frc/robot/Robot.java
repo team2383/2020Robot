@@ -58,6 +58,10 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Differential", HAL.shoot.differential());
     SmartDashboard.putNumber("Shooter % Output", HAL.shoot.getPercentageOutput());
     SmartDashboard.putNumber("CL Error", HAL.shoot.getClosedLoopError());
+    SmartDashboard.putNumber("Left Master Velocity", HAL.drive.getLeftVelocity());
+    SmartDashboard.putNumber("Left Position", HAL.drive.getLeftPosition());
+    SmartDashboard.putNumber("Right Velocity", HAL.drive.getRightVelocity());
+    SmartDashboard.putNumber("Right Position", HAL.drive.getRightPosition());
   }
 @Override
  public void disabledInit() {

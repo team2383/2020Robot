@@ -74,8 +74,8 @@ public class OI {
         TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain GUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
-        // Procedure interval_feed = () ->{HAL.feeder.interval_feed(0.5);};
-        // Grain GIntervalFeed = new Grain(interval_feed, releasedRBump, stopFeed);
+        Procedure interval_feed = () ->{HAL.feeder.interval_feed(0.5);};
+        Grain GIntervalFeed = new Grain(interval_feed, releasedRBump, stopFeed);
 
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor.pull();};
@@ -87,8 +87,8 @@ public class OI {
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
         
-        // Procedure interval_conveyor = () -> {HAL.conveyor.interval_conveyor(0.5);};
-        // Grain GIntervalConveyor = new Grain(interval_conveyor, releasedRBump2, off);
+        Procedure interval_conveyor = () -> {HAL.conveyor.interval_conveyor(0.5);};
+        Grain GIntervalConveyor = new Grain(interval_conveyor, releasedRBump2, off);
        
         //TRIGGER
         Procedure trigger = () -> {HAL.triggered.spinHigh();};
@@ -193,15 +193,15 @@ public class OI {
             Robot.mill.addGrain(conveyout);
         }
 
-        if(driver.getButtonStateRightBumper()){
-            Robot.mill.addGrain(GFeed); 
-            Robot.mill.addGrain(conveyin);
-        }
+         if(driver.getButtonStateRightBumper()){
+             Robot.mill.addGrain(GFeed); 
+             Robot.mill.addGrain(conveyin);
+         }
 
-        // if(driver.getButtonStateRightBumper()){
-        //     Robot.mill.addGrain(GIntervalFeed);
-        //     Robot.mill.addGrain(GIntervalConveyor);
-        // }
+       /* if(driver.getButtonStateRightBumper()){
+            Robot.mill.addGrain(GIntervalFeed);
+            Robot.mill.addGrain(GIntervalConveyor);
+        }*/
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             Robot.mill.addGrain(GlimelightH); 

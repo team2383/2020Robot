@@ -1,4 +1,4 @@
-package frc.robot.auto;
+package frc.robot.ninjaLib;
 
 import java.util.function.Supplier;
 
@@ -219,7 +219,7 @@ public class FollowTrajectory2 extends Command implements Sendable  {
 			//forwards
 			if (!backwards) {
 				leftOutput = leftFollower.calculate(drive.getLeftPosition());
-				rightOutput = rightFollower.calculate(drive.getRightPosition());
+				rightOutput = -rightFollower.calculate(drive.getRightPosition());
 			} else {
 				//backwards
 				leftOutput = leftFollower.calculate(-drive.getRightPosition()); //left = -right
