@@ -29,6 +29,13 @@ public class Feeder{
   public void spin(double speed){
     feeder.set(ControlMode.PercentOutput, speed);
   }
+  public void toggle(){
+    boolean moving = feeder.get() != 0;
+    if (!moving){
+    feed();
+    }
+    else off();
+  }
 
   public void interval_feed(double interval){
     double startTime = Timer.getMatchTime();

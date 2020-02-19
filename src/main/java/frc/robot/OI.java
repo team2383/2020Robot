@@ -89,7 +89,7 @@ public class OI {
         //Procedure interval_conveyor = () -> {HAL.conveyor.interval_conveyor(0.5);};
         //Grain GIntervalConveyor = new Grain(interval_conveyor, releasedRBump2, off);
        //CHAMBER(LAUNCH)
-       Procedure triggerX = () -> {HAL.triggered.spin(0.5);};
+       Procedure triggerX = () -> {HAL.triggered.spin(0.4);};
        Procedure trigOffX = () -> {HAL.triggered.off();};
        TC releasedX = () ->{return !(driver.getButtonStateX());};
         //TRIGGER
@@ -101,10 +101,10 @@ public class OI {
         // Procedure arctrig = () -> {HAL.triggered.spinOut();};
         // TC releasedXBump = () ->{return !driver.getButtonStateX();};
         // Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
-        Procedure conveyX = () -> {HAL.conveyor.spin(0.8);};
+        Procedure conveyX = () -> {HAL.conveyor.spin(0.7);};
         Procedure conveyoff = () -> {HAL.conveyor.off();};
 
-        Procedure feedX = () -> {HAL.feeder.spin(0.5);};
+        Procedure feedX = () -> {HAL.feeder.spin(0.3);};
         Procedure feedoffX = () -> {HAL.feeder.off();};   
 
         Grain GtriggerX = new Grain (triggerX, releasedX, trigOffX);
@@ -175,6 +175,13 @@ public class OI {
         Procedure teledown = () -> {HAL.telescope.TelescopeGo(3, -0.9);};
         Grain teleNow = new Grain (telego, releasedDUP2, telestop);
         Grain Gteledown = new Grain(teledown, releasedDDOWN2, telestop);
+
+        Procedure toggleconvey = () -> {HAL.conveyor.toggle();;};
+        Procedure togglefeed = () -> {HAL.feeder.toggle();;};
+        TC pressedB = () -> {return (operator.getButtonStateB());};
+        TC pressedY = () -> {return (operator.getButtonStateY());};
+        Grain Gtoggleconvey = new Grain(toggleconvey, pressedB, toggleconvey);
+        Grain Gtogglefeed = new Grain(togglefeed, pressedY, togglefeed);
 
         
 
@@ -288,6 +295,9 @@ public class OI {
         if(operator.getButtonStateB()){
             Robot.mill.addGrain(arming);
         }
-    
+
+        if(operator.getButtonStateA()){
+            Robot.mill.addGrain(arming);
+        }
     }
 }

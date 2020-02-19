@@ -29,7 +29,7 @@ public class Shooter{
   public void out(double power){
     shootMaster.set(-power);
   }
-  public double desiredRPM = 5000; //Max RPM is around 5800
+  public double desiredRPM = 2000; //Max RPM is around 5800
 
   public void Run() {
     double velocity = desiredRPM * 2048.0 / 600.0 * (48.0/38.0); //was 2048

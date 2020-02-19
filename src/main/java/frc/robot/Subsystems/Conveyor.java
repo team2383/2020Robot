@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
@@ -28,6 +29,14 @@ public class Conveyor{
 
   public void out(){
     conveyor.set(ControlMode.PercentOutput, -0.50);
+  }
+
+  public void toggle(){
+    boolean moving = conveyor.get() != 0;
+    if (!moving){
+    pull();
+    }
+    else off();
   }
 
   public void interval_conveyor(double interval){
