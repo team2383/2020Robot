@@ -31,12 +31,19 @@ public class Conveyor{
     conveyor.set(ControlMode.PercentOutput, -0.50);
   }
 
-  public void toggle(){
-    boolean moving = conveyor.get() != 0;
-    if (!moving){
-    pull();
+  public void toggle(boolean chillin){
+    // boolean moving = conveyor.get() != 0;
+    // if (!moving){
+    // pull();
+    // }
+    // else off();
+    
+    if(chillin = true){
+      pull();
     }
-    else off();
+    else if (chillin = false){
+      off();
+    }
   }
 
   public void interval_conveyor(double interval){
