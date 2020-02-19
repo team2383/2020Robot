@@ -34,12 +34,12 @@ public class Turret{
     turret.set(ControlMode.MotionMagic, pos);
   }
 
-  public void limeT(double pipeline){
+  public void limeTOn(double pipeline){
     double output;
+    HAL.limelight.setPipeline(pipeline);
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
     double divisor = 27;
-
     output = (xOffset/divisor); 
     
     if (HAL.limelight.hasTargets()){
@@ -58,6 +58,10 @@ public class Turret{
       //HAL.limelight.setPipeline(pipeline);
       turret.set(ControlMode.PercentOutput, stop);
     }
+  }
+
+  public void limeTOff(double pipeline){
+    HAL.limelight.setPipeline(pipeline);
   }
 
   public void off(){

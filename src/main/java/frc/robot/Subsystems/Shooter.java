@@ -27,16 +27,12 @@ public class Shooter{
     configMotorController();
   }
   public void out(double power){
-    //configMotorController();
-    // shootFollower.follow(shootMaster);
     shootMaster.set(-power);
-    //shootFollower.set(power);
   }
   public double desiredRPM = 5000; //Max RPM is around 5800
 
   public void Run() {
-    
-    double velocity = desiredRPM * 2048.0 / 600.0 * (38.0/48.0); //was 2048
+    double velocity = desiredRPM * 2048.0 / 600.0 * (48.0/38.0); //was 2048
     shootMaster.set(ControlMode.Velocity, -velocity);
   }
 
@@ -48,6 +44,7 @@ public class Shooter{
     double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
     return desiredRPM + currentRPM;
   }
+
   public static double nativeToRPM(double nativeUnits, double countsPerRevolution) {
     return nativeUnits * 600.0 / 2048;
   }
@@ -72,8 +69,8 @@ public double getClosedLoopError(){
     // double clerror = shootMaster.getClosedLoopError();
     shootMaster.configClosedloopRamp(0.25);
     shootMaster.config_kP(0, 0.071); //0.07 too low 0.0725 too high                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-    //shootMaster.config_kI(0, 0.0); //0.000115
-    //shootMaster.config_kD(0, 0.0); //0.0
+    shootMaster.config_kI(0, 0.0); //0.000115
+    shootMaster.config_kD(0, 0.0); //0.0
     shootMaster.config_kF(0, 0.065); //0.065
     //shootMaster.config_IntegralZone(0, 9);
 
@@ -104,8 +101,8 @@ public double getClosedLoopError(){
   public void in(){
     shootFollower.set(0.75);
     shootMaster.set(0.75);
-  }  
-
+  } 
+  
   public void shoot(double output){
     //configMotorController(output);
     shootMaster.set(output);

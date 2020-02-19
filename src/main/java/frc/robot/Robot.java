@@ -42,6 +42,7 @@ public class Robot extends TimedRobot{
     autoChooser = new SendableChooser<Command>();
     
    autoChooser.addOption("Five Feet", new BaselineAuto(false));
+   HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
  }
@@ -90,7 +91,6 @@ public class Robot extends TimedRobot{
     Scheduler.getInstance().run();
   }
 
-
   public void teleopInit() {
     if (autoCommand != null){
       autoCommand.cancel();
@@ -98,7 +98,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Is on", 10);
     // SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
     // SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
-    // HAL.limelight.setPipeline(1);
+    HAL.limelight.setPipeline(1);
   }
   
  

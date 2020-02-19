@@ -15,7 +15,7 @@ public class Feeder{
   {}
   
   public void feed(){
-    feeder.set(ControlMode.PercentOutput, 1.0);
+    feeder.set(ControlMode.PercentOutput, 0.7);
   }
 
   public void off(){
@@ -24,6 +24,10 @@ public class Feeder{
 
   public void unfeed(){
     feeder.set(ControlMode.PercentOutput, -0.25);
+  }
+
+  public void spin(double speed){
+    feeder.set(ControlMode.PercentOutput, speed);
   }
 
   public void interval_feed(double interval){

@@ -20,13 +20,14 @@ public class Trigger {
         trigger.set(ControlMode.PercentOutput, -0.5);
     }
 
-    public void spinHigh (){
-        trigger.set(ControlMode.PercentOutput, -.750);
+    public void spin (double speed){
+        trigger.set(ControlMode.PercentOutput, speed);
     }
 
     public void spinOut (){
         trigger.set(ControlMode.PercentOutput, 1);
     }
+
 
     public void off (){
         trigger.set(ControlMode.PercentOutput, 0);

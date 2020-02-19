@@ -18,6 +18,10 @@ public class Conveyor{
     conveyor.set(ControlMode.PercentOutput, .80);
   }
 
+  public void spin(double speed){
+    conveyor.set(ControlMode.PercentOutput, speed);
+  }
+
   public void off(){
     conveyor.set(ControlMode.PercentOutput, 0);
   }
