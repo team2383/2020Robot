@@ -39,7 +39,7 @@ public class RobotMap{
   public static double kDrive_Motion_turnP = 0.0175;
   
   public static double kDrive_Motion_Tolerance = 0.05;// ft
-  public static double kDrive_WheelDiameterInch = 6.25;
+  public static double kDrive_WheelDiameterInch = 6.0; //6.25
   public static double getWheelCircumference() { return (kDrive_WheelDiameterInch*Math.PI)/12.0; };
 
   public static int kDrive_ContinuousCurrentLimit = 60;

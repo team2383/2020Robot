@@ -52,6 +52,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Hood Position", HAL.hood.getHoodPosition());
     SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
     SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
+    SmartDashboard.putNumber("Gyro Pitch", HAL.navX.getRawGyroZ());
     SmartDashboard.putNumber("Distance from target in feet", HAL.limelight.getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterVelocity());
     SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
@@ -79,7 +80,8 @@ public class Robot extends TimedRobot{
 
     autoCommand = autoChooser.getSelected();
 		autoCommand = (Command) autoChooser.getSelected();
-		
+    HAL.drive.resetEncoders();
+    HAL.navX.zeroYaw();
 		if (autoCommand != null) {
 			autoCommand.start();
     }
