@@ -89,7 +89,7 @@ public class OI {
         //Procedure interval_conveyor = () -> {HAL.conveyor.interval_conveyor(0.5);};
         //Grain GIntervalConveyor = new Grain(interval_conveyor, releasedRBump2, off);
        //CHAMBER(LAUNCH)
-       Procedure triggerX = () -> {HAL.triggered.spin(0.4);};
+       Procedure triggerX = () -> {HAL.triggered.spin(0.5);};
        Procedure trigOffX = () -> {HAL.triggered.off();};
        TC releasedX = () ->{return !(driver.getButtonStateX());};
         //TRIGGER
@@ -101,15 +101,18 @@ public class OI {
         // Procedure arctrig = () -> {HAL.triggered.spinOut();};
         // TC releasedXBump = () ->{return !driver.getButtonStateX();};
         // Grain trigout = new Grain (arctrig, releasedXBump, trigOff);
-        Procedure conveyX = () -> {HAL.conveyor.spin(0.7);};
+        Procedure conveyX = () -> {HAL.conveyor.toggle(true);};
+        Procedure conveyXoff = () -> {HAL.conveyor.toggle(false);};
         Procedure conveyoff = () -> {HAL.conveyor.off();};
 
-        Procedure feedX = () -> {HAL.feeder.spin(0.3);};
+        Procedure feedX = () -> {HAL.feeder.spin(0.5);};
         Procedure feedoffX = () -> {HAL.feeder.off();};   
 
         Grain GtriggerX = new Grain (triggerX, releasedX, trigOffX);
         Grain GconveyX = new Grain (conveyX, releasedX, conveyoff);
-        Grain GfeedX = new Grain (feedX, releasedX, feedoffX);   
+        Grain GconveyXoff = new Grain (conveyXoff, releasedX, conveyoff);
+        Grain GfeedX = new Grain (feedX, releasedX, feedoffX);
+           
 
         // SHOOTER
         Procedure shooter = () -> {HAL.shoot.Run();};
@@ -129,8 +132,8 @@ public class OI {
         
         //LIMELIGHT TURRET
         Procedure limelightT = () -> {HAL.turret.limeTOn(1);};
-        TC releaseStart = () -> {return driver.getRawButton(8);};
-        TC releaseBack = () -> {return driver.getRawButton(7);};
+        TC releaseStart = () -> {return !driver.getRawButton(8);};
+        TC releaseBack = () -> {return !driver.getRawButton(7);};
         Procedure limeoffT = () -> {HAL.turret.limeTOff(2);};
         Grain GlimelightTOn = new Grain (limelightT, releaseStart, limelightT);
         Grain GlimelightTOff = new Grain (limeoffT, releaseBack, limeoffT);
@@ -176,12 +179,13 @@ public class OI {
         Grain teleNow = new Grain (telego, releasedDUP2, telestop);
         Grain Gteledown = new Grain(teledown, releasedDDOWN2, telestop);
 
-        Procedure toggleconvey = () -> {HAL.conveyor.toggle();;};
-        Procedure togglefeed = () -> {HAL.feeder.toggle();;};
-        TC pressedB = () -> {return (operator.getButtonStateB());};
-        TC pressedY = () -> {return (operator.getButtonStateY());};
-        Grain Gtoggleconvey = new Grain(toggleconvey, pressedB, toggleconvey);
-        Grain Gtogglefeed = new Grain(togglefeed, pressedY, togglefeed);
+        
+        // Procedure toggleconvey = () -> {HAL.conveyor.toggle();;};
+        // Procedure togglefeed = () -> {HAL.feeder.toggle();;};
+        // TC pressedB = () -> {return (operator.getButtonStateB());};
+        // TC pressedY = () -> {return (operator.getButtonStateY());};
+        // Grain Gtoggleconvey = new Grain(toggleconvey, pressedB, toggleconvey);
+        // Grain Gtogglefeed = new Grain(togglefeed, pressedY, togglefeed);
 
         
 
@@ -200,9 +204,19 @@ public class OI {
 
 
         if(driver.getButtonStateX()){
-            Robot.mill.addGrain(GtriggerX);
-            Robot.mill.addGrain(GconveyX);
-            Robot.mill.addGrain(GfeedX);
+            if(operator.getRawButton(Gamepad.BUTTON_A)){
+                Robot.mill.addGrain(GtriggerX);
+                Robot.mill.addGrain(GconveyX);
+                Robot.mill.addGrain(GfeedX);
+            }
+            
+            
+            if(operator.getRawButton(Gamepad.BUTTON_B)){
+                Robot.mill.addGrain(GtriggerX);
+                //Robot.mill.addGrain(GconveyXoff);
+                Robot.mill.addGrain(GfeedX);
+            }
+            
         }
 
         if(driver.getButtonStateY()){
@@ -236,13 +250,23 @@ public class OI {
         }
 
         // New Operator/Driver Duo Conveyer/Feeder
-        if(driver.getButtonStateRightBumper() && operator.getButtonStateA()){
-            Robot.mill.addGrain(gFeed); 
-            Robot.mill.addGrain(conveyin);
-        }
-        if(driver.getButtonStateRightBumper() && operator.getButtonStateX()){
-            Robot.mill.addGrain(gFeed); 
-        }
+        // if(driver.getButtonStateRightBumper() ){
+        //     if(operator.getRawButton(Gamepad.BUTTON_A)){
+        //         Robot.mill.addGrain(GtriggerX);
+        //         Robot.mill.addGrain(GconveyX);
+        //         Robot.mill.addGrain(GfeedX);
+        //     }
+            
+            
+        //     if(operator.getRawButton(Gamepad.BUTTON_B)){
+        //         Robot.mill.addGrain(GtriggerX);
+        //         Robot.mill.addGrain(GconveyXoff);
+        //         Robot.mill.addGrain(GfeedX);
+        //     }
+        // }
+
+
+    
 
 
        /* if(driver.getButtonStateRightBumper()){
@@ -292,12 +316,9 @@ public class OI {
             Robot.mill.addGrain(self);
         }
 
-        if(operator.getButtonStateB()){
-            Robot.mill.addGrain(arming);
-        }
-
-        if(operator.getButtonStateA()){
-            Robot.mill.addGrain(arming);
-        }
+        // if(operator.getButtonStateB()){
+        //     Robot.mill.addGrain(arming);
+        // }
+    
     }
 }
