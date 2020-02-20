@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -38,6 +39,9 @@ public class Drivetrain{
     leftSlave.setNeutralMode(NeutralMode.Brake);
     rightMaster.setNeutralMode(NeutralMode.Brake);
     rightSlave.setNeutralMode(NeutralMode.Brake);
+    rightMaster.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+    leftMaster.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+  
   }
   public void tank(double leftValue, double rightValue) {
 		drive.tankDrive(leftValue, rightValue, false);
@@ -48,11 +52,11 @@ public class Drivetrain{
   }
 
   public double getRightPosition() {
-    return rightMaster.getSelectedSensorPosition(0)/16384.0*RobotMap.getWheelCircumference();
+    return rightMaster.getSelectedSensorPosition()/16384.0*RobotMap.getWheelCircumference();
   }
 
   public double getLeftPosition(){
-    return leftMaster.getSelectedSensorPosition(0)/16384.0*RobotMap.getWheelCircumference();
+    return leftMaster.getSelectedSensorPosition()/16384.0*RobotMap.getWheelCircumference();
   }
   public double getLimeDegree(){
     return limeDegree;
@@ -61,8 +65,8 @@ public class Drivetrain{
     this.limeDegree = degree;
   }
   public void resetEncoders() {
-		leftMaster.setSelectedSensorPosition(0, 0, 0);
-    rightMaster.setSelectedSensorPosition(0, 0, 0);
+		leftMaster.setSelectedSensorPosition(50, 0, 0);
+    rightMaster.setSelectedSensorPosition(50, 0, 0);
     
   }
   public double getLeftVelocity() {
