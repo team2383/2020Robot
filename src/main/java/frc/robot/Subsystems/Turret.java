@@ -15,14 +15,19 @@ public class Turret{
   {}
   //We make it return an int so it can exit if a certain condition is reached
   public int move(double stick){
-    if (getTurretPosition() > 37000 && stick>0){
+    if (getTurretPosition() > 37000 && stick<0){
       return 0;
     }
-    else if (getTurretPosition() < -27000 && stick<0){
+    else if (getTurretPosition() < -27000 && stick>0){
       return 0;
     }
-    turret.set(ControlMode.PercentOutput, stick);
-    return 1;
+    if(Math.abs(stick)>0.2){
+      turret.set(ControlMode.PercentOutput, stick);
+      return 1;
+    } else {
+      turret.set(ControlMode.PercentOutput, 0.0);
+      return 0;
+    }
       
   }
 

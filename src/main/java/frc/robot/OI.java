@@ -36,7 +36,9 @@ public class OI {
 
     // TURRET
     //--old turret
-    Procedure turretmanual = () -> {HAL.turret.move((0.5*driver.getLeftTrigger())-0.5*driver.getRightTrigger());};
+    Procedure turretmanual = () -> {HAL.turret.move(driver.getLeftTrigger()-driver.getRightTrigger());};
+    Procedure turretLeft = () -> {HAL.turret.move(0.5*driver.getLeftTrigger());};
+    Procedure turretRight = () -> {HAL.turret.move(0.5*driver.getRightTrigger());};
     //Dylan's race car drive he wanted to try
     //Procedure turretmanual = () -> {HAL.turret.move(driver.getRightX());};
     //Procedure resetTurret = () -> {HAL.turret.zeroTurret();};
