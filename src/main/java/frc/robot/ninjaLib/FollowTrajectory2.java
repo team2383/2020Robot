@@ -222,7 +222,7 @@ public class FollowTrajectory2 extends Command implements Sendable  {
 				rightOutput = -rightFollower.calculate(drive.getRightPosition());
 			} else {
 				//backwards
-				leftOutput = leftFollower.calculate(-drive.getRightPosition()); //left = -right
+				leftOutput = -leftFollower.calculate(-drive.getRightPosition()); //left = -right
 				rightOutput = rightFollower.calculate(-drive.getLeftPosition()); //right = -left
 			}
 			

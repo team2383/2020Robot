@@ -29,16 +29,19 @@ public class Drivetrain{
   public void configMotorController(){
     leftMaster.setInverted(false);
     leftSlave.setInverted(false);
-    leftMaster.setSensorPhase(true);
+    leftMaster.setSensorPhase(false);
     leftSlave.setSensorPhase(true);
+
     rightMaster.setInverted(true);
     rightSlave.setInverted(true);
-    rightMaster.setSensorPhase(true);
+    rightMaster.setSensorPhase(false);
     rightSlave.setSensorPhase(true);
+    
     leftMaster.setNeutralMode(NeutralMode.Brake);
     leftSlave.setNeutralMode(NeutralMode.Brake);
     rightMaster.setNeutralMode(NeutralMode.Brake);
     rightSlave.setNeutralMode(NeutralMode.Brake);
+    
     rightMaster.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
     leftMaster.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
   
@@ -49,6 +52,13 @@ public class Drivetrain{
   
   public void arcade(double move, double turn){
     drive.arcadeDrive(move,turn);
+  }
+
+  public void coastMode(){
+    leftMaster.setNeutralMode(NeutralMode.Coast);
+    leftSlave.setNeutralMode(NeutralMode.Coast);
+    rightMaster.setNeutralMode(NeutralMode.Coast);
+    rightSlave.setNeutralMode(NeutralMode.Coast);
   }
 
   public double getRightPosition() {

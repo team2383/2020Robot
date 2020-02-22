@@ -101,6 +101,7 @@ public class Robot extends TimedRobot{
     // SmartDashboard.putBoolean("Ready to Shoot?", HAL.hood.isangledY());
     // SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
     HAL.limelight.setPipeline(1);
+    HAL.drive.configMotorController();
   }
   
  
