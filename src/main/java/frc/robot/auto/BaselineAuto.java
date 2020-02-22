@@ -13,16 +13,16 @@ import jaci.pathfinder.Waypoint;
 public class BaselineAuto extends CommandGroup {
 	Waypoint[] baseline = new Waypoint[] {
 			new Waypoint(0, 0, 0),
-			new Waypoint(5, 0, 0)
+			new Waypoint(8, 0, 0)
 			};
 
 	Waypoint[] backward = new Waypoint[] {
 		new Waypoint (0, 0, 0),
 		//new Waypoint (2, -3, Pathfinder.d2r(-45)),
 		//new Waypoint(3.5, -7, Pathfinder.d2r(-75)),
-		new Waypoint(4, -4, Pathfinder.d2r(-85)),
+		new Waypoint(7, -4, Pathfinder.d2r(-85)),
 	
-		new Waypoint(4, -16.25, Pathfinder.d2r(-90))
+		new Waypoint(7, -16.25, Pathfinder.d2r(-90))
 	};
 
 	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,

@@ -36,7 +36,7 @@ public class RobotMap{
   public static double kDrive_Motion_V = 0.058;
 
   public static double kDrive_Motion_trackwidth = 2.29;
-  public static double kDrive_Motion_turnP = 0.0215; //0.0175
+  public static double kDrive_Motion_turnP = 0.0215; //0.0215
 
   
   public static double kDrive_Motion_Tolerance = 0.05;// ft

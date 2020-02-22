@@ -198,7 +198,7 @@ public class OI {
 
         //button groups + initializing conditionals
 
-        Grain shoot = new Grain(shooter, releasedA,stop);
+        Grain shoot = new Grain(shooter, releasedA, stop);
         if(driver.getButtonStateA()){
             Robot.mill.addGrain(shoot);
         }

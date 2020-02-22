@@ -4,6 +4,7 @@ package frc.robot.Subsystems;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.HAL;
+import jaci.pathfinder.Pathfinder;
 
 
 public class LimelightSubsystem {
@@ -69,24 +70,40 @@ public class LimelightSubsystem {
     public double getDistanceFromTarget()
     {
       //Units: Inches
-      double h1 = 21; //need to confirm
-      double h2 = 81; //need to confirm
+      double h1 = 23.25; //need to confirm21
+      double h2 = 91.5; //need to confirm81
       double netHeight = h2-h1;
       //Unit: Degrees
       double a1 = yOffset();
-      double a2 = 57.6; //need to confirm
+      double a2 = 90-62.0; //need to confirm
       double netAngle = a1+a2;
     
-      double distance = netHeight/(Math.tan(netAngle));
+      double distance = netHeight / (Math.tan(Pathfinder.d2r(netAngle)) );
     
       if(hasTargets() == true)
       {
         return distance;
       }
+
       else
       {
         return 0.0;
       }
+
+    }
+
+    public double desiredHoodAngle(double ballVelocity)
+    {
+      double velocity = ballVelocity;
+      double output = (Math.asin((2*386.09* this.getDistanceFromTarget())/(velocity*velocity)))/2;
+      return output;
+    }
+
+    public double desiredBallVelocity(double hoodAngle)
+    {
+      double angle = hoodAngle; //radians
+      double output = Math.sqrt((2*386.09*this.getDistanceFromTarget())/(Math.sin(2*angle)));
+      return output;
     }
 
 

@@ -13,19 +13,31 @@ import jaci.pathfinder.Waypoint;
 public class SJ extends CommandGroup {
 	Waypoint[] baseline = new Waypoint[] {
 			new Waypoint(0, 0, 0),
-			new Waypoint(10, 3, Pathfinder.d2r(10))
+			new Waypoint(6, 5.6, Pathfinder.d2r(0)),
+			new Waypoint(20, 5.6, Pathfinder.d2r(0))
+			};
+	
+	Waypoint[] baseline2 = new Waypoint[] {
+			new Waypoint(0, 0, 0),
+			new Waypoint(13, 7.4, Pathfinder.d2r(0)),
 			};
 
 	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
 			0.02, 	//delta time
-			8.0,		//max velocity in ft/s for the motion profile
-			2.0,		//max acceleration in ft/s/s for the motion profile
+			2.5,		//max velocity in ft/s for the motion profile
+			1.0,		//max acceleration in ft/s/s for the motion profile
 			500);	//max jerk in ft/s/s/s for the motion profile
 
+	// Trajectory.Config config2 = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
+	// 		0.02, 	//delta time
+	// 		3.0,		//max velocity in ft/s for the motion profile
+	// 		2.0,		//max acceleration in ft/s/s for the motion profile
+	// 		500);	
 	Trajectory trajectory = PathLoader.get(baseline, config);
-
+	Trajectory trajectory2 = PathLoader.get(baseline2, config);
 	public SJ(boolean backwards) {
 		backwards = false;
-		addSequential(new FollowTrajectory2(trajectory, backwards));
+		addSequential(new FollowTrajectory2(trajectory, false));
+		addSequential(new FollowTrajectory2(trajectory2, true));
 	}
 }

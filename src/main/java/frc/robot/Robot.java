@@ -42,6 +42,7 @@ public class Robot extends TimedRobot{
     autoChooser = new SendableChooser<Command>();
     
    autoChooser.addOption("Five Feet", new BaselineAuto(false));
+   autoChooser.addOption("Second Path", new SJ(false));
    HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
@@ -53,7 +54,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Gyro Angle", HAL.navX.getAngle());
     SmartDashboard.putNumber("Gyro Yaw", HAL.navX.getRawGyroX());
     SmartDashboard.putNumber("Gyro Pitch", HAL.navX.getRawGyroZ());
-    SmartDashboard.putNumber("Distance from target in feet", HAL.limelight.getDistanceFromTarget());
+    SmartDashboard.putNumber("Distance from target in inches", HAL.limelight.getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterVelocity());
     SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
     SmartDashboard.putNumber("Shooter RPM", HAL.shoot.getRPM());
