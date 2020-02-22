@@ -13,27 +13,25 @@ public class Turret{
 
   public Turret()
   {}
-  //We make it return an int so it can exit if a certain condition is reached
-  public int move(double stick){
-    if (getTurretPosition() > 37000 && stick<0){
-      return 0;
+ 
+  public void move(double stick){
+    if (getTurretPosition() > 3700 && stick<0){
+      turret.set(ControlMode.PercentOutput, 0);
+
     }
-    else if (getTurretPosition() < -27000 && stick>0){
-      return 0;
+    else if (getTurretPosition() < -2700 && stick>0){
+      turret.set(ControlMode.PercentOutput, 0);
+
     }
-    if(Math.abs(stick)>0.2){
+    else if (Math.abs(stick)>0.05){
       turret.set(ControlMode.PercentOutput, stick);
-      return 1;
+
     } else {
       turret.set(ControlMode.PercentOutput, 0.0);
-      return 0;
+
     }
       
   }
-
-  // public void move(double stick){
-  //     turret.set(ControlMode.PercentOutput, stick);
-  // }
 
   public void moveto(double pos){
     turret.set(ControlMode.MotionMagic, pos);
@@ -45,23 +43,27 @@ public class Turret{
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
     double divisor = 27;
-    output = (xOffset/divisor); 
+    output = -(xOffset/divisor); 
+    
     
     if (HAL.limelight.hasTargets()){
-      if (getTurretPosition() < -26000){
-        moveto(-25500);
+      if (getTurretPosition() > 3700 && output<0){
+        turret.set(ControlMode.PercentOutput, 0);
+  
       }
-      else if (getTurretPosition() > 36000){
-        moveto(-35500);
+      else if (getTurretPosition() < -2700 && output>0){
+        turret.set(ControlMode.PercentOutput, 0);
+  
       }
-      else{
-      //HAL.limelight.setPipeline(pipeline);
-      turret.set(ControlMode.PercentOutput, -output);
-      }
+      else {
+        turret.set(ControlMode.PercentOutput, output);
+  
+      } 
+
     }
     else{
       //HAL.limelight.setPipeline(pipeline);
-      turret.set(ControlMode.PercentOutput, stop);
+      turret.set(ControlMode.PercentOutput, 0);
     }
   }
 

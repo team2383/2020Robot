@@ -19,14 +19,35 @@ public class Hood {
     }
 
     public void slowMoveUP (){
-        //if(this.getHoodPosition()<1000){
-        if(this.getHoodPosition()<3500){
+        double speed = hoodc.getMotorOutputPercent();
+        if(this.getHoodPosition() > 3500) {
+            if (speed < 0){
+                hoodc.set(ControlMode.PercentOutput, 0);
+            }
+            // else{
+            //     hoodc.set(ControlMode.PercentOutput, -0.15);
+            // }
+        }
+
+
+        else {
             hoodc.set(ControlMode.PercentOutput, -0.15);
         }
+
+
     }
 
     public void slowMoveDown (){
-        hoodc.set(ControlMode.PercentOutput, 0.15);
+        //hoodc.set(ControlMode.PercentOutput, 0.15);
+        double speed = hoodc.getMotorOutputPercent();
+        if(this.getHoodPosition() < 50) {
+            if (speed > 0){
+                hoodc.set(ControlMode.PercentOutput, 0);
+            }
+        }
+        else {
+            hoodc.set(ControlMode.PercentOutput, 0.15);
+        }
     }
 
     public void moveto(double pos){
@@ -50,23 +71,23 @@ public class Hood {
         double height;
         height = area*factor;
 
-        if(hoodc.getSelectedSensorPosition()>4900) {
-            moveto(4850);
-        }
-
-        else if(hoodc.getSelectedSensorPosition()<0){
-            moveto(50);
-        }
-
-        else{
-            if(hasTarget){
-                moveto(height); 
+        if(hasTarget){
+            if (getHoodPosition() > 3700 && hoodc.getMotorOutputPercent() < 0){
+                hoodc.set(ControlMode.PercentOutput, 0);
+          
+            }
+            else if (getHoodPosition() < -2700 && hoodc.getMotorOutputPercent() > 0){
+                hoodc.set(ControlMode.PercentOutput, 0);
+          
             }
             else{
-                moveto(0);
-            }
+               moveto(height);
+          
+            } 
         }
-
+        else{
+            moveto(100);
+        }
         
     }
 

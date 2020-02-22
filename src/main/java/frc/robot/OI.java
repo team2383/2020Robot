@@ -13,14 +13,17 @@ import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
 import frc.robot.Subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Field;
 
 public class OI {
 
     Gamepad driver = new Gamepad(0);
     public Gamepad operator = new Gamepad(1);
+    //boolean operatorCool = Field.operatorCool;
 
 
     public OI(){
+        
     //these are active listeners
     //make procedures and conditions
 
@@ -36,7 +39,7 @@ public class OI {
 
     // TURRET
     //--old turret
-    Procedure turretmanual = () -> {HAL.turret.move(driver.getLeftTrigger()-driver.getRightTrigger());};
+    Procedure turretmanual = () -> {HAL.turret.move(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
     Procedure turretLeft = () -> {HAL.turret.move(0.5*driver.getLeftTrigger());};
     Procedure turretRight = () -> {HAL.turret.move(0.5*driver.getRightTrigger());};
     //Dylan's race car drive he wanted to try
@@ -94,6 +97,7 @@ public class OI {
        Procedure triggerX = () -> {HAL.triggered.spin(0.5);};
        Procedure trigOffX = () -> {HAL.triggered.off();};
        TC releasedX = () ->{return !(driver.getButtonStateX());};
+       TC releasedOperator = () -> {return (operator.getButtonStateB());};
         //TRIGGER
         // Procedure trigger = () -> {HAL.triggered.spinHigh();};
         // Procedure trigOff = () -> {HAL.triggered.off();};
@@ -203,23 +207,9 @@ public class OI {
         // if(driver.getButtonStateB()){
         //    Robot.mill.addGrain(triglow);
         // }
+    //    if(driver.getButtonStateX()){
 
-
-        if(driver.getButtonStateX()){
-            if(operator.getRawButton(Gamepad.BUTTON_A)){
-                Robot.mill.addGrain(GtriggerX);
-                Robot.mill.addGrain(GconveyX);
-                Robot.mill.addGrain(GfeedX);
-            }
-            
-            
-            if(operator.getRawButton(Gamepad.BUTTON_B)){
-                Robot.mill.addGrain(GtriggerX);
-                //Robot.mill.addGrain(GconveyXoff);
-                Robot.mill.addGrain(GfeedX);
-            }
-            
-        }
+    //     }
 
         if(driver.getButtonStateY()){
         }
@@ -241,27 +231,36 @@ public class OI {
             Robot.mill.addGrain(conveyout);
         }
 
-        Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
-        if(driver.getButtonStateRightBumper()){
-            Robot.mill.addGrain(gFeed); 
+        if(operator.getButtonStateRightBumper()){
+            Field.operatorCool = false;
+            
+        }
+        if(!(operator.getButtonStateRightBumper())){
+            Field.operatorCool = true;
+        }
 
-        //  if(driver.getButtonStateRightBumper()){
-        //      Robot.mill.addGrain(GFeed); 
-        //      Robot.mill.addGrain(conveyin);
-        //  }
+        Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
+
+        Grain gConvey = new Grain(conveyor1, releasedRBump, conveyoff);
+
+        if(driver.getButtonStateRightBumper()){
+            
+            Robot.mill.addGrain(gConvey);
+            Robot.mill.addGrain(gFeed);
+            
+
+
         }
 
         // New Operator/Driver Duo Conveyer/Feeder
         // if(driver.getButtonStateRightBumper() ){
         //     if(operator.getRawButton(Gamepad.BUTTON_A)){
-        //         Robot.mill.addGrain(GtriggerX);
         //         Robot.mill.addGrain(GconveyX);
         //         Robot.mill.addGrain(GfeedX);
         //     }
             
             
         //     if(operator.getRawButton(Gamepad.BUTTON_B)){
-        //         Robot.mill.addGrain(GtriggerX);
         //         Robot.mill.addGrain(GconveyXoff);
         //         Robot.mill.addGrain(GfeedX);
         //     }
@@ -318,9 +317,11 @@ public class OI {
             Robot.mill.addGrain(self);
         }
 
+
         // if(operator.getButtonStateB()){
         //     Robot.mill.addGrain(arming);
         // }
     
     }
 }
+

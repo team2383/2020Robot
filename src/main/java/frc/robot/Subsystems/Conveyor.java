@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
+import frc.robot.Field;
+
 
 public class Conveyor{
 
@@ -13,10 +15,17 @@ public class Conveyor{
   Timer timer = new Timer();
 
   public Conveyor() 
-  {}
+  {
+  }
   
   public void pull(){
-    conveyor.set(ControlMode.PercentOutput, .80);
+    if (Field.operatorCool){
+      conveyor.set(ControlMode.PercentOutput, .80);
+    }
+    else{
+      conveyor.set(ControlMode.PercentOutput, 0);
+    }
+    
   }
 
   public void spin(double speed){
