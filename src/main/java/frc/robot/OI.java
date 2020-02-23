@@ -231,11 +231,15 @@ public class OI {
             Robot.mill.addGrain(conveyout);
         }
 
+
         if(operator.getButtonStateRightBumper()){
             Field.operatorCool = false;
             
         }
-        if(!(operator.getButtonStateRightBumper())){
+        // if(!(operator.getButtonStateRightBumper())){
+        //     Field.operatorCool = true;
+        // }
+        if(operator.getButtonStateLeftBumper()){
             Field.operatorCool = true;
         }
 
