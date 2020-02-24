@@ -1,4 +1,4 @@
-package Util;
+package frc.robot.ninjaLib;
 
 public class TrajectoryUtil
 {
