@@ -2,11 +2,14 @@ package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.Timer;
+
 import frc.robot.RobotMap;
+import frc.robot.ninjaLib.StatefulSubsystem;
 
 
-public class Feeder{
+public class Feeder extends StatefulSubsystem<Feeder.State>{
 
   WPI_VictorSPX feeder = new WPI_VictorSPX(RobotMap.feedPort);
 
@@ -14,6 +17,17 @@ public class Feeder{
   {
     feeder.setInverted(true);
   }
+  
+  public enum State{
+    STOP,
+    SLOW,
+    MID,
+    FAST,
+    RSLOW,
+    RMID,
+    RFAST
+  }
+
   
   public void feed(){
     feeder.set(ControlMode.PercentOutput, 0.7);
@@ -49,5 +63,35 @@ public class Feeder{
     while(!(Timer.getMatchTime() > (startTime - interval))) {
       ;
     }
+  }
+
+public void setState(State state){
+    
+  switch (state) {
+    case SLOW:
+      spin(0.3);
+      break;
+    case MID:
+      spin(0.6);
+      break;
+    case FAST:
+      spin(0.8);
+      break;
+    case RSLOW:
+      spin(-0.3);
+      break;
+    case RMID:
+      spin(-0.6);
+      break;
+    case RFAST:
+      spin(-0.8);
+      break;
+  default:
+    case STOP:
+      off();
+    }
+  }
+  
+  public void initDefaultCommand() { 
   }
 }

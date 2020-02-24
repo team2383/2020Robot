@@ -24,11 +24,21 @@ public class TrajectoryUtil
         return Math.sqrt((2*g*distance)/(Math.sin(Math.toRadians(2*hoodAngle))));
     }
 
+    /*
+    * Parameter desiredBallVelocity: units in inches/per second
+    * Parameter kP: tuning constant to account for air resistence
+    * Return: the desired ball velocity in inches/per second
+    */
     public static double getDesiredMotorOutput(double kP, double desiredBallVelocity)
     {
-        return kP;
+        final double k = 0.0; 
+        return kP*(k*desiredBallVelocity);
     }
 
+    /*
+    * Parameter hoodAngle: units in degrees
+    * Return: the desired hood ticks to move the desired degrees
+    */
     public static double getDesiredHoodTicks(double hoodAngle)
     {
         final double k = 0.0;

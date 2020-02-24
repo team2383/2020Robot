@@ -29,6 +29,16 @@ public class Shooter{
   public void out(double power){
     shootMaster.set(-power);
   }
+
+  public enum State{
+    STOP,
+    SLOW,
+    MID,
+    FAST,
+    LIME,
+
+  }
+  
   public double desiredRPM = 3100; //Max RPM is around 5800 // good point 1685
 
   public void Run() {
@@ -167,6 +177,27 @@ public double getClosedLoopError(){
     shoot(zone3output);
     }
   }
+  
+  public void setState(State state){
+    
+    switch (state) {
+      case SLOW:
+        shoot(0.3);
+        break;
+      case MID:
+        shoot(0.6);
+        break;
+      case FAST:
+        shoot(0.8);
+        break;
+      case LIME:
+        LimeS();
+        break;
+    default:
+      case STOP:
+        shoot(0);
+      }
+    }
 
   public void manualorlime(){
   boolean tracking = HAL.limelight.hasTargets();
