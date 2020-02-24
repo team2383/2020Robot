@@ -105,7 +105,7 @@ public class OI {
 
         //SELFCLIMB
         Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
-        TC releasedRightBumper2 = () -> {return !operator.getButtonStateY();};
+        TC releasedRightBumper2 = () -> {return (HAL.selfClimb.run);};
         Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
         Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
 
@@ -207,11 +207,11 @@ public class OI {
             // Robot.mill.addGrain(Gteledown);
         } 
         
-        if(operator.getButtonStateX()){
+        if(operator.getRawButtonPressed(Gamepad.BUTTON_X)){
             Robot.mill.addGrain(buddy);
         }
 
-        if(operator.getButtonStateY()){
+        if(operator.getRawButtonPressed(Gamepad.BUTTON_Y)){
             Robot.mill.addGrain(self);
         }
 

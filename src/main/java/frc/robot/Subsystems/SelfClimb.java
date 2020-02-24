@@ -7,7 +7,8 @@ import frc.robot.RobotMap;
 
 public class SelfClimb{
     
-
+    int toggle=1;
+    public boolean run=false;
     DoubleSolenoid solenoid4 = new DoubleSolenoid(RobotMap.s4fchannel, RobotMap.s4rchannel);
 
 
@@ -16,13 +17,16 @@ public class SelfClimb{
     }
 
     public void prepClimb(){
-
-        solenoid4.set(Value.kForward);
-
+        run=true;
     }
 
     public void stopClimb(){
-        solenoid4.set(Value.kReverse);
+        if (toggle>0){
+            solenoid4.set(Value.kForward);
+        }else{
+            solenoid4.set(Value.kReverse);
+        }
+        run=false;
+        toggle*=-1;
     }
-
 }
