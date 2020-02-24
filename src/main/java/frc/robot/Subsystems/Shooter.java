@@ -21,18 +21,19 @@ public class Shooter{
   public Shooter(){
     //configMotorController(output);
     shootFollower.follow(shootMaster);
-    shootMaster.setInverted(true);
-    shootFollower.setInverted(false);
+    shootMaster.setInverted(false);
+    shootFollower.setInverted(true);
     shootMaster.setSensorPhase(false);
     configMotorController();
   }
   public void out(double power){
     shootMaster.set(-power);
   }
-  public double desiredRPM = 2000; //Max RPM is around 5800
+  public double desiredRPM = 3100; //Max RPM is around 5800 // good point 1685
 
   public void Run() {
-    double velocity = desiredRPM * 2048.0 / 600.0 * (48.0/38.0); //was 2048
+    shootFollower.follow(shootMaster);
+    double velocity = desiredRPM * 2048.0 / 600.0 * (48.0/36.0); //was 2048
     shootMaster.set(ControlMode.Velocity, -velocity);
   }
 
@@ -56,6 +57,11 @@ public class Shooter{
   public double getPercentageOutput(){
     return shootMaster.getMotorOutputPercent();
   }
+
+  public double getPercentageOutputFollower(){
+    return shootFollower.getMotorOutputPercent();
+  }
+
 public double getClosedLoopError(){
   return shootMaster.getClosedLoopError();
 }
@@ -72,6 +78,10 @@ public double getClosedLoopError(){
     shootMaster.config_kI(0, 0.0); //0.000115
     shootMaster.config_kD(0, 0.0); //0.0
     shootMaster.config_kF(0, 0.065); //0.065
+    shootFollower.follow(shootMaster);
+    shootMaster.setInverted(true);
+    shootFollower.setInverted(false);
+    shootMaster.setSensorPhase(false);
     //shootMaster.config_IntegralZone(0, 9);
 
     shootMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -102,36 +112,40 @@ public double getClosedLoopError(){
     shootFollower.set(0.75);
     shootMaster.set(0.75);
   } 
+
+  public void fireOut(){
+    //shoo
+  }
   
   public void shoot(double output){
     //configMotorController(output);
     shootMaster.set(output);
-    shootFollower.set(-output);
+    //shootFollower.set(-output);
   }
 
   //desired RPM : 5040
-  public void shootInfoDrop(double output){
-    timesRun++;
-    currentRPM=this.getRPM();
-    System.out.println("CR "+currentRPM);
-    System.out.println("PR "+pastRPM);
-    if(currentRPM>maxRPM){
-      maxRPM=currentRPM;
-    } 
-    if((Math.abs(currentRPM-pastRPM)<50)&&(!minSet)){
-      minRPM=currentRPM;
-      minSet=true;
-    }
-    if((currentRPM<minRPM)&&minSet){
-      minRPM=currentRPM;
-    }
-    //System.out.println(this.getRPM());
-    shootMaster.set(output);
-    shootFollower.set(-output);
-    System.out.println("Speed difference: "+(currentRPM-pastRPM));
-    pastRPM=currentRPM;
+  // public void shootInfoDrop(double output){
+  //   timesRun++;
+  //   currentRPM=this.getRPM();
+  //   System.out.println("CR "+currentRPM);
+  //   System.out.println("PR "+pastRPM);
+  //   if(currentRPM>maxRPM){
+  //     maxRPM=currentRPM;
+  //   } 
+  //   if((Math.abs(currentRPM-pastRPM)<50)&&(!minSet)){
+  //     minRPM=currentRPM;
+  //     minSet=true;
+  //   }
+  //   if((currentRPM<minRPM)&&minSet){
+  //     minRPM=currentRPM;
+  //   }
+  //   //System.out.println(this.getRPM());
+  //   shootMaster.set(output);
+  //   shootFollower.set(-output);
+  //   System.out.println("Speed difference: "+(currentRPM-pastRPM));
+  //   pastRPM=currentRPM;
     
-  }
+  // }
 
   public void LimeS(){
   double area = HAL.limelight.area();

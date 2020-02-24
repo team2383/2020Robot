@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import frc.robot.OI.driver2;
 import frc.robot.ninjaLib.Gamepad;
-import frc.robot.auto.*;
+//import frc.robot.auto.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -41,8 +41,8 @@ public class Robot extends TimedRobot{
     OI oi = new OI();
     autoChooser = new SendableChooser<Command>();
     
-   autoChooser.addOption("Five Feet", new BaselineAuto(false));
-   autoChooser.addOption("Second Path", new SJ(false));
+  //  autoChooser.addOption("Left Side", new LeftStart(false));
+  //  autoChooser.addOption("Right Side", new RightStart(false));
    HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
@@ -56,10 +56,11 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Gyro Pitch", HAL.navX.getRawGyroZ());
     SmartDashboard.putNumber("Distance from target in inches", HAL.limelight.getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter Speed", HAL.shoot.getShooterVelocity());
-    SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
+    // SmartDashboard.putNumber("tele height", HAL.telescope.getPosition());
     SmartDashboard.putNumber("Shooter RPM", HAL.shoot.getRPM());
     SmartDashboard.putNumber("Differential", HAL.shoot.differential());
     SmartDashboard.putNumber("Shooter % Output", HAL.shoot.getPercentageOutput());
+    SmartDashboard.putNumber("Shooter % Output Follower", HAL.shoot.getPercentageOutputFollower());
     SmartDashboard.putNumber("CL Error", HAL.shoot.getClosedLoopError());
     SmartDashboard.putNumber("Left Master Velocity", HAL.drive.getLeftVelocity());
     SmartDashboard.putNumber("Left Position", HAL.drive.getLeftPosition());

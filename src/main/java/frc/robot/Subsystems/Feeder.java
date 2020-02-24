@@ -9,10 +9,11 @@ import frc.robot.RobotMap;
 public class Feeder{
 
   WPI_VictorSPX feeder = new WPI_VictorSPX(RobotMap.feedPort);
-  Timer timer = new Timer();
 
   public Feeder()
-  {}
+  {
+    feeder.setInverted(true);
+  }
   
   public void feed(){
     feeder.set(ControlMode.PercentOutput, 0.7);
