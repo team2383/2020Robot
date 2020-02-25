@@ -26,7 +26,7 @@ public class OI {
     //make procedures and conditions
 
     // DRIVE
-    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.6),(-driver.getLeftY()*.6));};
+    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
 
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
@@ -34,8 +34,6 @@ public class OI {
 
     // TURRET
     Procedure turretmanual = () -> {HAL.turret.move(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
-
-
     Grain t = new Grain(turretmanual,noTC,turretmanual);
     Robot.mill.addGrain(t);
 
@@ -55,19 +53,28 @@ public class OI {
         TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
         Procedure unfeed = () -> {HAL.feeder.unfeed();};
         TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
+        Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
 
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor.pull();};
-        Procedure off = () -> {HAL.conveyor.off();};
+        Procedure conveyorOff = () -> {HAL.conveyor.off();};
         Procedure conveyor1out = () -> {HAL.conveyor.out();};
+        Procedure xConveyor = () -> {HAL.conveyor.fire();};
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
-        Grain conveyout = new Grain(conveyor1out, releasedLBump2,off);
+        TC releasedX = () -> {return !(driver.getButtonStateX());};
+        Grain gConvey = new Grain(conveyor1, releasedRBump, conveyorOff);
+        Grain conveyout = new Grain(conveyor1out, releasedLBump2,conveyorOff);
+        Grain xConveyorFire = new Grain(xConveyor, releasedX, conveyorOff);
        
         //TRIGGER
         Procedure trig = () -> {HAL.triggered.spinMedium();};
         Procedure trigno = () -> {HAL.triggered.off();};
-        TC releasedX = () -> {return !(driver.getButtonStateX());};
-        Grain tiger = new Grain(trig, releasedX, trigno);
+        
+        Grain xTriggerFire = new Grain(trig, releasedX, trigno);
+
+        //FIRE
+        Procedure xFeeder = () -> {HAL.feeder.fire();};
+        Grain xFeederFire = new Grain(xFeeder, releasedX, stopFeed);
 
         // SHOOTER
         Procedure shooter = () -> {HAL.shoot.Run();};
@@ -162,9 +169,6 @@ public class OI {
             Field.operatorCool = true;
         }
 
-        Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
-
-        Grain gConvey = new Grain(conveyor1, releasedRBump, off);
 
         if(driver.getButtonStateRightBumper()){
             
@@ -175,7 +179,10 @@ public class OI {
 
         }
         if(driver.getButtonStateX()){
-            Robot.mill.addGrain(tiger);
+            //Robot.mill.addGrain(tiger);
+            Robot.mill.addGrain(xFeederFire);
+            Robot.mill.addGrain(xConveyorFire);
+            Robot.mill.addGrain(xTriggerFire);
             // Robot.mill.addGrain(gConvey);
             // Robot.mill.addGrain(gFeed);
         }

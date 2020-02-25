@@ -39,6 +39,10 @@ public class Conveyor extends StatefulSubsystem<Conveyor.State>{
     conveyor.set(ControlMode.PercentOutput, -0.50);
   }
 
+  public void fire(){
+    conveyor.set(ControlMode.PercentOutput, 0.75);
+  }
+
   public void spin(double speed){
     conveyor.set(ControlMode.PercentOutput, speed);
   }

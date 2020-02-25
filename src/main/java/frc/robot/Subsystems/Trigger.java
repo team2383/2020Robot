@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import frc.robot.RobotMap;
@@ -11,7 +12,12 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
     WPI_VictorSPX trigger = new WPI_VictorSPX(RobotMap.triggerPort);
 
     public Trigger() 
-    {}
+    {
+      configMotorController();
+    }
+    public void configMotorController(){
+      trigger.setNeutralMode(NeutralMode.Brake);
+    }
     
     public enum State{
         SPIN,
@@ -23,7 +29,7 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
     }
 
     public void spinMedium (){
-        trigger.set(ControlMode.PercentOutput, -0.5);
+        trigger.set(ControlMode.PercentOutput, -1);
     }
 
     public void spin (double speed){

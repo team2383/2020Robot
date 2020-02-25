@@ -15,11 +15,11 @@ public class Turret{
   {}
  
   public void move(double stick){
-    if (getTurretPosition() > 3700 && stick<0){
+    if (getTurretPosition() > 36200 && stick<0){
       turret.set(ControlMode.PercentOutput, 0);
 
     }
-    else if (getTurretPosition() < -2700 && stick>0){
+    else if (getTurretPosition() < -27900 && stick>0){
       turret.set(ControlMode.PercentOutput, 0);
 
     }
@@ -47,11 +47,11 @@ public class Turret{
     
     
     if (HAL.limelight.hasTargets()){
-      if (getTurretPosition() > 3700 && output<0){
+      if (getTurretPosition() > 38200 && output<0){
         turret.set(ControlMode.PercentOutput, 0);
   
       }
-      else if (getTurretPosition() < -2700 && output>0){
+      else if (getTurretPosition() < -29900 && output>0){
         turret.set(ControlMode.PercentOutput, 0);
   
       }

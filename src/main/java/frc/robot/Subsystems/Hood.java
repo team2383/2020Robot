@@ -11,7 +11,8 @@ public class Hood {
    
     public Hood() 
     {
-        hoodc.setSensorPhase(true);
+        hoodc.setSensorPhase(false);
+        hoodc.setInverted(true);
     }
 
 
