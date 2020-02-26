@@ -90,12 +90,12 @@ public class OI {
         TC releasedDDown = () ->{return !driver.getDPadDown();};
 
         //LIMELIGHT TURRET
-        Procedure limelightT = () -> {HAL.turret.limeTOn(1);};
-        TC releaseStart = () -> {return !driver.getRawButton(8);};
-        TC releaseBack = () -> {return !driver.getRawButton(7);};
+        Procedure limelightT = () -> {HAL.turret.limeTOn(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
+        TC releaseStart = () -> {return !driver.getRawButtonPressed(8);};
+        TC releaseBack = () -> {return !driver.getRawButtonPressed(7);};
         Procedure limeoffT = () -> {HAL.turret.limeTOff(2);};
-        Grain GlimelightTOn = new Grain (limelightT, releaseStart, limelightT);
-        Grain GlimelightTOff = new Grain (limeoffT, releaseBack, limeoffT);
+        Grain GlimelightTOn = new Grain (limelightT, releaseBack, limelightT);
+        Grain GlimelightTOff = new Grain (limeoffT, releaseStart, limeoffT);
         
         //LIMELIGHT HOOD
         Procedure limelightH = () -> {HAL.hood.limeH();};
@@ -160,10 +160,7 @@ public class OI {
         }
 
         //Turns on and off the conveyor
-        if(operator.getButtonStateRightBumper()){
-            Field.operatorCool = false;
-            
-        }
+
     
         if(operator.getButtonStateLeftBumper()){
             Field.operatorCool = true;
@@ -171,7 +168,7 @@ public class OI {
 
 
         if(driver.getButtonStateRightBumper()){
-            
+            Field.operatorCool = false;
             Robot.mill.addGrain(gConvey);
             Robot.mill.addGrain(gFeed);
             
@@ -190,14 +187,16 @@ public class OI {
 
 
         if(driver.getRawButton(Gamepad.BUTTON_START)){
+            Field.limelightOn = true;
             Robot.mill.addGrain(GlimelightHOn);
             Robot.mill.addGrain(GlimelightTOn); 
         }
 
 
         if((driver.getRawButton(Gamepad.BUTTON_BACK))){
+            Field.limelightOn = false;
             Robot.mill.addGrain(GlimelightHOff);
-            Robot.mill.addGrain(GlimelightTOff); 
+
         }
 
 

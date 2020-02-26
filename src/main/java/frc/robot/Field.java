@@ -5,4 +5,5 @@ public class Field {
     static public boolean armUp = false;
     static public boolean wristUp = false;
     static public boolean operatorCool = true;
+    static public boolean limelightOn = false;
 }

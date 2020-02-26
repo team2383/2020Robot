@@ -30,7 +30,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
 
   
   public void feed(){
-    feeder.set(ControlMode.PercentOutput, 0.7);
+    feeder.set(ControlMode.PercentOutput, 1.0);
   }
 
   public void off(){
@@ -42,7 +42,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void unfeed(){
-    feeder.set(ControlMode.PercentOutput, -0.25);
+    feeder.set(ControlMode.PercentOutput, -0.45);
   }
 
   public void spin(double speed){

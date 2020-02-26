@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.HAL;
+import frc.robot.Field;
 
 public class Turret{
 
@@ -37,34 +38,45 @@ public class Turret{
     turret.set(ControlMode.MotionMagic, pos);
   }
 
-  public void limeTOn(double pipeline){
+  public void limeTOn(double stick){
     double output;
-    HAL.limelight.setPipeline(pipeline);
+    HAL.limelight.setPipeline(1);
     double xOffset = HAL.limelight.xOffset();
     double stop = 0;
     double divisor = 27;
-    output = -(xOffset/divisor); 
+    output = -(xOffset/divisor) * 1.1; 
+
+    if(Field.limelightOn) {
+      if (HAL.limelight.hasTargets()){
+        if (getTurretPosition() > 35208 && output<0){
+          turret.set(ControlMode.PercentOutput, 0);
     
+        }
+        else if (getTurretPosition() < -29900 && output>0){
+          turret.set(ControlMode.PercentOutput, 0);
     
-    if (HAL.limelight.hasTargets()){
-      if (getTurretPosition() > 38200 && output<0){
-        turret.set(ControlMode.PercentOutput, 0);
+        }
+        else {
+          turret.set(ControlMode.PercentOutput, output);
+    
+        } 
   
       }
-      else if (getTurretPosition() < -29900 && output>0){
+      else{
+        //HAL.limelight.setPipeline(pipeline);
         turret.set(ControlMode.PercentOutput, 0);
-  
       }
-      else {
-        turret.set(ControlMode.PercentOutput, output);
-  
-      } 
+
 
     }
     else{
-      //HAL.limelight.setPipeline(pipeline);
-      turret.set(ControlMode.PercentOutput, 0);
+      HAL.limelight.setPipeline(2);
+      move(stick);
+      
     }
+    
+    
+
   }
 
   public void limeTOff(double pipeline){
