@@ -1,18 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
+
 import frc.robot.Robot;
 import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
-import frc.robot.Subsystems.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Field;
 
 public class OI {
@@ -27,10 +19,10 @@ public class OI {
 
     // DRIVE
     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
-
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
+
 
     // TURRET
     Procedure turretmanual = () -> {HAL.turret.move(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
@@ -42,18 +34,30 @@ public class OI {
     Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};
     Grain GzeroTurret = new Grain (zeroTurret, noTC, zeroTurret);
     Robot.mill.addGrain(GzeroTurret);
+
+
+    // DEPLOYMENT
+    Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY());};
+    Grain gDeployment = new Grain(deployment, noTC, deployment);
+    Robot.mill.addGrain(gDeployment);
     }
 
+    
 
     public void listener(){
-    
-        // CHAMBER (PRE-SHOOT)
+        // FEEDER
         Procedure feed = () ->{HAL.feeder.feed();};
         Procedure stopFeed = () -> {HAL.feeder.off();};
         TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
         Procedure unfeed = () -> {HAL.feeder.unfeed();};
         TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
+        Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
+
+        Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
+        TC releasedB = ()->{return !(driver.getButtonStateB());};
+        Grain gIntervalFeeder = new Grain(intervalFeeder, releasedB, stopFeed);
+
 
         // CONVEYOR
         Procedure conveyor1 = () -> {HAL.conveyor.pull();};
@@ -66,20 +70,25 @@ public class OI {
         Grain conveyout = new Grain(conveyor1out, releasedLBump2,conveyorOff);
         Grain xConveyorFire = new Grain(xConveyor, releasedX, conveyorOff);
        
+
         //TRIGGER
         Procedure trig = () -> {HAL.triggered.spinMedium();};
         Procedure trigno = () -> {HAL.triggered.off();};
         
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
 
+
         //FIRE
         Procedure xFeeder = () -> {HAL.feeder.fire();};
         Grain xFeederFire = new Grain(xFeeder, releasedX, stopFeed);
+
 
         // SHOOTER
         Procedure shooter = () -> {HAL.shoot.Run();};
         Procedure stop = () -> {HAL.shoot.stop();};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
+        Grain shoot = new Grain(shooter, releasedA, stop);
+
 
         // HOOD
         Procedure hoodmanual = () -> {HAL.hood.slowMoveUP();};
@@ -88,6 +97,9 @@ public class OI {
 
         Procedure hoodmanualdown = () -> {HAL.hood.slowMoveDown();};
         TC releasedDDown = () ->{return !driver.getDPadDown();};
+        Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
+        Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
+
 
         //LIMELIGHT TURRET
         Procedure limelightT = () -> {HAL.turret.limeTOn(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
@@ -97,11 +109,13 @@ public class OI {
         Grain GlimelightTOn = new Grain (limelightT, releaseBack, limelightT);
         Grain GlimelightTOff = new Grain (limeoffT, releaseStart, limeoffT);
         
+
         //LIMELIGHT HOOD
         Procedure limelightH = () -> {HAL.hood.limeH();};
         Procedure limeoffH = () -> {HAL.hood.off();};
         Grain GlimelightHOn = new Grain (limelightH, releaseStart, limelightH);
         Grain GlimelightHOff = new Grain (limeoffH, releaseBack, limeoffH);
+
 
         //SHIFTER
         Procedure armed = () -> {HAL.arm.activate();};
@@ -116,54 +130,48 @@ public class OI {
         Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
         Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
 
+
         //BUDDYCLIMB
         Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
         TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
-
-
-        //TELESCOPE
-        // Procedure telego = () -> {HAL.telescope.TelescopeGo(3, 0.9);};
-        TC releasedDUP2 = () -> {return !(operator.getDPadUp());};
-        TC releasedDDOWN2 = () -> {return !(operator.getDPadDown());};
-        // Procedure telestop = () -> {HAL.telescope.off();};
-        // Procedure teledown = () -> {HAL.telescope.TelescopeGo(3, -0.9);};
-        // Grain teleNow = new Grain (telego, releasedDUP2, telestop);
-        // Grain Gteledown = new Grain(teledown, releasedDDOWN2, telestop);
-
-
+        
 
         //button groups + initializing conditionals
+        ///////////////////////////////////////
+        //            DRIVER                 //
+        ///////////////////////////////////////
 
-        Grain shoot = new Grain(shooter, releasedA, stop);
         if(driver.getButtonStateA()){
             Robot.mill.addGrain(shoot);
         }
-        
 
-        Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
+        if(driver.getButtonStateB()){
+            Robot.mill.addGrain(gIntervalFeeder);
+        }
+
+        
+        if(driver.getButtonStateX()){
+            Robot.mill.addGrain(xFeederFire);
+            Robot.mill.addGrain(xConveyorFire);
+            Robot.mill.addGrain(xTriggerFire);
+        }
+
+        
         if(driver.getDPadUp()){
             Robot.mill.addGrain(hoodUp);
         }
 
-        Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
+        
         if(driver.getDPadDown()){
             Robot.mill.addGrain(hoodDown);
         }
 
         
-        Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
         if(driver.getButtonStateLeftBumper()){
             Robot.mill.addGrain(gUnfeed);
             Robot.mill.addGrain(conveyout);
-        }
-
-        //Turns on and off the conveyor
-
-    
-        if(operator.getButtonStateLeftBumper()){
-            Field.operatorCool = true;
         }
 
 
@@ -171,32 +179,18 @@ public class OI {
             Field.operatorCool = false;
             Robot.mill.addGrain(gConvey);
             Robot.mill.addGrain(gFeed);
-            
-
-
         }
-        if(driver.getButtonStateX()){
-            //Robot.mill.addGrain(tiger);
-            Robot.mill.addGrain(xFeederFire);
-            Robot.mill.addGrain(xConveyorFire);
-            Robot.mill.addGrain(xTriggerFire);
-            // Robot.mill.addGrain(gConvey);
-            // Robot.mill.addGrain(gFeed);
-        }
+        
   
-
-
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             Field.limelightOn = true;
             Robot.mill.addGrain(GlimelightHOn);
             Robot.mill.addGrain(GlimelightTOn); 
         }
 
-
         if((driver.getRawButton(Gamepad.BUTTON_BACK))){
             Field.limelightOn = false;
             Robot.mill.addGrain(GlimelightHOff);
-
         }
 
 
@@ -206,12 +200,16 @@ public class OI {
         ///////////////////////////////////////
 
         if(operator.getDPadUp()){
-            // Robot.mill.addGrain(teleNow);
+            
         } 
 
         if(operator.getDPadDown()){
-            // Robot.mill.addGrain(Gteledown);
+           
         } 
+
+        if(operator.getButtonStateLeftBumper()){
+            Field.operatorCool = true;
+        }
         
         if(operator.getRawButtonPressed(Gamepad.BUTTON_X)){
             Robot.mill.addGrain(buddy);
@@ -224,4 +222,3 @@ public class OI {
     
     }
 }
-

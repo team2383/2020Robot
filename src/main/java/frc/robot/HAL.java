@@ -15,6 +15,7 @@ public class HAL {
     public static AHRS TnavX = new AHRS(SPI.Port.kMXP);
     public static Shooter shoot = new Shooter();
     public static Conveyor conveyor = new Conveyor();
+    public static Deployment deployment = new Deployment();
     public static Trigger triggered = new Trigger();
     public static Turret turret = new Turret();
     public static Hood hood = new Hood();

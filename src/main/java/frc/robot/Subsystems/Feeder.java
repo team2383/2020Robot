@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Timer;
+import java.lang.Object;
 
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.StatefulSubsystem;
@@ -57,9 +58,10 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void interval_feed(double interval){
-    double startTime = Timer.getMatchTime();
+    //double startTime = Timer.getMatchTime();
+    double startTime = Timer.getFPGATimestamp();
     this.feed();
-    while(!(Timer.getMatchTime() > (startTime - interval))) {
+    while(!(Timer.getFPGATimestamp() > (startTime - interval))) {
       ;
     }
     this.off();
@@ -68,6 +70,11 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
       ;
     }
   }
+
+public double displayTimer(){
+  double startTime2 = Timer.getFPGATimestamp();
+  return startTime2;
+}
 
 public void setState(State state){
     
