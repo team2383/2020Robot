@@ -4,7 +4,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 import frc.robot.RobotMap;
+import static frc.robot.HAL.limelight;
 
 public class Drivetrain{
   
@@ -77,5 +79,38 @@ public class Drivetrain{
   
 	public double getRightVelocity() {
 		return rightMaster.getSelectedSensorVelocity(0); // 16384.0 * RobotMap.getWheelCircumference();
+  }
+
+  public void limeAlign() {
+    double offset = limelight.xOffset();
+    double divisor = 108;
+    arcade(0, offset/divisor);
+  }
+
+  public boolean pivoted(){
+    double offset = limelight.xOffset();
+    return Math.abs(offset) < 0.5;
+  }
+
+  public void limeApache() {
+    double xOffset = limelight.xOffset();
+    double area = limelight.area();
+    double approachSpeed  = .32 / area;
+    boolean hasTarget = limelight.hasTargets();
+    if (xOffset > -27 && xOffset <= -4 && hasTarget == true){
+        arcade(approachSpeed + .22, ((xOffset-0.5)/27)-.07);
+    }  
+    else if (xOffset < 27 && xOffset >= 4 && hasTarget == true){
+        arcade(approachSpeed + .22, ((xOffset+0.5)/27)+.07);
+    }
+    else if (xOffset > -4 && xOffset < 0 && hasTarget == true){
+      arcade(approachSpeed + .22, ((xOffset-0.5)*2/27)-.07);
+    }
+    else if (xOffset >= 0 && xOffset < 4 && hasTarget == true){
+      arcade(approachSpeed + .22, ((xOffset+0.5)*2/27)+.07);
+    }
+    else{
+      arcade(0, 0.0);
+    }
   }
 }

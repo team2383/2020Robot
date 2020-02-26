@@ -2,9 +2,12 @@ package frc.robot.auto;
 
 import frc.robot.ninjaLib.*;
 import frc.robot.ninjaLib.PathLoader;
+import frc.robot.Subsystems.Feeder.State;
+import frc.robot.auto.autocommands.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitUntilCommand;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
@@ -18,11 +21,7 @@ public class LeftStart extends CommandGroup {
 
 	Waypoint[] backward = new Waypoint[] {
 		new Waypoint (0, 0, 0),
-		//new Waypoint (2, -3, Pathfinder.d2r(-45)),
-		//new Waypoint(3.5, -7, Pathfinder.d2r(-75)),
-		new Waypoint(7, -4, Pathfinder.d2r(-85)),
-	
-		new Waypoint(7, -16.25, Pathfinder.d2r(-90))
+		
 	};
 
 	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
@@ -41,8 +40,8 @@ public class LeftStart extends CommandGroup {
 	Trajectory trajectory2 = PathLoader.get(backward, config2);
 
 	public LeftStart(boolean backwards) {
-		//backwards = false;
 		addSequential(new FollowTrajectory2(trajectory, false));
+		///addParallel(new WaitThenCommand(1, new SetFeeder(State.FAST, State.STOP, 0.5)));
 		addSequential(new FollowTrajectory2(trajectory2, true));
 	}
 }
