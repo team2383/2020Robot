@@ -5,12 +5,13 @@ import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import frc.robot.ninjaLib.Gamepad;
+import frc.robot.ninjaLib.Gamepad2;
 import frc.robot.Field;
 
 public class OI {
 
     Gamepad driver = new Gamepad(0);
-    public Gamepad operator = new Gamepad(1);
+    public Gamepad2 operator = new Gamepad2(1);
 
     public OI(){
         
@@ -78,7 +79,6 @@ public class OI {
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
 
         Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
-        TC releasedY = ()->{return !(driver.getButtonStateY());};
         Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
 
 
@@ -142,6 +142,13 @@ public class OI {
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
         
+        Procedure limealign = () -> {HAL.drive.limeAlign();};
+        Procedure driveoff = () -> {HAL.drive.arcade(0, 0);};
+        Grain Glimealign = new Grain (limealign, releasedB, driveoff); 
+
+        Procedure limeapproach = () -> {HAL.drive.limeApache();};
+        TC releasedY = () -> {return (!driver.getButtonStateY());};
+        Grain Glimeapproach = new Grain (limeapproach, releasedY, driveoff); 
 
         //button groups + initializing conditionals
         ///////////////////////////////////////
@@ -153,7 +160,7 @@ public class OI {
         }
 
         if(driver.getButtonStateB()){
-            Robot.mill.addGrain(gIntervalFeeder);
+            Robot.mill.addGrain(Glimealign);
         }
 
         
@@ -161,6 +168,9 @@ public class OI {
             Robot.mill.addGrain(xFeederFire);
             Robot.mill.addGrain(xConveyorFire);
             Robot.mill.addGrain(xTriggerFire);
+        }
+        if(driver.getButtonStateY()){
+            Robot.mill.addGrain(Glimeapproach);
         }
 
         if(driver.getButtonStateY()){
@@ -205,7 +215,8 @@ public class OI {
 
 
         ///////////////////////////////////////
-        //            OPERATOR               //
+        //            OPERATOR    
+                   //
         ///////////////////////////////////////
 
         if(operator.getDPadUp()){
@@ -220,11 +231,11 @@ public class OI {
             Field.operatorCool = true;
         }
         
-        if(operator.getRawButtonPressed(Gamepad.BUTTON_X)){
+        if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
             Robot.mill.addGrain(buddy);
         }
 
-        if(operator.getRawButtonPressed(Gamepad.BUTTON_Y)){
+        if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
             Robot.mill.addGrain(self);
         }
 
