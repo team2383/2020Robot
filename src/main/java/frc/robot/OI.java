@@ -156,6 +156,10 @@ public class OI {
         Procedure limeapproach = () -> {HAL.drive.limeApache();};
         Grain Glimeapproach = new Grain (limeapproach, releasedY, driveoff); 
 
+        Procedure limeback = () -> {HAL.drive.arcade(0, -0.5);};
+        TC distanced = () -> {return HAL.limelight.getDistanceFromTarget() >= 100;};
+        Grain Glimeback = new Grain (limeback, distanced, driveoff); 
+
         //button groups + initializing conditionals
         ///////////////////////////////////////
         //            DRIVER                 //
@@ -198,8 +202,9 @@ public class OI {
 
         
         if(driver.getButtonStateLeftBumper()){
-            Robot.mill.addGrain(gUnfeed);
-            Robot.mill.addGrain(conveyout);
+            // Robot.mill.addGrain(gUnfeed);
+            // Robot.mill.addGrain(conveyout);
+            Robot.mill.addGrain(Glimeback);
         }
 
 

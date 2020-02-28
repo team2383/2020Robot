@@ -82,9 +82,14 @@ public class Drivetrain{
   }
 
   public void limeAlign() {
-    double offset = limelight.xOffset();
-    double divisor = 108;
-    arcade(0, offset/divisor);
+    if(limelight.xOffset() >= 3){
+      arcade(0.4,0);
+    }
+    else if(limelight.xOffset() <= -3){
+      arcade(-0.4,0);
+    }
+    //double divisor = 30;
+    //arcade(offset/divisor,0);
   }
 
   public boolean pivoted(){
@@ -113,4 +118,6 @@ public class Drivetrain{
       arcade(0, 0.0);
     }
   }
+
+  
 }
