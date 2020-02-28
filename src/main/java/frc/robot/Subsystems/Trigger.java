@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.StatefulSubsystem;
@@ -38,6 +39,21 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
 
     public void spinOut (){
         trigger.set(ControlMode.PercentOutput, 1);
+    }
+
+    public void interval_trigger(double interval){
+      //System.out.println("start");
+      double startTime = Timer.getFPGATimestamp();
+      this.spinLow();
+      while(Timer.getFPGATimestamp() <= (startTime + interval)) {
+        ;
+      }
+      this.off();
+      startTime = Timer.getFPGATimestamp();
+      while(Timer.getFPGATimestamp() <= (startTime + interval)) {
+        ;
+      }
+      System.out.println("end");
     }
 
 

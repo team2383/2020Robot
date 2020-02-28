@@ -105,7 +105,7 @@ public class Robot extends TimedRobot{
     // SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
     HAL.limelight.setPipeline(1);
     HAL.drive.configMotorController();
-    HAL.feeder.
+    //HAL.feeder.
   }
   
  

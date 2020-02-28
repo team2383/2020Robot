@@ -58,17 +58,18 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void interval_feed(double interval){
-    //double startTime = Timer.getMatchTime();
+    //System.out.println("start");
     double startTime = Timer.getFPGATimestamp();
     this.feed();
-    while(!(Timer.getFPGATimestamp() > (startTime - interval))) {
+    while(Timer.getFPGATimestamp() <= (startTime + interval)) {
       ;
     }
     this.off();
-    startTime = Timer.getMatchTime();
-    while(!(Timer.getMatchTime() > (startTime - interval))) {
+    startTime = Timer.getFPGATimestamp();
+    while(Timer.getFPGATimestamp() <= (startTime + interval)) {
       ;
     }
+    System.out.println("end");
   }
 
 public double displayTimer(){

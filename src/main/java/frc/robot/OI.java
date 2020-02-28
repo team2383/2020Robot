@@ -77,6 +77,11 @@ public class OI {
         
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
 
+        Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
+        TC releasedY = ()->{return !(driver.getButtonStateY());};
+        Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
+
+
 
         //FIRE
         Procedure xFeeder = () -> {HAL.feeder.fire();};
@@ -117,7 +122,7 @@ public class OI {
         Grain GlimelightHOff = new Grain (limeoffH, releaseBack, limeoffH);
 
 
-        //SHIFTER
+        //ARM
         Procedure armed = () -> {HAL.arm.activate();};
         TC releasedB2 = () -> {return !operator.getButtonStateB();};
         Procedure disarm = () -> {HAL.arm.prepClimb();};
@@ -156,6 +161,10 @@ public class OI {
             Robot.mill.addGrain(xFeederFire);
             Robot.mill.addGrain(xConveyorFire);
             Robot.mill.addGrain(xTriggerFire);
+        }
+
+        if(driver.getButtonStateY()){
+            Robot.mill.addGrain(gIntervalTrigger);
         }
 
         
