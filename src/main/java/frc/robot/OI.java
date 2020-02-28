@@ -77,7 +77,7 @@ public class OI {
         Procedure trigno = () -> {HAL.triggered.off();};
         
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
-
+        TC releasedY = () -> {return (!driver.getButtonStateY());};
         Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
         Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
 
@@ -147,7 +147,6 @@ public class OI {
         Grain Glimealign = new Grain (limealign, releasedB, driveoff); 
 
         Procedure limeapproach = () -> {HAL.drive.limeApache();};
-        TC releasedY = () -> {return (!driver.getButtonStateY());};
         Grain Glimeapproach = new Grain (limeapproach, releasedY, driveoff); 
 
         //button groups + initializing conditionals
