@@ -45,7 +45,7 @@ public class Shooter{
   public void Run() {
     shootFollower.follow(shootMaster);
     double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
-    shootMaster.set(ControlMode.Velocity, -velocity);
+    shootMaster.set(ControlMode.Velocity, velocity);
   }
 
   public static double rpmToNative(double rpm, double countsPerRevolution){

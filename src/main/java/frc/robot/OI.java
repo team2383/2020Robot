@@ -84,6 +84,10 @@ public class OI {
         Procedure trigno = () -> {HAL.triggered.off();};
         
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
+        TC releasedY = () -> {return (!driver.getButtonStateY());};
+        Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
+        Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
+
 
 
         //FIRE
@@ -125,7 +129,7 @@ public class OI {
         Grain GlimelightHOff = new Grain (limeoffH, releaseBack, limeoffH);
 
 
-        //SHIFTER
+        //ARM
         Procedure armed = () -> {HAL.arm.activate();};
         TC releasedB2 = () -> {return !operator.getButtonStateB();};
         Procedure disarm = () -> {HAL.arm.prepClimb();};
@@ -150,7 +154,6 @@ public class OI {
         Grain Glimealign = new Grain (limealign, releasedB, driveoff); 
 
         Procedure limeapproach = () -> {HAL.drive.limeApache();};
-        TC releasedY = () -> {return (!driver.getButtonStateY());};
         Grain Glimeapproach = new Grain (limeapproach, releasedY, driveoff); 
 
         //button groups + initializing conditionals
@@ -177,6 +180,10 @@ public class OI {
 
         if(driver.getButtonStateY()){
             Robot.mill.addGrain(Glimeapproach);
+        }
+
+        if(driver.getButtonStateY()){
+            Robot.mill.addGrain(gIntervalTrigger);
         }
 
         
