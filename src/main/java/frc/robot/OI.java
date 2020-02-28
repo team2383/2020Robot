@@ -4,9 +4,12 @@ import frc.robot.Robot;
 import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
+import edu.wpi.first.wpilibj.buttons.*;
 import frc.robot.ninjaLib.Gamepad;
 import frc.robot.ninjaLib.Gamepad2;
 import frc.robot.Field;
+import frc.robot.auto.autocommands.*;
+import frc.robot.Subsystems.Feeder;
 
 public class OI {
 
@@ -17,6 +20,9 @@ public class OI {
         
     //these are active listeners
     //make procedures and conditions
+
+    // Button intervalFeed = new JoystickButton(driver, Gamepad.BUTTON_B);
+    // intervalFeed.whenPressed(new SetFeederInterval());
 
     // DRIVE
     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
@@ -56,6 +62,7 @@ public class OI {
         Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
         Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
+        Procedure intervalFeeder2 = () -> {HAL.feeder.interval_feed_JA(0.5, .75);};
         TC releasedB = ()->{return !(driver.getButtonStateB());};
         Grain gIntervalFeeder = new Grain(intervalFeeder, releasedB, stopFeed);
 
@@ -157,6 +164,8 @@ public class OI {
 
         if(driver.getButtonStateB()){
             Robot.mill.addGrain(Glimealign);
+           // Robot.mill.addGrain(gIntervalFeeder);
+           //Robot.mill.addGrain(gIntervalFeeder);
         }
 
         
@@ -165,6 +174,7 @@ public class OI {
             Robot.mill.addGrain(xConveyorFire);
             Robot.mill.addGrain(xTriggerFire);
         }
+
         if(driver.getButtonStateY()){
             Robot.mill.addGrain(Glimeapproach);
         }
@@ -221,6 +231,10 @@ public class OI {
 
         if(operator.getButtonStateLeftBumper()){
             Field.operatorCool = true;
+        }
+
+        if(operator.getButtonStateRightBumper()){
+          //  Robot.mill.addGrain(gIntervalFeeder);
         }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){

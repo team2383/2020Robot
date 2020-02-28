@@ -1,9 +1,12 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+
 import java.lang.Object;
 
 import frc.robot.RobotMap;
@@ -11,12 +14,13 @@ import frc.robot.ninjaLib.StatefulSubsystem;
 
 
 public class Feeder extends StatefulSubsystem<Feeder.State>{
-
+  double startTime = Timer.getFPGATimestamp();
   WPI_VictorSPX feeder = new WPI_VictorSPX(RobotMap.feedPort);
 
   public Feeder()
   {
     feeder.setInverted(true);
+    feeder.setNeutralMode(NeutralMode.Brake);
   }
   
   public enum State{
@@ -59,7 +63,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
 
   public void interval_feed(double interval){
     //double startTime = Timer.getMatchTime();
-    double startTime = Timer.getFPGATimestamp();
+    // double startTime = Timer.getFPGATimestamp();
     this.feed();
     while(!(Timer.getFPGATimestamp() > (startTime - interval))) {
       ;
@@ -71,13 +75,27 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
     }
   }
 
+
+  public void interval_feed_JA(double interval, double speed){
+    this.feed();
+    if (startTime%1.0 < 0.5){
+      feeder.set(speed);
+    }
+    else{
+      feeder.set(0);
+    }
+  }
+
+  public double getFeederSpeed(){
+    return feeder.getMotorOutputPercent();
+  }
+
 public double displayTimer(){
   double startTime2 = Timer.getFPGATimestamp();
   return startTime2;
 }
 
 public void setState(State state){
-    
   switch (state) {
     case SLOW:
       spin(0.3);

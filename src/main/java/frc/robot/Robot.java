@@ -66,7 +66,8 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Left Position", HAL.drive.getLeftPosition());
     SmartDashboard.putNumber("Right Velocity", HAL.drive.getRightVelocity());
     SmartDashboard.putNumber("Right Position", HAL.drive.getRightPosition());
-    SmartDashboard.putNumber("currentTimeMillis", HAL.feeder.displayTimer());
+    SmartDashboard.putNumber("currentTimeMilli", HAL.feeder.displayTimer());
+    SmartDashboard.putNumber("Feeder Speed", HAL.feeder.getFeederSpeed());
   }
 @Override
  public void disabledInit() {
