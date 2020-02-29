@@ -160,6 +160,17 @@ public class OI {
         TC distanced = () -> {return HAL.limelight.getDistanceFromTarget() >= 100;};
         Grain Glimeback = new Grain (limeback, distanced, driveoff); 
 
+        //Drive a bit
+        Procedure runabit = () -> {HAL.drive.endRun();};
+        Procedure stopnow = () -> {HAL.drive.distance_drive(-1);};
+        TC distance = () -> {return HAL.drive.run;};//(HAL.drive.run);};
+        Grain driveatad = new Grain(runabit, distance, stopnow);
+
+        Procedure test = ()-> {HAL.drive.run(0.1);};
+        TC releasedA2 = () -> {return !operator.getButtonStateA();};
+        Procedure endTest = ()-> {HAL.drive.run(0);};
+        Grain gTest = new Grain(test, releasedA2, endTest);
+
         //button groups + initializing conditionals
         ///////////////////////////////////////
         //            DRIVER                 //
@@ -199,6 +210,8 @@ public class OI {
         if(driver.getDPadDown()){
             Robot.mill.addGrain(hoodDown);
         }
+
+
 
         
         if(driver.getButtonStateLeftBumper()){
@@ -255,6 +268,14 @@ public class OI {
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
             Robot.mill.addGrain(self);
+        }
+
+        if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){
+            Robot.mill.addGrain(driveatad);
+        }
+
+        if(operator.getButtonStateB()){
+            Robot.mill.addGrain(gTest);
         }
 
     

@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import static frc.robot.HAL.limelight;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class Drivetrain{
   
   DifferentialDrive drive;
   double limeDegree;
+  public boolean run=false;
 
   WPI_TalonFX rightMaster = new WPI_TalonFX(RobotMap.rightmasterPort);
   WPI_TalonFX rightSlave = new WPI_TalonFX(RobotMap.rightfollowerPort);
@@ -52,6 +55,32 @@ public class Drivetrain{
   public void arcade(double move, double turn){
     drive.arcadeDrive(move,turn);
   }
+
+  public void run(double speed){
+    this.arcade(speed, 0);
+  }
+
+  public void distance_drive(double distance){
+    System.out.println("start");
+    double speed=0;
+    if(distance<0){
+      speed=-0.3;
+    }else{
+      speed=0.3;
+    }
+    double startPos= this.getLeftPosition();
+    while(Math.abs(this.getLeftPosition()-startPos)<Math.abs(this.getLeftPosition()-startPos+distance)) {
+      this.arcade(0, speed);
+    }
+    this.arcade(0, 0);
+    System.out.println("end");
+    run=false;
+  }
+
+  public void endRun(){
+    run=true;
+  }
+
 
   public void coastMode(){
     leftMaster.setNeutralMode(NeutralMode.Coast);
