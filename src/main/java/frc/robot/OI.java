@@ -5,24 +5,35 @@ import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
 import edu.wpi.first.wpilibj.buttons.*;
+import frc.robot.ninjaLib.FollowTrajectory2;
 import frc.robot.ninjaLib.Gamepad;
 import frc.robot.ninjaLib.Gamepad2;
+import frc.robot.ninjaLib.HelperCommand;
 import frc.robot.Field;
 import frc.robot.auto.autocommands.*;
 import frc.robot.Subsystems.Feeder;
+import frc.robot.ninjaLib.PathLoader;
+
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
+import jaci.pathfinder.Waypoint;
 
 public class OI {
 
     Gamepad driver = new Gamepad(0);
     public Gamepad2 operator = new Gamepad2(1);
 
+    
+
     public OI(){
         
     //these are active listeners
     //make procedures and conditions
 
-    // Button intervalFeed = new JoystickButton(driver, Gamepad.BUTTON_B);
-    // intervalFeed.whenPressed(new SetFeederInterval());
+    Button trajectory = new JoystickButton(operator, Gamepad2.BUTTON_A);
+    trajectory.whenPressed(new HelperCommand(false));
 
     // DRIVE
     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
@@ -160,16 +171,13 @@ public class OI {
         TC distanced = () -> {return HAL.limelight.getDistanceFromTarget() >= 100;};
         Grain Glimeback = new Grain (limeback, distanced, driveoff); 
 
-        //Drive a bit
-        Procedure runabit = () -> {HAL.drive.endRun();};
-        Procedure stopnow = () -> {HAL.drive.distance_drive(-1);};
-        TC distance = () -> {return HAL.drive.run;};//(HAL.drive.run);};
-        Grain driveatad = new Grain(runabit, distance, stopnow);
-
-        Procedure test = ()-> {HAL.drive.run(0.1);};
+        //Test Grain
+        Procedure teleAuto = () -> {HAL.drive.test();};
         TC releasedA2 = () -> {return !operator.getButtonStateA();};
-        Procedure endTest = ()-> {HAL.drive.run(0);};
-        Grain gTest = new Grain(test, releasedA2, endTest);
+        Procedure end = () -> {HAL.drive.endTest();};
+        Grain gTest = new Grain (teleAuto, releasedA2,end);
+
+
 
         //button groups + initializing conditionals
         ///////////////////////////////////////
@@ -261,6 +269,10 @@ public class OI {
         if(operator.getButtonStateRightBumper()){
           //  Robot.mill.addGrain(gIntervalFeeder);
         }
+
+        if(operator.getButtonStateA()){
+           // Robot.mill.addGrain(gTest);
+        }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
             Robot.mill.addGrain(buddy);
@@ -270,13 +282,7 @@ public class OI {
             Robot.mill.addGrain(self);
         }
 
-        if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){
-            Robot.mill.addGrain(driveatad);
-        }
-
-        if(operator.getButtonStateB()){
-            Robot.mill.addGrain(gTest);
-        }
+        
 
     
     }

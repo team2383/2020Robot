@@ -49,10 +49,6 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
         ;
       }
       this.off();
-      startTime = Timer.getFPGATimestamp();
-      while(Timer.getFPGATimestamp() <= (startTime + interval)) {
-        ;
-      }
       System.out.println("end");
     }
 

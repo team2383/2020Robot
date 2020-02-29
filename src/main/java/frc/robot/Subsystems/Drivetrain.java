@@ -1,16 +1,27 @@
 package frc.robot.Subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import frc.robot.RobotMap;
+import frc.robot.ninjaLib.FollowTrajectory2;
+import frc.robot.ninjaLib.HelperCommand;
+import frc.robot.ninjaLib.PathLoader;
+import jaci.pathfinder.Pathfinder;
+import edu.wpi.first.wpilibj.command.Command;
+import jaci.pathfinder.Trajectory;
+import jaci.pathfinder.Waypoint;
+
 import static frc.robot.HAL.limelight;
 
 import edu.wpi.first.wpilibj.Timer;
 
 public class Drivetrain{
+
+  Command autoCommand;
   
   DifferentialDrive drive;
   double limeDegree;
@@ -20,6 +31,20 @@ public class Drivetrain{
   WPI_TalonFX rightSlave = new WPI_TalonFX(RobotMap.rightfollowerPort);
   WPI_TalonFX leftMaster = new WPI_TalonFX(RobotMap.leftmasterPort);
   WPI_TalonFX leftSlave = new WPI_TalonFX(RobotMap.leftfollowerPort);
+
+  Waypoint[] baseline = new Waypoint[] {
+    new Waypoint(0, 0, 0),
+    new Waypoint(20.0/12.0, 0, Pathfinder.d2r(0)),
+    };
+    
+  
+  Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
+  0.02, 	//delta time
+  1.0,		//max velocity in ft/s for the motion profile
+  1.0,		//max acceleration in ft/s/s for the motion profile
+  500);	//max jerk in ft/s/s/s for the motion profile
+
+  Trajectory trajectory = PathLoader.get(baseline, config);
 
   public Drivetrain () {
     rightSlave.follow(rightMaster);
@@ -56,29 +81,14 @@ public class Drivetrain{
     drive.arcadeDrive(move,turn);
   }
 
-  public void run(double speed){
-    this.arcade(speed, 0);
-  }
 
-  public void distance_drive(double distance){
-    System.out.println("start");
-    double speed=0;
-    if(distance<0){
-      speed=-0.3;
-    }else{
-      speed=0.3;
-    }
-    double startPos= this.getLeftPosition();
-    while(Math.abs(this.getLeftPosition()-startPos)<Math.abs(this.getLeftPosition()-startPos+distance)) {
-      this.arcade(0, speed);
-    }
-    this.arcade(0, 0);
-    System.out.println("end");
-    run=false;
-  }
 
-  public void endRun(){
-    run=true;
+
+
+  public void driveBack()
+  {
+    FollowTrajectory2 back;
+    back = new FollowTrajectory2(trajectory, false);
   }
 
 
@@ -146,6 +156,18 @@ public class Drivetrain{
     else{
       arcade(0, 0.0);
     }
+  }
+
+  HelperCommand help = new HelperCommand(false);
+
+  public void test(){
+      
+      help.start();
+      
+  }
+
+  public void endTest(){
+    help.cancel();
   }
 
   

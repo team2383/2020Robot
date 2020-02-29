@@ -112,6 +112,7 @@ public class Robot extends TimedRobot{
   public void teleopPeriodic(){
     mill.seed();
     oi.listener();
+    Scheduler.getInstance().run();
     //SmartDashboard.putNumber("turretbith", HAL.turret.getTurretPosition());
   }
 

@@ -84,7 +84,6 @@ public class LimelightSubsystem {
       {
         return distance;
       }
-
       else
       {
         return 0.0;
