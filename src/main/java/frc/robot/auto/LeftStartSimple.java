@@ -13,7 +13,11 @@ import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 
 // (X,Y,THETA)
-public class LeftStart extends CommandGroup {
+/**Starting condition: begin in fron of enemy trench
+ * Back up and grab first two balls in enemy trench
+ * Rush to the line and shoot loaded balls into high goal
+ */
+public class LeftStartSimple extends CommandGroup {g
 	Waypoint[] baseline = new Waypoint[] {
 			new Waypoint(0, 0, 0),
 			new Waypoint(8, 0, 0)
@@ -39,7 +43,7 @@ public class LeftStart extends CommandGroup {
 	Trajectory trajectory = PathLoader.get(baseline, config);
 	Trajectory trajectory2 = PathLoader.get(backward, config2);
 
-	public LeftStart(boolean backwards) {
+	public LeftStartSimple(boolean backwards) {
 		addSequential(new FollowTrajectory2(trajectory, false));
 		///addParallel(new WaitThenCommand(1, new SetFeeder(State.FAST, State.STOP, 0.5)));
 		addSequential(new FollowTrajectory2(trajectory2, true));

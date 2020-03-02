@@ -10,6 +10,13 @@ import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 
 // (X,Y,THETA)
+/**  Starting condition: Start in front of alliance trench
+ * Use limelight, align in place and shoot preloaded balls into high goal
+ * Back up and pick up balls in our trench
+ * Rush back and shoot balls into high goal
+ * Cross line
+ * **/
+
 public class RightStart extends CommandGroup {
 	Waypoint[] baseline = new Waypoint[] {
 			new Waypoint(0, 0, 0),
@@ -21,6 +28,13 @@ public class RightStart extends CommandGroup {
 			new Waypoint(0, 0, 0),
 			new Waypoint(13, 7.4, Pathfinder.d2r(0)),
 			};
+
+	Waypoint[] rsSingleBalls = new Waypoint[]{
+		new Waypoint(0, 0, 0)
+	};
+	Waypoint[] rsBallPair = new Waypoint[]{};
+	Waypoint[] rsReturn = new Waypoint[]{};
+
 
 	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
 			0.02, 	//delta time
