@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import java.lang.Object;
 
+import frc.robot.Field;
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.StatefulSubsystem;
 
@@ -77,25 +78,16 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void delay_feed(double delay){
-    //System.out.println("start");
-    double startTime4 = Timer.getFPGATimestamp();
-    if (Timer.getFPGATimestamp() <= startTime4 + delay){
-      feeder.set(0);
-    }
-    else {
-      feeder.set(.9);
-    }
-  }
-
-
-  public void interval_feed_JA(double interval, double speed){
-    this.feed();
-    if (startTime%1.0 < 0.5){
-      feeder.set(speed);
-    }
-    else{
-      feeder.set(0);
-    }
+    double startDelayTimer = Timer.getFPGATimestamp();
+      // if (Timer.getFPGATimestamp() - startDelayTimer < delay){
+      //   feeder.set(0);
+      // }
+      if (Timer.getFPGATimestamp() -  < delay){
+        feeder.set(0);
+      }
+      else{
+        feeder.set(.7);
+      }
   }
 
   public double getFeederSpeed(){

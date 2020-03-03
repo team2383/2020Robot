@@ -9,6 +9,7 @@ import frc.robot.OI;
 import static frc.robot.Subsystems.Hood.hoodc;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 //import frc.robot.OI.driver2;
 import frc.robot.ninjaLib.Gamepad;
 //import frc.robot.auto.*;
@@ -106,6 +107,7 @@ public class Robot extends TimedRobot{
     // SmartDashboard.putNumber("Hpos", hoodc.getSelectedSensorPosition());
     HAL.limelight.setPipeline(1);
     HAL.drive.configMotorController();
+    double startDelayTimer2 = Timer.getFPGATimestamp();
   }
   
  

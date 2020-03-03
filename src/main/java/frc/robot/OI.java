@@ -32,7 +32,7 @@ public class OI {
         
     //these are active listeners
     //make procedures and conditions
-
+    Field.operatorCool = true;
     Button trajectory = new JoystickButton(operator, Gamepad2.BUTTON_A);
     trajectory.whenPressed(new HelperCommand(false));
 
@@ -74,12 +74,13 @@ public class OI {
         Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
         Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
-        Procedure intervalFeeder2 = () -> {HAL.feeder.interval_feed_JA(0.5, .75);};
-        Procedure delayFeeder = () -> {HAL.feeder.delay_feed(1.0);};
+        Procedure delayFeeder = () -> {HAL.feeder.delay_feed(1.5);};
         TC releasedX = () -> {return !(driver.getButtonStateX());};
         TC releasedB = ()->{return !(driver.getButtonStateB());};
         Grain gIntervalFeeder = new Grain(intervalFeeder, releasedRBump, stopFeed);
         Grain gDelayFeeder = new Grain(delayFeeder, releasedX, stopFeed);
+
+        
 
 
         // CONVEYOR
@@ -89,9 +90,8 @@ public class OI {
         Procedure xConveyor = () -> {HAL.conveyor.fire();};
         TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
         Grain gConvey = new Grain(conveyor1, releasedRBump, conveyorOff);
-        Grain conveyout = new Grain(conveyor1out, releasedLBump2,conveyorOff);
+        Grain gconveyout = new Grain(conveyor1out, releasedLBump2,conveyorOff);
         Grain xConveyorFire = new Grain(xConveyor, releasedX, conveyorOff);
-        Field.operatorCool = true;
        
 
         //TRIGGER
@@ -194,13 +194,12 @@ public class OI {
 
         if(driver.getButtonStateB()){
             Robot.mill.addGrain(Glimealign);
-           // Robot.mill.addGrain(gIntervalFeeder);
-           //Robot.mill.addGrain(gIntervalFeeder);
         }
 
         
         if(driver.getButtonStateX()){
             //Robot.mill.addGrain(xFeederFire);
+            double startTimerDelay3 = Timer.getFPGATimestamp();
             Robot.mill.addGrain(xConveyorFire);
             Robot.mill.addGrain(xTriggerFire);
             Robot.mill.addGrain(gDelayFeeder);
@@ -208,11 +207,9 @@ public class OI {
 
         if(driver.getButtonStateY()){
             Robot.mill.addGrain(Glimeapproach);
+            // Robot.mill.addGrain(gIntervalTrigger);
         }
 
-        if(driver.getButtonStateY()){
-            Robot.mill.addGrain(gIntervalTrigger);
-        }
 
         if(driver.getDPadUp()){
             Robot.mill.addGrain(hoodUp);
@@ -224,17 +221,14 @@ public class OI {
         }
 
 
-
-        
         if(driver.getButtonStateLeftBumper()){
             Robot.mill.addGrain(gUnfeed);
-            Robot.mill.addGrain(conveyout);
+            Robot.mill.addGrain(gconveyout);
             //Robot.mill.addGrain(Glimeback);
         }
 
 
         if(driver.getButtonStateRightBumper()){
-            Field.operatorCool = true;
             Robot.mill.addGrain(gConvey);
             Robot.mill.addGrain(gFeed);
             //  Robot.mill.addGrain(gIntervalFeeder);
@@ -249,10 +243,8 @@ public class OI {
         }
 
         if((driver.getRawButton(Gamepad.BUTTON_BACK))){
-            Field.limelightOn = false;
-            Robot.mill.addGrain(GlimelightHOff);
+            
         }
-
 
 
         ///////////////////////////////////////
