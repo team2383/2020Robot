@@ -18,6 +18,7 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
     }
     public void configMotorController(){
       trigger.setNeutralMode(NeutralMode.Brake);
+      trigger.setInverted(true);
     }
     
     public enum State{

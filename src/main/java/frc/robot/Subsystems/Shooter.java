@@ -91,8 +91,8 @@ public double getClosedLoopError(){
     shootMaster.config_kD(0, 0.0); //0.0
     shootMaster.config_kF(0, 0.0475); //0.065(calculated mid Feb) //.0475 (calculated 2/25)
     shootFollower.follow(shootMaster);
-    shootMaster.setInverted(true);
-    shootFollower.setInverted(false);
+    // shootMaster.setInverted(true);
+    // shootFollower.setInverted(false);
     shootMaster.setSensorPhase(false);
     //shootMaster.config_IntegralZone(0, 9);
 

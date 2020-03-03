@@ -17,7 +17,7 @@ public class HAL {
     public static Conveyor conveyor = new Conveyor();
     public static Deployment deployment = new Deployment();
     public static Trigger triggered = new Trigger();
-    public static Turret turret = new Turret();
+    // public static Turret turret = new Turret();
     public static Hood hood = new Hood();
     public static LimelightSubsystem limelight = new LimelightSubsystem();
     public static Arm arm = new Arm();

@@ -19,7 +19,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
 
   public Feeder()
   {
-    feeder.setInverted(true);
+    feeder.setInverted(false);
     feeder.setNeutralMode(NeutralMode.Brake);
   }
   
@@ -74,6 +74,17 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
       ;
     }
     System.out.println("end");
+  }
+
+  public void delay_feed(double delay){
+    //System.out.println("start");
+    double startTime4 = Timer.getFPGATimestamp();
+    if (Timer.getFPGATimestamp() <= startTime4 + delay){
+      feeder.set(0);
+    }
+    else {
+      feeder.set(.9);
+    }
   }
 
 

@@ -10,7 +10,9 @@ public class Conveyor extends StatefulSubsystem<Conveyor.State>{
 
   WPI_VictorSPX conveyor = new WPI_VictorSPX(RobotMap.conveyPort);
 
-  public Conveyor(){}
+  public Conveyor(){
+    conveyor.setInverted(false);
+  }
   
   public void pull(){
     if (Field.operatorCool){
@@ -40,7 +42,7 @@ public class Conveyor extends StatefulSubsystem<Conveyor.State>{
   }
 
   public void fire(){
-    conveyor.set(ControlMode.PercentOutput, 0.75);
+    conveyor.set(ControlMode.PercentOutput, 0.90);
   }
 
   public void spin(double speed){

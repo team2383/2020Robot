@@ -17,7 +17,7 @@ import jaci.pathfinder.Waypoint;
  * Back up and grab first two balls in enemy trench
  * Rush to the line and shoot loaded balls into high goal
  */
-public class LeftStartSimple extends CommandGroup {g
+public class LeftStartSimple extends CommandGroup {
 	Waypoint[] baseline = new Waypoint[] {
 			new Waypoint(0, 0, 0),
 			new Waypoint(8, 0, 0)
