@@ -9,5 +9,8 @@ public class Field {
     static public boolean operatorCool = true;
     static public boolean limelightOn = false;
 
+
+
     static public double startTimerDelay2 = Timer.getFPGATimestamp();
+    static public double shooterClose = 4000;
 }

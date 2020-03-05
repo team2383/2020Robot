@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.Subsystems.*;
+import frc.robot.ninjaLib.DelayFeed;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.SPI;
  * (HAL) Hardware Abstraction Layer
  */
 public class HAL {
+    public static DelayFeed delay = new DelayFeed(1);
     public static Drivetrain drive = new Drivetrain();
     public static Feeder feeder = new Feeder();
     public static AHRS navX = new AHRS(SPI.Port.kMXP);

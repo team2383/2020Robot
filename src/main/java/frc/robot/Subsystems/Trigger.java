@@ -38,9 +38,13 @@ public class Trigger extends StatefulSubsystem<Trigger.State> {
         trigger.set(ControlMode.PercentOutput, speed);
     }
 
-    public void spinOut (){
+    public void out (){
         trigger.set(ControlMode.PercentOutput, 1);
     }
+
+    public void outSlow (){
+      trigger.set(ControlMode.PercentOutput, 0.1);
+  }
 
     public void interval_trigger(double interval){
       //System.out.println("start");

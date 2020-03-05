@@ -3,10 +3,12 @@ package frc.robot.Subsystems;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode; 
 
 public class Deployment{
     public static WPI_TalonSRX deployment = new WPI_TalonSRX(RobotMap.deploymentPort);
+    public static WPI_VictorSPX deployment2 = new WPI_VictorSPX(RobotMap.deployment2Port);
 
     public Deployment(){
 
@@ -35,12 +37,14 @@ public class Deployment{
         
     }
 
-    public void setSpeed(double speed){
-        deployment.set(speed);
+    public void setSpeed(double speed1, double speed2){
+        deployment.set(speed1);
+        deployment2.set(-speed2);
     }
     
     public void off(){
         deployment.set(0);
+        deployment2.set(0);
     }
 
     public int getPosition() {

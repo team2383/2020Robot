@@ -91,6 +91,10 @@ public class Drivetrain{
     back = new FollowTrajectory2(trajectory, false);
   }
 
+  public void individualBoomer(double leftSpeed, double rightSpeed){
+    leftMaster.set(leftSpeed);
+    rightMaster.set(rightSpeed);
+  }
 
   public void coastMode(){
     leftMaster.setNeutralMode(NeutralMode.Coast);
@@ -121,11 +125,13 @@ public class Drivetrain{
   }
 
   public void limeAlign() {
-    if(limelight.xOffset() >= 3){
-      arcade(0.4,0);
+    if(limelight.xOffset() >= 1){
+      // arcade(limelight.xOffset()/27 + .15,0);
+      arcade(.328,0);
     }
-    else if(limelight.xOffset() <= -3){
-      arcade(-0.4,0);
+    else if(limelight.xOffset() <= -1){
+      // arcade(limelight.xOffset()/27 - .15,0);
+      arcade(-.328,0);
     }
     //double divisor = 30;
     //arcade(offset/divisor,0);
@@ -141,17 +147,17 @@ public class Drivetrain{
     double area = limelight.area();
     double approachSpeed  = .32 / area;
     boolean hasTarget = limelight.hasTargets();
-    if (xOffset > -27 && xOffset <= -4 && hasTarget == true){
-        arcade(approachSpeed + .22, ((xOffset-0.5)/27)-.07);
+    if (xOffset > -27 && xOffset <= -1 && hasTarget == true){
+        arcade(.328, approachSpeed + .22);
     }  
-    else if (xOffset < 27 && xOffset >= 4 && hasTarget == true){
-        arcade(approachSpeed + .22, ((xOffset+0.5)/27)+.07);
+    else if (xOffset < 27 && xOffset >= 1 && hasTarget == true){
+        arcade(.328, approachSpeed);
     }
-    else if (xOffset > -4 && xOffset < 0 && hasTarget == true){
-      arcade(approachSpeed + .22, ((xOffset-0.5)*2/27)-.07);
+    else if (xOffset > -1 && xOffset < 0 && hasTarget == true){
+      arcade(.328, approachSpeed);
     }
-    else if (xOffset >= 0 && xOffset < 4 && hasTarget == true){
-      arcade(approachSpeed + .22, ((xOffset+0.5)*2/27)+.07);
+    else if (xOffset >= 0 && xOffset < 1 && hasTarget == true){
+      arcade(.328, approachSpeed);
     }
     else{
       arcade(0, 0.0);

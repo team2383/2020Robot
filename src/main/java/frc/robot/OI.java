@@ -4,43 +4,45 @@ import frc.robot.Robot;
 import frc.robot.Grain;
 import frc.robot.Procedure;
 import frc.robot.TC;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.*;
 import frc.robot.ninjaLib.FollowTrajectory2;
 import frc.robot.ninjaLib.Gamepad;
 import frc.robot.ninjaLib.Gamepad2;
 import frc.robot.ninjaLib.HelperCommand;
+import frc.robot.ninjaLib.DelayFeed;
 import frc.robot.Field;
 import frc.robot.auto.autocommands.*;
-import frc.robot.Subsystems.Feeder;
-import frc.robot.ninjaLib.PathLoader;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Waypoint;
 
 public class OI {
 
     Gamepad driver = new Gamepad(0);
     public Gamepad2 operator = new Gamepad2(1);
+    public Gamepad test = new Gamepad(2);
 
     
-
     public OI(){
         
-    //these are active listeners
-    //make procedures and conditions
+    //ACTIVE LISTENERS + SENDABLECOMMANDS
+
     Field.operatorCool = true;
+    
+    //1 FOOT
     Button trajectory = new JoystickButton(operator, Gamepad2.BUTTON_A);
     trajectory.whenPressed(new HelperCommand(false));
+    
+    // DELAYED CHAMBER
+    Button delayfeed = new JoystickButton(driver, Gamepad.BUTTON_X);
+    delayfeed.whenPressed(new DelayFeed(0.5));
 
     // DRIVE
     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
+
+    // Procedure driveClimb = () ->{HAL.drive.individualBoomer(test.getLeftY()*.6, test.getRightY()*.6);}; 
+    // Grain e2 = new Grain(driveClimb,noTC,driveClimb);
+    // Robot.mill.addGrain(e2);
 
 
     // TURRET
@@ -56,7 +58,7 @@ public class OI {
 
 
     // DEPLOYMENT
-    Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY());};
+    Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY(), operator.getLeftY());};
     Grain gDeployment = new Grain(deployment, noTC, deployment);
     Robot.mill.addGrain(gDeployment);
     }
@@ -74,13 +76,11 @@ public class OI {
         Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
         Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
-        Procedure delayFeeder = () -> {HAL.feeder.delay_feed(1.5);};
+        //Procedure delayFeeder = () -> {HAL.feeder.delay_feed(1.5);};
         TC releasedX = () -> {return !(driver.getButtonStateX());};
         TC releasedB = ()->{return !(driver.getButtonStateB());};
         Grain gIntervalFeeder = new Grain(intervalFeeder, releasedRBump, stopFeed);
-        Grain gDelayFeeder = new Grain(delayFeeder, releasedX, stopFeed);
-
-        
+        //Grain gDelayFeeder = new Grain(delayFeeder, releasedX, stopFeed);
 
 
         // CONVEYOR
@@ -97,11 +97,15 @@ public class OI {
         //TRIGGER
         Procedure trig = () -> {HAL.triggered.spinMedium();};
         Procedure trigno = () -> {HAL.triggered.off();};
+        Procedure triggerOut = () -> {HAL.triggered.out();};
+        Procedure triggerOutSlow = () -> {HAL.triggered.outSlow();};
         
         Grain xTriggerFire = new Grain(trig, releasedX, trigno);
         TC releasedY = () -> {return (!driver.getButtonStateY());};
         Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
         Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
+        Grain gTriggerOut = new Grain(triggerOut, releasedLBump, trigno);
+        Grain gTriggerOutSlow = new Grain (triggerOutSlow, releasedRBump, trigno);
 
 
 
@@ -113,6 +117,8 @@ public class OI {
         // SHOOTER
         Procedure shooter = () -> {HAL.shoot.Run();};
         Procedure stop = () -> {HAL.shoot.stop();};
+
+        Procedure shooterClose = () -> {HAL.shoot.shooterFire(Field.shooterClose);};
         TC releasedA = ()->{return !(driver.getButtonStateA());};
         Grain shoot = new Grain(shooter, releasedA, stop);
 
@@ -198,11 +204,11 @@ public class OI {
 
         
         if(driver.getButtonStateX()){
-            //Robot.mill.addGrain(xFeederFire);
-            double startTimerDelay3 = Timer.getFPGATimestamp();
+            Robot.mill.addGrain(xFeederFire);
+            //double startTimerDelay3 = Timer.getFPGATimestamp();
             Robot.mill.addGrain(xConveyorFire);
             Robot.mill.addGrain(xTriggerFire);
-            Robot.mill.addGrain(gDelayFeeder);
+            //Robot.mill.addGrain(gDelayFeeder);
         }
 
         if(driver.getButtonStateY()){
@@ -224,6 +230,7 @@ public class OI {
         if(driver.getButtonStateLeftBumper()){
             Robot.mill.addGrain(gUnfeed);
             Robot.mill.addGrain(gconveyout);
+            Robot.mill.addGrain(gTriggerOut);
             //Robot.mill.addGrain(Glimeback);
         }
 
@@ -231,6 +238,7 @@ public class OI {
         if(driver.getButtonStateRightBumper()){
             Robot.mill.addGrain(gConvey);
             Robot.mill.addGrain(gFeed);
+            Robot.mill.addGrain(gTriggerOutSlow);
             //  Robot.mill.addGrain(gIntervalFeeder);
             //Robot.mill.addGrain(gDelayFeeder);
         }
@@ -281,8 +289,5 @@ public class OI {
             Robot.mill.addGrain(self);
         }
 
-        
-
-    
     }
 }

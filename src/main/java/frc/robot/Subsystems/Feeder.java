@@ -44,7 +44,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void fire(){
-    feeder.set(ControlMode.PercentOutput, 0.3);
+    feeder.set(ControlMode.PercentOutput, 0.7);
   }
 
   public void unfeed(){
@@ -82,7 +82,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
       // if (Timer.getFPGATimestamp() - startDelayTimer < delay){
       //   feeder.set(0);
       // }
-      if (Timer.getFPGATimestamp() -  < delay){
+      if (Timer.getFPGATimestamp() - startDelayTimer < delay){
         feeder.set(0);
       }
       else{
