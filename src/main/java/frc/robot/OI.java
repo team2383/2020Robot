@@ -278,7 +278,7 @@ public class OI {
         }
 
         if(operator.getButtonStateA()){
-           // Robot.mill.addGrain(gTest);
+           Robot.mill.addGrain(gTest);
         }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){

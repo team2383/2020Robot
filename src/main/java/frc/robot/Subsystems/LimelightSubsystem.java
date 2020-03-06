@@ -70,12 +70,12 @@ public class LimelightSubsystem {
     public double getDistanceFromTarget()
     {
       //Units: Inches
-      double h1 = 24.5; //need to confirm21
+      double h1 = 21.5; //need to confirm21
       double h2 = 91.5; //need to confirm81
       double netHeight = h2-h1;
       //Unit: Degrees
       double a1 = yOffset();
-      double a2 = 90-62.5; //need to confirm
+      double a2 = 90-54.5; //need to confirm
       double netAngle = a1+a2;
     
       double distance = netHeight / (Math.tan(Pathfinder.d2r(netAngle)) );

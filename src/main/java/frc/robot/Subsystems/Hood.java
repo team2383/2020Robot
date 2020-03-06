@@ -18,7 +18,7 @@ public class Hood {
 
     public void slowMoveUP (){
         double speed = hoodc.getMotorOutputPercent();
-        if(this.getHoodPosition() > 5750) { //6400 is all the way up
+        if(this.getHoodPosition() > 6003 - 50) { //6400 is all the way up
             if (speed < 0){
                 hoodc.set(ControlMode.PercentOutput, 0);
             }
@@ -26,6 +26,7 @@ public class Hood {
         else {
             hoodc.set(ControlMode.PercentOutput, -0.15);
         }
+        // hoodc.set(ControlMode.PercentOutput, -0.15);
     }
 
 
@@ -39,6 +40,7 @@ public class Hood {
         else {
             hoodc.set(ControlMode.PercentOutput, 0.15);
         }
+        // hoodc.set(ControlMode.PercentOutput, 0.15);
     }
 
 

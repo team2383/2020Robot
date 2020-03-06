@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.FollowTrajectory2;
+import frc.robot.Field;
 import frc.robot.ninjaLib.HelperCommand;
 import frc.robot.ninjaLib.PathLoader;
 import jaci.pathfinder.Pathfinder;
@@ -124,17 +125,29 @@ public class Drivetrain{
 		return rightMaster.getSelectedSensorVelocity(0); // 16384.0 * RobotMap.getWheelCircumference();
   }
 
+  // public void limeAlign() {
+  //   if(limelight.xOffset() >= 2.0){
+  //     // arcade(limelight.xOffset()/27 + .15,0);
+  //     arcade(.4,0);
+  //   }
+  //   else if(limelight.xOffset() <= -2.0){
+  //     // arcade(limelight.xOffset()/27 - .15,0);
+  //     arcade(-.4,0);
+  //   }
+  //   //double divisor = 30;
+  //   //arcade(offset/divisor,0);
+  // }
+
   public void limeAlign() {
-    if(limelight.xOffset() >= 1){
+    if(limelight.xOffset() >= 2.0){
       // arcade(limelight.xOffset()/27 + .15,0);
-      arcade(.328,0);
+      arcade(.4,0);
     }
-    else if(limelight.xOffset() <= -1){
+    else if(limelight.xOffset() <= -2.0){
       // arcade(limelight.xOffset()/27 - .15,0);
-      arcade(-.328,0);
+      arcade(-.4,0);
     }
-    //double divisor = 30;
-    //arcade(offset/divisor,0);
+
   }
 
   public boolean pivoted(){
@@ -145,22 +158,30 @@ public class Drivetrain{
   public void limeApache() {
     double xOffset = limelight.xOffset();
     double area = limelight.area();
-    double approachSpeed  = .32 / area;
+    double approachSpeed  = -0.402*Math.log(area) + 0.9112;
     boolean hasTarget = limelight.hasTargets();
-    if (xOffset > -27 && xOffset <= -1 && hasTarget == true){
-        arcade(.328, approachSpeed + .22);
-    }  
-    else if (xOffset < 27 && xOffset >= 1 && hasTarget == true){
-        arcade(.328, approachSpeed);
+    if (4.8 < area){
+      Field.maxArea = false;
     }
-    else if (xOffset > -1 && xOffset < 0 && hasTarget == true){
-      arcade(.328, approachSpeed);
-    }
-    else if (xOffset >= 0 && xOffset < 1 && hasTarget == true){
-      arcade(.328, approachSpeed);
+    
+    else if (Field.maxArea){
+      if (xOffset > -27 && xOffset <= -1 && hasTarget == true){
+          arcade(-.4, approachSpeed);
+      }  
+      else if (xOffset < 27 && xOffset >= 1 && hasTarget == true){
+          arcade(.4, approachSpeed);
+      }
+      else if (xOffset > -1 && xOffset < 0 && hasTarget == true){
+        arcade(0, approachSpeed);
+      }
+      else if (xOffset >= 0 && xOffset < 1 && hasTarget == true){
+        arcade(0, approachSpeed);
+      }
     }
     else{
       arcade(0, 0.0);
+      Field.maxArea = true;
+
     }
   }
 

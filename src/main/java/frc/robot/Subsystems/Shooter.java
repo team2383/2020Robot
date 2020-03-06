@@ -40,7 +40,7 @@ public class Shooter{
 
   }
   
-  public double desiredRPM = 4700; //Max RPM is around 6280
+  public double desiredRPM = 3600; //Max RPM is around 6280
 
   public void Run() {
     shootFollower.follow(shootMaster);
