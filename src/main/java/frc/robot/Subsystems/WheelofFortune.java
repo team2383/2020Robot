@@ -41,12 +41,12 @@ public class WheelofFortune{
     
   }
 
-  public void wheelie(){
+  public void wheelieSimple(){
     wheelGo.set(ControlMode.PercentOutput, 0.5);
   }
 
 
-  public void wheelieControl() throws InterruptedException {
+  public void wheelie(){
     //sensor control
     String gameData;
     String colorString;
@@ -108,21 +108,8 @@ public class WheelofFortune{
           break;
       }
     } else {
-      //Rotation Control
-      for(int x = 0; x < 8;){
-        Color detectedColorDos = m_colorSensor.getColor();
-        ColorMatchResult match2 = m_colorMatcher.matchClosestColor(detectedColorDos);
-  
-        wheelGo.set(ControlMode.PercentOutput, 0.5);
-        if(match.color == match2.color){
-          wait(300);
-          x = x + 1;
-          
-        }
-  
-        break;
-      }
-      
+      wheelGo.set(ControlMode.PercentOutput, 0.5);
+            
 
     }
     

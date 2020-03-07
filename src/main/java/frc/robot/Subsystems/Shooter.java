@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.HAL;
 import frc.robot.RobotMap;
+import frc.robot.Field;
 
 
 public class Shooter{
@@ -40,9 +41,23 @@ public class Shooter{
 
   }
   
-  public double desiredRPM = 3600; //Max RPM is around 6280
+  public double desiredRPM = 3500; //Max RPM is around 6280
 
   public void Run() {
+    // if(HAL.limelight.getDistanceFromTarget() > 290){
+    //   desiredRPM = 5700;
+
+    // }
+    // else if(HAL.limelight.getDistanceFromTarget() < 100){
+    //   desiredRPM = 3500;
+
+    // }
+    // else{
+        // shootFollower.follow(shootMaster);
+        // double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
+        // shootMaster.set(ControlMode.Velocity, velocity);
+
+    // }
     shootFollower.follow(shootMaster);
     double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
     shootMaster.set(ControlMode.Velocity, velocity);
@@ -120,6 +135,7 @@ public double getClosedLoopError(){
   public void stop(){
     shootMaster.set(0);
     shootFollower.set(0);
+    Field.limelightElisa = false;
     System.out.println("MAX RPM: "+maxRPM);
     System.out.println("MIN RPM: " + minRPM);
     System.out.println("Min was set: "+minSet);

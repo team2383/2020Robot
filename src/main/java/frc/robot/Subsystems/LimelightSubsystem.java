@@ -4,6 +4,8 @@ package frc.robot.Subsystems;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.HAL;
+import frc.robot.Field;
+
 import jaci.pathfinder.Pathfinder;
 
 
@@ -103,6 +105,14 @@ public class LimelightSubsystem {
       double angle = hoodAngle; //radians
       double output = Math.sqrt((2*386.09*this.getDistanceFromTarget())/(Math.sin(2*angle)));
       return output;
+    }
+    public void limelightOnOff(){
+      if(Field.limelightElisa){
+        setPipeline(1);
+      }
+      else{
+        setPipeline(3);
+      }
     }
 
 

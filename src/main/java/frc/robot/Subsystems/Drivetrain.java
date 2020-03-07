@@ -15,6 +15,7 @@ import jaci.pathfinder.Pathfinder;
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
+import static frc.robot.HAL.spool;
 
 import static frc.robot.HAL.limelight;
 
@@ -80,6 +81,16 @@ public class Drivetrain{
   
   public void arcade(double move, double turn){
     drive.arcadeDrive(move,turn);
+    if(Field.spooltoggled){
+      spool.setB(move);
+    }
+    else{
+      spool.off();
+    }
+  }
+
+  public double getoutput(){
+    return leftMaster.get();
   }
 
 
@@ -183,6 +194,11 @@ public class Drivetrain{
       Field.maxArea = true;
 
     }
+  }
+
+  public void drivelimeoff(){
+    arcade(0, 0);
+    Field.limelightElisa = false;
   }
 
   HelperCommand help = new HelperCommand(false);

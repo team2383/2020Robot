@@ -18,6 +18,7 @@ public class OI {
     Gamepad driver = new Gamepad(0);
     public Gamepad2 operator = new Gamepad2(1);
     public Gamepad test = new Gamepad(2);
+    // HAL.limelight.setPipeline(3);
 
     
     public OI(){
@@ -25,6 +26,8 @@ public class OI {
     //ACTIVE LISTENERS + SENDABLECOMMANDS
 
     Field.operatorCool = true;
+    Field.limelightElisa = false;
+    // HAL.limelight.setPipeline(3);
     
     //1 FOOT
     Button trajectory = new JoystickButton(operator, Gamepad2.BUTTON_A);
@@ -43,6 +46,10 @@ public class OI {
     // Procedure driveClimb = () ->{HAL.drive.individualBoomer(test.getLeftY()*.6, test.getRightY()*.6);}; 
     // Grain e2 = new Grain(driveClimb,noTC,driveClimb);
     // Robot.mill.addGrain(e2);
+
+    Procedure poopBrainetc = () ->{HAL.limelight.limelightOnOff();};
+    Grain donepoop = new Grain(poopBrainetc, noTC, poopBrainetc);
+    Robot.mill.addGrain(donepoop);
 
 
     // TURRET
@@ -125,11 +132,11 @@ public class OI {
 
         // HOOD
         Procedure hoodmanual = () -> {HAL.hood.slowMoveUP();};
-        TC releasedDUP = () ->{return !driver.getDPadUp();};
+        TC releasedDUP = () ->{return !operator.getDPadUp();};
         Procedure hoodoff = () -> {HAL.hood.off();};
 
         Procedure hoodmanualdown = () -> {HAL.hood.slowMoveDown();};
-        TC releasedDDown = () ->{return !driver.getDPadDown();};
+        TC releasedDDown = () ->{return !operator.getDPadDown();};
         Grain hoodUp = new Grain (hoodmanual, releasedDUP, hoodoff);
         Grain hoodDown = new Grain (hoodmanualdown, releasedDDown, hoodoff);
 
@@ -162,8 +169,30 @@ public class OI {
         TC releasedRightBumper2 = () -> {return (HAL.selfClimb.run);};
         Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
         Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
+        
+        // Procedure spooltogg = () -> {HAL.spool.toggle();};
+        // TC RTOperator = () -> {return (HAL.selfClimb.run);};
+        // Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
+        // Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
+        
+        Procedure spoolleft = () -> {HAL.spool.setL(0.5);};
+        TC releasedminus = () -> {return !operator.getRawButton(9);};
+        Procedure spoolLoff = () -> {HAL.spool.setL(0);};
+        Grain GspoolL = new Grain (spoolleft, releasedminus, spoolLoff);
+        
+        Procedure spoolright = () -> {HAL.spool.setR(0.5);};
+        TC releasedplus = () -> {return !operator.getRawButton(10);};
+        Procedure spoolRoff = () -> {HAL.spool.setR(0);};
+        Grain GspoolR = new Grain (spoolright, releasedplus, spoolRoff);
 
-
+        Procedure spoolleftB = () -> {HAL.spool.setL(-0.5);};
+        TC releasedcircle = () -> {return !operator.getRawButton(16);};
+        Grain GspoolLB = new Grain (spoolleftB, releasedcircle, spoolLoff);
+        
+        Procedure spoolrightB = () -> {HAL.spool.setR(-0.5);};
+        TC releasedhome = () -> {return !operator.getRawButton(15);};
+        Grain GspoolRB = new Grain (spoolrightB, releasedhome, spoolRoff);
+        
         //BUDDYCLIMB
         Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
         TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
@@ -171,7 +200,7 @@ public class OI {
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
         
         Procedure limealign = () -> {HAL.drive.limeAlign();};
-        Procedure driveoff = () -> {HAL.drive.arcade(0, 0);};
+        Procedure driveoff = () -> {HAL.drive.drivelimeoff();};
         Grain Glimealign = new Grain (limealign, releasedB, driveoff); 
 
         Procedure limeapproach = () -> {HAL.drive.limeApache();};
@@ -187,6 +216,12 @@ public class OI {
         Procedure end = () -> {HAL.drive.endTest();};
         Grain gTest = new Grain (teleAuto, releasedA2,end);
 
+        //Color Wheel
+        Procedure wheelGo = () -> {HAL.wheelofFortune.wheelie();};
+        TC dRightRelease = () -> {return !operator.getDPadRight();};
+        Procedure endWheel = () -> {HAL.wheelofFortune.off();};
+        Grain wheelMove = new Grain (wheelGo, dRightRelease,endWheel);
+
 
 
         //button groups + initializing conditionals
@@ -195,10 +230,13 @@ public class OI {
         ///////////////////////////////////////
 
         if(driver.getButtonStateA()){
+             Field.limelightElisa = true;
             Robot.mill.addGrain(shoot);
         }
 
         if(driver.getButtonStateB()){
+            // HAL.limelight.setPipeline(1);
+            Field.limelightElisa = true;
             Robot.mill.addGrain(Glimealign);
         }
 
@@ -212,18 +250,20 @@ public class OI {
         }
 
         if(driver.getButtonStateY()){
+            // HAL.limelight.setPipeline(1);
+            Field.limelightElisa = true;
             Robot.mill.addGrain(Glimeapproach);
             // Robot.mill.addGrain(gIntervalTrigger);
         }
 
 
         if(driver.getDPadUp()){
-            Robot.mill.addGrain(hoodUp);
+            // Robot.mill.addGrain(hoodUp);
         }
 
         
         if(driver.getDPadDown()){
-            Robot.mill.addGrain(hoodDown);
+            // Robot.mill.addGrain(hoodDown);
         }
 
 
@@ -245,7 +285,8 @@ public class OI {
         
   
         if(driver.getRawButton(Gamepad.BUTTON_START)){
-            Field.limelightOn = true;
+            // HAL.limelight.setPipeline(1);
+            Field.limelightElisa = true;
             Robot.mill.addGrain(GlimelightHOn);
             // Robot.mill.addGrain(GlimelightTOn); 
         }
@@ -261,12 +302,15 @@ public class OI {
         ///////////////////////////////////////
 
         if(operator.getDPadUp()){
-            
+            Robot.mill.addGrain(hoodUp);
         } 
 
         if(operator.getDPadDown()){
-           
+            Robot.mill.addGrain(hoodDown);
         } 
+        if(operator.getDPadRight()){
+            Robot.mill.addGrain(wheelMove);
+        }
 
         if(operator.getButtonStateLeftBumper()){
             Field.operatorCool = false;
@@ -277,6 +321,34 @@ public class OI {
           Field.operatorCool = true;
         }
 
+        if(operator.getRawButton(7)){
+            Field.spooltoggled = false;
+        }
+
+        if(operator.getRawButton(8)){
+          
+          Field.spooltoggled = true;
+        }
+        
+        if(operator.getRawButton(9)){
+          
+            Robot.mill.addGrain(GspoolL);
+          }
+          
+        if(operator.getRawButton(10)){
+          
+            Robot.mill.addGrain(GspoolR);
+          }
+
+          if(operator.getRawButton(16)){
+          
+            Robot.mill.addGrain(GspoolLB);
+          }
+          
+        if(operator.getRawButton(15)){
+          
+            Robot.mill.addGrain(GspoolRB);
+          }
         if(operator.getButtonStateA()){
            Robot.mill.addGrain(gTest);
         }
@@ -284,6 +356,10 @@ public class OI {
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
             Robot.mill.addGrain(buddy);
         }
+
+        // if(operator.getRawButtonPressed(9)){
+        //     Robot.mill.addGrain(buddy);
+        // }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
             Robot.mill.addGrain(self);

@@ -17,6 +17,8 @@ public class RobotMap{
     public static int turretPort = 13;
     public static int deploymentPort = 14;
     public static int deployment2Port = 15;
+    public static int spoolLPort = 17;
+    public static int spoolRPort = 18;
     
     public static int s1fchannel = 7; 
     public static int s1rchannel = 6;
@@ -55,6 +57,8 @@ public class RobotMap{
   
   	//talon V and motio V are shared
 	public static double kDrive_Motion_Velocity = 6.0;		// for turn
-	public static double kDrive_Motion_Acceleration = 13.0;
+  public static double kDrive_Motion_Acceleration = 13.0;
+  
+  
 
 }

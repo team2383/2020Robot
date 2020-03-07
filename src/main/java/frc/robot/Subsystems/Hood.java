@@ -20,10 +20,23 @@ public class Hood {
         double speed = hoodc.getMotorOutputPercent();
         if(this.getHoodPosition() > 6003 - 50) { //6400 is all the way up
             if (speed < 0){
+
                 hoodc.set(ControlMode.PercentOutput, 0);
             }
         }
         else {
+            // if(HAL.limelight.getDistanceFromTarget() > 290){
+                //   moveto(3425);
+
+            // }
+            // else if(HAL.limelight.getDistanceFromTarget() < 100){
+                //   moveto(0);
+
+            // }
+            // else{
+                // hoodc.set(ControlMode.PercentOutput, -0.15);
+
+            // }
             hoodc.set(ControlMode.PercentOutput, -0.15);
         }
         // hoodc.set(ControlMode.PercentOutput, -0.15);
