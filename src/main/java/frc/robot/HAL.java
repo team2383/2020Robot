@@ -28,5 +28,6 @@ public class HAL {
     public static WheelofFortune wheelofFortune = new WheelofFortune();
     public static Spoolers spool = new Spoolers();
     
+    public static WheelLifter lifter = new WheelLifter();
     // public static Telescope telescope = new Telescope();
 }

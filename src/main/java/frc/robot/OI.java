@@ -198,6 +198,13 @@ public class OI {
         TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
         Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
         Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
+
+        //WHEEL LIFTER
+        Procedure lift = () -> {HAL.lifter.prepLift();};
+        TC runLift = () -> {return (HAL.lifter.run);};
+        Procedure retract = () -> {HAL.lifter.stopLift();};
+        Grain gLift = new Grain (lift, runLift, retract); 
+        
         
         Procedure limealign = () -> {HAL.drive.limeAlign();};
         Procedure driveoff = () -> {HAL.drive.drivelimeoff();};
@@ -363,6 +370,10 @@ public class OI {
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
             Robot.mill.addGrain(self);
+        }
+
+        if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){
+            Robot.mill.addGrain(gLift);
         }
 
     }
