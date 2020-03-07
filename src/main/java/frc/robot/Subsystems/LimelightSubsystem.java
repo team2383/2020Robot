@@ -107,7 +107,7 @@ public class LimelightSubsystem {
       return output;
     }
     public void limelightOnOff(){
-      if(Field.limelightElisa){
+      if(Field.limelightHeadache){
         setPipeline(1);
       }
       else{

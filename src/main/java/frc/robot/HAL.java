@@ -22,12 +22,13 @@ public class HAL {
     // public static Turret turret = new Turret();
     public static Hood hood = new Hood();
     public static LimelightSubsystem limelight = new LimelightSubsystem();
-    public static Arm arm = new Arm();
+    // public static Arm arm = new Arm();
     public static SelfClimb selfClimb = new SelfClimb();
-    public static BuddyClimb buddyClimb = new BuddyClimb();
+    // public static BuddyClimb buddyClimb = new BuddyClimb();
     public static WheelofFortune wheelofFortune = new WheelofFortune();
     public static Spoolers spool = new Spoolers();
     
-    public static WheelLifter lifter = new WheelLifter();
+    // public static WheelLifter lifter = new WheelLifter();
+    public static WheelLifter2 lift2 = new WheelLifter2();
     // public static Telescope telescope = new Telescope();
 }

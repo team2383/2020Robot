@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.robot.RobotMap;
@@ -25,18 +26,7 @@ public class Hood {
             }
         }
         else {
-            // if(HAL.limelight.getDistanceFromTarget() > 290){
-                //   moveto(3425);
-
-            // }
-            // else if(HAL.limelight.getDistanceFromTarget() < 100){
-                //   moveto(0);
-
-            // }
-            // else{
-                // hoodc.set(ControlMode.PercentOutput, -0.15);
-
-            // }
+  
             hoodc.set(ControlMode.PercentOutput, -0.15);
         }
         // hoodc.set(ControlMode.PercentOutput, -0.15);
@@ -55,6 +45,17 @@ public class Hood {
         }
         // hoodc.set(ControlMode.PercentOutput, 0.15);
     }
+    // public void johnIsJohn(){
+    //     if(HAL.limelight.getDistanceFromTarget() > 290){
+    //         moveto(3425);
+
+    //     }
+    //     else if(HAL.limelight.getDistanceFromTarget() < 100){
+    //         moveto(0);
+
+    //     }
+   
+    // }
 
 
     public void moveto(double pos){

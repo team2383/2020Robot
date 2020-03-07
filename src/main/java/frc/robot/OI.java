@@ -26,7 +26,7 @@ public class OI {
     //ACTIVE LISTENERS + SENDABLECOMMANDS
 
     Field.operatorCool = true;
-    Field.limelightElisa = false;
+    Field.limelightHeadache = false;
     // HAL.limelight.setPipeline(3);
     
     //1 FOOT
@@ -158,10 +158,10 @@ public class OI {
 
 
         //ARM
-        Procedure armed = () -> {HAL.arm.activate();};
-        TC releasedB2 = () -> {return !operator.getButtonStateB();};
-        Procedure disarm = () -> {HAL.arm.prepClimb();};
-        Grain arming = new Grain (armed, releasedB2, disarm);
+        // Procedure armed = () -> {HAL.arm.activate();};
+        // TC releasedB2 = () -> {return !operator.getButtonStateB();};
+        // Procedure disarm = () -> {HAL.arm.prepClimb();};
+        // Grain arming = new Grain (armed, releasedB2, disarm);
 
 
         //SELFCLIMB
@@ -194,16 +194,21 @@ public class OI {
         Grain GspoolRB = new Grain (spoolrightB, releasedhome, spoolRoff);
         
         //BUDDYCLIMB
-        Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
-        TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
-        Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
-        Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
+        // Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
+        // TC releasedLeftBumper2 = () -> {return (HAL.buddyClimb.run);};
+        // Procedure buddycease = () -> {HAL.buddyClimb.stopClimb();};
+        // Grain buddy = new Grain (buddyclimb, releasedLeftBumper2, buddycease); 
 
         //WHEEL LIFTER
-        Procedure lift = () -> {HAL.lifter.prepLift();};
-        TC runLift = () -> {return (HAL.lifter.run);};
-        Procedure retract = () -> {HAL.lifter.stopLift();};
-        Grain gLift = new Grain (lift, runLift, retract); 
+        // Procedure lift = () -> {HAL.lifter.prepLift();};
+        // TC runLift = () -> {return (HAL.lifter.run);};
+        // Procedure retract = () -> {HAL.lifter.stopLift();};
+        // Grain gLift = new Grain (lift, runLift, retract); 
+
+        Procedure wheelLift = () -> {HAL.lift2.wheelUp();};
+        Procedure wheelDown = () -> {HAL.lift2.wheelDown();};
+        TC releasedRightDPad = () -> {return !operator.getDPadRight();};
+        Grain wheelFinal = new Grain (wheelLift, releasedRightDPad, wheelDown);
         
         
         Procedure limealign = () -> {HAL.drive.limeAlign();};
@@ -229,6 +234,11 @@ public class OI {
         Procedure endWheel = () -> {HAL.wheelofFortune.off();};
         Grain wheelMove = new Grain (wheelGo, dRightRelease,endWheel);
 
+        //Hood Move w A
+        // Procedure hoodCheck = () -> {HAL.hood.johnIsJohn();};
+        // // Procedur
+        // Grain hoodie = new Grain(hoodCheck, releasedA,hoodoff);
+
 
 
         //button groups + initializing conditionals
@@ -237,13 +247,15 @@ public class OI {
         ///////////////////////////////////////
 
         if(driver.getButtonStateA()){
-             Field.limelightElisa = true;
+            Field.limelightHeadache = true;
             Robot.mill.addGrain(shoot);
+            // Robot.mill.addGrain(hoodie);
+
         }
 
         if(driver.getButtonStateB()){
             // HAL.limelight.setPipeline(1);
-            Field.limelightElisa = true;
+            Field.limelightHeadache = true;
             Robot.mill.addGrain(Glimealign);
         }
 
@@ -258,7 +270,7 @@ public class OI {
 
         if(driver.getButtonStateY()){
             // HAL.limelight.setPipeline(1);
-            Field.limelightElisa = true;
+            Field.limelightHeadache = true;
             Robot.mill.addGrain(Glimeapproach);
             // Robot.mill.addGrain(gIntervalTrigger);
         }
@@ -293,7 +305,7 @@ public class OI {
   
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             // HAL.limelight.setPipeline(1);
-            Field.limelightElisa = true;
+            Field.limelightHeadache = true;
             Robot.mill.addGrain(GlimelightHOn);
             // Robot.mill.addGrain(GlimelightTOn); 
         }
@@ -361,7 +373,7 @@ public class OI {
         }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
-            Robot.mill.addGrain(buddy);
+            // Robot.mill.addGrain(buddy);
         }
 
         // if(operator.getRawButtonPressed(9)){
@@ -373,7 +385,7 @@ public class OI {
         }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){
-            Robot.mill.addGrain(gLift);
+            Robot.mill.addGrain(wheelFinal);
         }
 
     }

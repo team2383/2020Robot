@@ -9,7 +9,7 @@ public class Field {
     static public boolean operatorCool = true;
     static public boolean limelightOn = false;
     static public boolean spooltoggled = false;
-    static public boolean limelightElisa = false;
+    static public boolean limelightHeadache = false;
 
     static public boolean maxArea = true;
 

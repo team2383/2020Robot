@@ -78,7 +78,7 @@ public class Robot extends TimedRobot{
       autoCommand.cancel();
     }
     SmartDashboard.putNumber("Is on", 10);
-    HAL.limelight.setPipeline(1);
+    HAL.limelight.setPipeline(3);
     HAL.drive.configMotorController();
     double startDelayTimer2 = Timer.getFPGATimestamp();
   }

@@ -198,7 +198,7 @@ public class Drivetrain{
 
   public void drivelimeoff(){
     arcade(0, 0);
-    Field.limelightElisa = false;
+    Field.limelightHeadache = false;
   }
 
   HelperCommand help = new HelperCommand(false);

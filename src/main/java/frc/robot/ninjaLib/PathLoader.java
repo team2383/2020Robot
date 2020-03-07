@@ -19,7 +19,7 @@ public class PathLoader {
 							")");
 
 		SmartDashboard.putString("Path Hash", pathHash);
-		Trajectory trajectory;
+		Trajectory trajectory; // = Pathfinder.generate(null, null);
 		File trajectoryFile = new File("/home/lvuser/paths/" + pathHash + ".csv");
 		System.out.println("path " + pathHash + " does not exist");
 		trajectory = Pathfinder.generate(points, config);
@@ -39,7 +39,12 @@ public class PathLoader {
 		// } else {
 		// 	System.out.println("path " + pathHash + " found");
 
-		// 	trajectory = Pathfinder.readFromCSV(trajectoryFile);
+		// 	try {
+		// 		trajectory = Pathfinder.readFromCSV(trajectoryFile);
+		// 	} catch (IOException e) {
+		// 		// TODO Auto-generated catch block
+		// 		e.printStackTrace();
+		// 	}
 
 		// 	System.out.println("path " + pathHash + ".csv read from file");
 		// }
