@@ -169,9 +169,10 @@ public class Drivetrain{
   public void limeApache() {
     double xOffset = limelight.xOffset();
     double area = limelight.area();
-    double approachSpeed  = -0.402*Math.log(area) + 0.9112;
+    // double approachSpeed  = -0.402*Math.log(area) + 0.9112;
+    double approachSpeed  = -0.0233*area*area*area +0.1863*area*area - .5726*area + 1.295 ;
     boolean hasTarget = limelight.hasTargets();
-    if (4.8 < area){
+    if (4.65 < area){
       Field.maxArea = false;
     }
     
@@ -192,7 +193,6 @@ public class Drivetrain{
     else{
       arcade(0, 0.0);
       Field.maxArea = true;
-
     }
   }
 

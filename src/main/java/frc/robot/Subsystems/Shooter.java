@@ -41,28 +41,29 @@ public class Shooter{
 
   }
   
-  public double desiredRPM = 3500; //Max RPM is around 6280
+  public double desiredRPM; //Max RPM is around 6280
 
   public void Run() {
     shootFollower.follow(shootMaster);
-    if(HAL.limelight.getDistanceFromTarget() > 290){
-      desiredRPM = 5700;
+    // if(HAL.limelight.area() >= 4.2){
+    //   desiredRPM = 3500;
+    // }
+    // else if(HAL.limelight.area() <= 1.2){
+    //   desiredRPM = 5700;
+    // }
+    // else{
+    //     // shootFollower.follow(shootMaster);
+    //     desiredRPM = 5000;
+    //     // double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
+    //     // shootMaster.set(ControlMode.Velocity, velocity);
 
-    }
-    else if(HAL.limelight.getDistanceFromTarget() < 100){
-      desiredRPM = 3500;
-
-    }
-    else{
-        shootFollower.follow(shootMaster);
-        double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
-        shootMaster.set(ControlMode.Velocity, velocity);
-
-    }
-    shootFollower.follow(shootMaster);
-    // double velocity = desiredRPM * 2048.0 / 600.0; //was 2048
-    // shootMaster.set(ControlMode.Velocity, velocity);
+    // }
+    // shootFollower.follow(shootMaster);
+    desiredRPM = 5500;
+    double velocity = Field.desiredRPM * 2048.0 / 600.0; //was 2048
+    shootMaster.set(ControlMode.Velocity, velocity);
   }
+
 
   public void shooterFire(double desiredRPM2) {
     shootFollower.follow(shootMaster);
@@ -77,7 +78,7 @@ public class Shooter{
 
   public double differential(){
     double currentRPM = nativeToRPM(shootMaster.getSelectedSensorVelocity(), 2048);
-    return desiredRPM + currentRPM;
+    return desiredRPM - currentRPM;
   }
 
   public static double nativeToRPM(double nativeUnits, double countsPerRevolution) {
@@ -102,16 +103,16 @@ public double getClosedLoopError(){
 
 
   public void configMotorController(){ //double nativeoutput
-    //desired RPM : 5040
+    // desired RPM : 5040
     // double maxvel = 21000.0;
     // double currentvel = shootMaster.getSelectedSensorVelocity();
     // double error = ((maxvel*nativeoutput) - currentvel);
     // double clerror = shootMaster.getClosedLoopError();
     shootMaster.configClosedloopRamp(0.25);
-    shootMaster.config_kP(0, 0.25); //right now 0.071                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-    shootMaster.config_kI(0, 0.000115); //0.000115 || right now 0.0
-    shootMaster.config_kD(0, 0.0); //0.0
-    shootMaster.config_kF(0, 0.0475); //0.065(calculated mid Feb) //.0475 (calculated 2/25)
+    shootMaster.config_kP(0, Field.shooter_kP); //right now 0.071 3/7// .25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+    shootMaster.config_kI(0, Field.shooter_kI); //0.000115 || right now 0.0 3/7//0.000115
+    shootMaster.config_kD(0, Field.shooter_kD); //0.0 3/7//0.0
+    shootMaster.config_kF(0, Field.shooter_kF); //0.065(calculated mid Feb) //.0475 (calculated 2/25) 3/7//0.0475
     shootFollower.follow(shootMaster);
     // shootMaster.setInverted(true);
     // shootFollower.setInverted(false);

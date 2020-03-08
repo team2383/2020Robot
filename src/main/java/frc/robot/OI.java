@@ -38,7 +38,7 @@ public class OI {
     delayfeed.whenPressed(new DelayFeed(0.5));
 
     // DRIVE
-    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.8),(-driver.getLeftY()*.8));};
+    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.90),(-driver.getLeftY()*.90));};
     TC noTC = ()->{return false;}; 
     Grain e = new Grain(drive,noTC,drive);
     Robot.mill.addGrain(e);
@@ -151,10 +151,10 @@ public class OI {
         
 
         //LIMELIGHT HOOD
-        Procedure limelightH = () -> {HAL.hood.limeH();};
-        Procedure limeoffH = () -> {HAL.hood.off();};
-        Grain GlimelightHOn = new Grain (limelightH, releaseStart, limelightH);
-        Grain GlimelightHOff = new Grain (limeoffH, releaseBack, limeoffH);
+        // Procedure limelightH = () -> {HAL.hood.limeH();};
+        // Procedure limeoffH = () -> {HAL.hood.off();};
+        // Grain GlimelightHOn = new Grain (limelightH, releaseStart, limelightH);
+        // Grain GlimelightHOff = new Grain (limeoffH, releaseBack, limeoffH);
 
 
         //ARM
@@ -235,9 +235,9 @@ public class OI {
         Grain wheelMove = new Grain (wheelGo, dRightRelease,endWheel);
 
         //Hood Move w A
-        // Procedure hoodCheck = () -> {HAL.hood.johnIsJohn();};
+        Procedure hoodCheck = () -> {HAL.hood.johnIsJohn();};
         // // Procedur
-        // Grain hoodie = new Grain(hoodCheck, releasedA,hoodoff);
+        Grain hoodie = new Grain(hoodCheck, releasedA,hoodoff);
 
 
 
@@ -249,7 +249,7 @@ public class OI {
         if(driver.getButtonStateA()){
             Field.limelightHeadache = true;
             Robot.mill.addGrain(shoot);
-            // Robot.mill.addGrain(hoodie);
+            //Robot.mill.addGrain(hoodie);
 
         }
 
@@ -306,7 +306,7 @@ public class OI {
         if(driver.getRawButton(Gamepad.BUTTON_START)){
             // HAL.limelight.setPipeline(1);
             Field.limelightHeadache = true;
-            Robot.mill.addGrain(GlimelightHOn);
+            //Robot.mill.addGrain(GlimelightHOn);
             // Robot.mill.addGrain(GlimelightTOn); 
         }
 
@@ -387,6 +387,5 @@ public class OI {
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){
             Robot.mill.addGrain(wheelFinal);
         }
-
     }
 }

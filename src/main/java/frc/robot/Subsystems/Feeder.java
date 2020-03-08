@@ -44,7 +44,7 @@ public class Feeder extends StatefulSubsystem<Feeder.State>{
   }
 
   public void fire(){
-    feeder.set(ControlMode.PercentOutput, 0.7);
+    feeder.set(ControlMode.PercentOutput, 0.5);
   }
 
   public void unfeed(){

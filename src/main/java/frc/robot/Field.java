@@ -17,6 +17,14 @@ public class Field {
     static public double startTimerDelay2 = Timer.getFPGATimestamp();
     static public double shooterClose = 4000;
 
+    public static double shooter_kP = .31; //.29 //.31
+    public static double shooter_kI = 0.000; //0.001
+    public static double shooter_kD = 0;//0.1 //0.00
+    public static double shooter_kF = 0.0475;//0.0475
+    public static double desiredRPM = 5000;
+
+    
+
     // //short bitches only
     // static public double RPM = 3500;
     // static public double Hood = 0;

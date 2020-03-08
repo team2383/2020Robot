@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import frc.robot.auto.BaselineAuto;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot{
    HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
+  //  autoChooser.addOption("Left Simple", new BaselineAuto(false));
  }
 
  @Override
@@ -48,6 +50,12 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("Right Position", HAL.drive.getRightPosition());
     SmartDashboard.putNumber("currentTimeMilli", HAL.feeder.displayTimer());
     SmartDashboard.putNumber("Feeder Speed", HAL.feeder.getFeederSpeed());
+    // SmartDashboard.getNumber("kP", Field.shooter_kP);
+    // SmartDashboard.getNumber("kI", Field.shooter_kI);
+    // SmartDashboard.getNumber("kD", Field.shooter_kD);
+    // SmartDashboard.getNumber("kF", Field.shooter_kF);
+    // SmartDashboard.getNumber("Desired RPM", Field.desiredRPM);
+    //SmartDashboard.
   }
 @Override
  public void disabledInit() {
