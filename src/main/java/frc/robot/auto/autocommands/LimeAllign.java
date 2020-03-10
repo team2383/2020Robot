@@ -13,11 +13,9 @@ import frc.robot.HAL;
 
 public class LimeAllign extends Command {
 
-  double leftOutput;
-  double rightOutput;
+
   public LimeAllign() {
-    leftOutput = -HAL.limelight.xOffset()/29.8;
-    rightOutput = HAL.limelight.xOffset()/29/8;
+    double turn = HAL.limelight.xOffset()/29.8;
   }
 
   // Called just before this Command runs the first time
@@ -29,13 +27,15 @@ public class LimeAllign extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    while(HAL.limelight.xOffset() >= 2.0 || HAL.limelight.xOffset() <= -2.0){
-      HAL.drive.limeAlign();
-      //HAL.drive.arcade(0, rightOutput);
-      //HAL.drive.tank(leftOutput, rightOutput);
+      if(Math.abs(HAL.limelight.xOffset()) > 1){
+        HAL.drive.arcade(0, HAL.limelight.xOffset()/54 + 0.1);
+      }
+      else{
+        HAL.drive.arcade(0, 0);
+      }
+
     }
-    end();
-  }
+  
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

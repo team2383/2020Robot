@@ -22,15 +22,15 @@ public class Spoolers{
     }
 
     public void configmotorcontroller(){
-        spoolL.setNeutralMode(NeutralMode.Brake);
-        spoolR.setNeutralMode(NeutralMode.Brake);
+        spoolL.setNeutralMode(NeutralMode.Coast);
+        spoolR.setNeutralMode(NeutralMode.Coast);
     }
     public void setL(double speedL){
         spoolL.set(speedL);
     }
 
     public void setR(double speedR){
-        spoolR.set(speedR);
+        spoolR.set(-speedR);
     }
 
     public void setB(double speedB){

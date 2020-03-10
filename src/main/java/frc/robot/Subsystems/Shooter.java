@@ -59,7 +59,7 @@ public class Shooter{
 
     // }
     // shootFollower.follow(shootMaster);
-    desiredRPM = 5500;
+    desiredRPM = 2500;
     double velocity = Field.desiredRPM * 2048.0 / 600.0; //was 2048
     shootMaster.set(ControlMode.Velocity, velocity);
   }

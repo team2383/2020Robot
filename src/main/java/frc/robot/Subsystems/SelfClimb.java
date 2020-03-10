@@ -29,4 +29,18 @@ public class SelfClimb{
         run=false;
         toggle*=-1;
     }
+
+    public void startClimb(){
+        solenoid4.set(Value.kForward);
+        run=true;
+    }
+
+    public void endClimb(){
+        run=false;
+    }
+
+    public void retract(){
+        solenoid4.set(Value.kReverse);
+        run=true;
+    }
 }

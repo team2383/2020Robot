@@ -41,6 +41,14 @@ public class Deployment{
         deployment.set(speed1);
         deployment2.set(-speed2);
     }
+
+    public void setSpeedL(double speed){
+        deployment.set(speed);
+    }
+    
+    public void setSpeedR(double speed){
+        deployment2.set(speed);
+    }
     
     public void off(){
         deployment.set(0);

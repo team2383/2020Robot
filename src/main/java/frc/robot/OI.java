@@ -66,11 +66,17 @@ public class OI {
 
     // DEPLOYMENT
     Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY(), operator.getLeftY());};
+    Procedure deploymentL = () ->{HAL.deployment.setSpeedL(operator.getRightY());};
+    Procedure deploymentR = () ->{HAL.deployment.setSpeedR(operator.getRightY());};
+
+    Grain gDeploymentL = new Grain(deploymentL, noTC, deploymentL);
+    Grain gDeploymentR = new Grain(deploymentR, noTC, deploymentR);
     Grain gDeployment = new Grain(deployment, noTC, deployment);
     Robot.mill.addGrain(gDeployment);
+    // Robot.mill.addGrain(gDeploymentL);
+    
     }
 
-    
 
     public void listener(){
         // FEEDER
@@ -165,10 +171,17 @@ public class OI {
 
 
         //SELFCLIMB
-        Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
-        TC releasedRightBumper2 = () -> {return (HAL.selfClimb.run);};
-        Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
-        Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
+        //Procedure selfclimb = () -> {HAL.selfClimb.prepClimb();};
+        //TC releasedRightBumper2 = () -> {return (HAL.selfClimb.run);};
+        //Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
+        //Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
+        Procedure selfClimb = () -> {HAL.selfClimb.startClimb();};
+        TC done = () -> {return (HAL.selfClimb.run);};
+        Procedure endClimb = () -> {HAL.selfClimb.endClimb();};
+        Procedure retract = () -> {HAL.selfClimb.retract();};
+        Grain engage = new Grain (selfClimb, done, endClimb);
+        Grain disengage = new Grain (retract, done, endClimb);
+
         
         // Procedure spooltogg = () -> {HAL.spool.toggle();};
         // TC RTOperator = () -> {return (HAL.selfClimb.run);};
@@ -186,11 +199,11 @@ public class OI {
         Grain GspoolR = new Grain (spoolright, releasedplus, spoolRoff);
 
         Procedure spoolleftB = () -> {HAL.spool.setL(-0.5);};
-        TC releasedcircle = () -> {return !operator.getRawButton(16);};
+        TC releasedcircle = () -> {return !operator.getRawButton(14);};
         Grain GspoolLB = new Grain (spoolleftB, releasedcircle, spoolLoff);
         
         Procedure spoolrightB = () -> {HAL.spool.setR(-0.5);};
-        TC releasedhome = () -> {return !operator.getRawButton(15);};
+        TC releasedhome = () -> {return !operator.getRawButton(13);};
         Grain GspoolRB = new Grain (spoolrightB, releasedhome, spoolRoff);
         
         //BUDDYCLIMB
@@ -359,12 +372,12 @@ public class OI {
             Robot.mill.addGrain(GspoolR);
           }
 
-          if(operator.getRawButton(16)){
+          if(operator.getRawButton(14)){
           
             Robot.mill.addGrain(GspoolLB);
           }
           
-        if(operator.getRawButton(15)){
+        if(operator.getRawButton(13)){
           
             Robot.mill.addGrain(GspoolRB);
           }
@@ -373,7 +386,7 @@ public class OI {
         }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
-            // Robot.mill.addGrain(buddy);
+            Robot.mill.addGrain(disengage);
         }
 
         // if(operator.getRawButtonPressed(9)){
@@ -381,7 +394,7 @@ public class OI {
         // }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
-            Robot.mill.addGrain(self);
+            Robot.mill.addGrain(engage);
         }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){

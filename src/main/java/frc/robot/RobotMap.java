@@ -17,6 +17,7 @@ public class RobotMap{
     public static int turretPort = 13;
     public static int deploymentPort = 14;
     public static int deployment2Port = 15;
+    public static int wheelPort = 16; 
     public static int spoolLPort = 17;
     public static int spoolRPort = 18;
     
@@ -29,7 +30,7 @@ public class RobotMap{
     public static int s4fchannel = 1;
     public static int s4rchannel = 0;
 
-    public static int wheelPort = 16; 
+    
 
     
   // CONSTANTS
