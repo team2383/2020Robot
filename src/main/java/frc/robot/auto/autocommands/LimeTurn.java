@@ -21,12 +21,13 @@ public class LimeTurn extends Command {
   
     @Override
     protected void execute() {
-        if (HAL.limelight.hasTargets()){
-            drive.arcade(0, (limelight.xOffset()/54) + 0.1);;
-        }
-        else{
-            drive.arcade(0,0.4);
-        }
+        // if (HAL.limelight.hasTargets()){
+        //     drive.arcade(0, (limelight.xOffset()/54) + 0.1);;
+        // }
+        // else{
+        //     drive.arcade(0,0.4);
+        // }
+        HAL.drive.limeAlign();
     }
 
     @Override

@@ -38,10 +38,22 @@ public class OI {
     delayfeed.whenPressed(new DelayFeed(0.5));
 
     // DRIVE
+
     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.90),(-driver.getLeftY()*.90));};
-    TC noTC = ()->{return false;}; 
-    Grain e = new Grain(drive,noTC,drive);
+    Procedure operatorTank = () ->{HAL.drive.tank(operator.getLeftY() * .8, operator.getRightY() *.8);};
+    TC noTC = ()->{return false;};
+    TC handJobz = () -> {return Field.handJob;};
+    Grain e = new Grain(drive,handJobz,operatorTank);
+    // Grain e2 = new Grain(operatorTank,noTC,operatorTank);
+    // if (Field.handJob){ 
+        // Robot.mill.addGrain(e2);
+    // }
+    // else{
     Robot.mill.addGrain(e);
+    // }
+    
+    
+    
 
     // Procedure driveClimb = () ->{HAL.drive.individualBoomer(test.getLeftY()*.6, test.getRightY()*.6);}; 
     // Grain e2 = new Grain(driveClimb,noTC,driveClimb);
@@ -66,13 +78,16 @@ public class OI {
 
     // DEPLOYMENT
     Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY(), operator.getLeftY());};
-    Procedure deploymentL = () ->{HAL.deployment.setSpeedL(operator.getRightY());};
+    Procedure deploymentL = () ->{HAL.deployment.setSpeedL(operator.getLeftY());};
     Procedure deploymentR = () ->{HAL.deployment.setSpeedR(operator.getRightY());};
 
-    Grain gDeploymentL = new Grain(deploymentL, noTC, deploymentL);
+    //Grain gDeploymentL = new Grain(deploymentL, noTC, deploymentL);
     Grain gDeploymentR = new Grain(deploymentR, noTC, deploymentR);
-    Grain gDeployment = new Grain(deployment, noTC, deployment);
+    Grain gDeployment = new Grain(deploymentL, noTC, deploymentL);
     Robot.mill.addGrain(gDeployment);
+    Robot.mill.addGrain(gDeploymentR);
+
+
     // Robot.mill.addGrain(gDeploymentL);
     
     }
@@ -394,7 +409,9 @@ public class OI {
         // }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
+            Field.handJob = true;
             Robot.mill.addGrain(engage);
+            
         }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_B)){

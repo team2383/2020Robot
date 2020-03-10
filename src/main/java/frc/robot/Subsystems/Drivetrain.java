@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.FollowTrajectory2;
 import frc.robot.Field;
+import frc.robot.HAL;
 import frc.robot.ninjaLib.HelperCommand;
 import frc.robot.ninjaLib.PathLoader;
 import jaci.pathfinder.Pathfinder;
@@ -80,6 +81,7 @@ public class Drivetrain{
   }
   
   public void arcade(double move, double turn){
+
     drive.arcadeDrive(move,turn);
     if(Field.spooltoggled){
       spool.setB(move);
@@ -87,6 +89,7 @@ public class Drivetrain{
     else{
       spool.off();
     }
+
   }
 
   public double getoutput(){
@@ -150,20 +153,36 @@ public class Drivetrain{
   // }
 
   public void limeAlign() {
-    if(limelight.xOffset() >= 2.0){
-      // arcade(limelight.xOffset()/27 + .15,0);
-      arcade(.4,0);
+
+    double turnP = 0.02;
+    double minoutput = 0.1;
+    double error = HAL.limelight.xOffset();
+    double turnoutput = 0;
+
+    if(error > 1){
+       turnoutput = (turnP*error) + minoutput;
     }
-    else if(limelight.xOffset() <= -2.0){
-      // arcade(limelight.xOffset()/27 - .15,0);
-      arcade(-.4,0);
+    else if(error < -1){
+      turnoutput = (turnP*error) - minoutput;
     }
 
-  }
+    arcade(0, turnoutput);
+    }
+    
+    // if(limelight.xOffset() >= 2.0){
+    //   // arcade(limelight.xOffset()/27 + .15,0);
+    //   arcade(.4,0);
+    // }
+    // else if(limelight.xOffset() <= -2.0){
+    //   // arcade(limelight.xOffset()/27 - .15,0);
+    //   arcade(-.4,0);
+    // }
+
+  
 
   public boolean pivoted(){
     double offset = limelight.xOffset();
-    return Math.abs(offset) < 0.5;
+    return Math.abs(offset) < 1;
   }
 
   public void limeApache() {

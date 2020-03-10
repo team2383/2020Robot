@@ -13,6 +13,8 @@ public class Field {
 
     static public boolean maxArea = true;
 
+    static public boolean handJob = false;
+
 
     static public double startTimerDelay2 = Timer.getFPGATimestamp();
     static public double shooterClose = 4000;
@@ -22,6 +24,8 @@ public class Field {
     public static double shooter_kD = 0;//0.1 //0.00
     public static double shooter_kF = 0.0475;//0.0475
     public static double desiredRPM = 5000;
+
+    public static boolean slowDown = true;
 
     
 

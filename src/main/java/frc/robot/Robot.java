@@ -53,6 +53,8 @@ public class Robot extends TimedRobot{
     SmartDashboard.putNumber("currentTimeMilli", HAL.feeder.displayTimer());
     SmartDashboard.putNumber("Feeder Speed", HAL.feeder.getFeederSpeed());
     SmartDashboard.putBoolean("Conveyor On?", Field.operatorCool);
+    SmartDashboard.putNumber("Right Deployment", HAL.deployment.getRDeployPosition());
+    SmartDashboard.putNumber("Left Deployment", HAL.deployment.getLDeployPosition());
     // SmartDashboard.getNumber("kP", Field.shooter_kP);
     // SmartDashboard.getNumber("kI", Field.shooter_kI);
     // SmartDashboard.getNumber("kD", Field.shooter_kD);
