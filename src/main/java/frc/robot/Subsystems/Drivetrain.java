@@ -161,7 +161,7 @@ public class Drivetrain{
   public void limeAlign() {
 
     double turnP = 0.02;
-    double minoutput = 0.1;
+    double minoutput = 0.3;
     double error = HAL.limelight.xOffset();
     double turnoutput = 0;
 
@@ -172,7 +172,7 @@ public class Drivetrain{
       turnoutput = (turnP*error) - minoutput;
     }
 
-    arcade(0, turnoutput);
+    arcade(turnoutput,0);
     }
     
     // if(limelight.xOffset() >= 2.0){

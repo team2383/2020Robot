@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.auto.LeftStartSimple;
 // import frc.robot.auto.LimeAuto;
 // import frc.robot.auto.BaselineAuto;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -29,7 +30,7 @@ public class Robot extends TimedRobot{
    HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
-  // autoChooser.addOption("Left Simple", new BaselineAuto(false));
+  autoChooser.addOption("Left Simple", new LeftStartSimple(false));
   // autoChooser.addOption("Lime Only", new LimeAuto());
  }
 

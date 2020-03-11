@@ -9,71 +9,51 @@ package frc.robot.auto.autocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.HAL;
+// import frc.robot.Subsystems.Conveyor;
+// import frc.robot.Subsystems.Shooter;
+// import frc.robot.Subsystems.Trigger;
+// import frc.robot.Subsystems.Feeder;
+import frc.robot.Subsystems.*;
+
+import static frc.robot.HAL.feeder;
+import static frc.robot.HAL.shoot;
+import static frc.robot.HAL.triggered;
+import static frc.robot.HAL.conveyor;
 
 
-public class LimeAllign extends Command {
+public class SetHood extends Command {
+    double timeout;
 
-
-  public LimeAllign() {
-    double turn = HAL.limelight.xOffset()/29.8;
+  public SetHood(double timeout) {
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    HAL.limelight.setPipeline(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      // if(Math.abs(HAL.limelight.xOffset()) > 1){
-      //   HAL.drive.arcade(HAL.limelight.xOffset()/27 - 0.1,0);
-      // }
-      // else{
-      //   HAL.drive.arcade(0, 0);
-      // }
-      double turnP = 0.02;
-      double minoutput = 0.33;
-      double error = HAL.limelight.xOffset() + 3.0;
-      double turnoutput = 0;
-  
-      if(error > 1){
-         turnoutput = (turnP*error) + minoutput;
-        //  HAL.drive.arcade(.35,0);
-      }
-      else if(error < -1){
-        turnoutput = (turnP*error) - minoutput;
-        // HAL.drive.arcade(-.35,0);
-
-      }
-  
-      HAL.drive.arcade(turnoutput,0);
-
-    }
-  
+   HAL.hood.moveto(2777);
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    // double error = HAL.limelight.xOffset();
-    // if(error<1 && error>-1 && HAL.limelight.hasTargets()){
-    //   return true;
-    // }
-    return false;
-
-  }   
+    return isTimedOut();
+  }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    HAL.limelight.setPipeline(3);
+    
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    execute();
   }
 }
