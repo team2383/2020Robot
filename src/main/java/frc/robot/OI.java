@@ -26,88 +26,104 @@ public class OI {
     //ACTIVE LISTENERS + SENDABLECOMMANDS
 
     Field.operatorCool = true;
-    Field.limelightHeadache = false;
-    // HAL.limelight.setPipeline(3);
+    Field.limelightHeadache = false;    
+
+    // DRIVE & OPERATOR DRIVE
+    // if (Field.handJob){
+    //     Procedure drive = () ->{HAL.drive.arcade(operator.getLeftY() * .9, operator.getRightY() *.9);};
+    //     TC noTC = ()->{return false;};
+    //     Grain e = new Grain(drive,noTC,drive);
+    //     Robot.mill.addGrain(e);
+    // }
+    // else{
+    //     Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.90),(-driver.getLeftY()*.90));};
+    //     TC noTC = ()->{return false;};
+    //     Grain e = new Grain(drive,noTC,drive);
+    //     Robot.mill.addGrain(e);
+    // }
+
+    Procedure drive = () ->{HAL.drive.drive(driver, operator);};
+    TC noTC = ()->{return false;};
+    Grain e = new Grain(drive,noTC,drive);
+    Robot.mill.addGrain(e);
+
+    TC handJobz = () -> {return Field.handJob;};
+    // Grain e = new Grain(drive,noTC,drive);
+    // Grain e2 = new Grain(operatorTank,noTC,operatorTank);
+    // if (Field.handJob){
+    //     Robot.mill.addGrain(e2);
+    // }
+    // else{
+    //     Robot.mill.addGrain(e);
+    // }
+    // Robot.mill.addGrain(e);
     
+    
+    // SPOOL
+    Procedure spoolL = () -> {HAL.spool.setL(operator.getLeftY()*-1);};
+    Procedure spoolR = () -> {HAL.spool.setR(operator.getRightY()*-1);};
+
+    Grain gSpoolL = new Grain(spoolL, noTC, spoolL);
+    Grain gSpoolR = new Grain(spoolR, noTC, spoolR);
+    Robot.mill.addGrain(gSpoolL);
+    Robot.mill.addGrain(gSpoolR);
+
+    // LIMELIGHT
+    Procedure poopBrainetc = () ->{HAL.limelight.limelightOnOff();};
+    Grain donepoop = new Grain(poopBrainetc, noTC, poopBrainetc);
+    Robot.mill.addGrain(donepoop);
+
     //1 FOOT
     Button trajectory = new JoystickButton(operator, Gamepad2.BUTTON_A);
     trajectory.whenPressed(new HelperCommand(false));
     
     // DELAYED CHAMBER
-    Button delayfeed = new JoystickButton(driver, Gamepad.BUTTON_X);
-    delayfeed.whenPressed(new DelayFeed(0.5));
-
-    // DRIVE
-
-    Procedure drive = () ->{HAL.drive.arcade((driver.getRightX()*.90),(-driver.getLeftY()*.90));};
-    Procedure operatorTank = () ->{HAL.drive.tank(operator.getLeftY() * .8, operator.getRightY() *.8);};
-    TC noTC = ()->{return false;};
-    TC handJobz = () -> {return Field.handJob;};
-    Grain e = new Grain(drive,handJobz,operatorTank);
-    // Grain e2 = new Grain(operatorTank,noTC,operatorTank);
-    // if (Field.handJob){ 
-        // Robot.mill.addGrain(e2);
-    // }
-    // else{
-    Robot.mill.addGrain(e);
-    // }
-    
-    
-    
-
-    // Procedure driveClimb = () ->{HAL.drive.individualBoomer(test.getLeftY()*.6, test.getRightY()*.6);}; 
-    // Grain e2 = new Grain(driveClimb,noTC,driveClimb);
-    // Robot.mill.addGrain(e2);
-
-    Procedure poopBrainetc = () ->{HAL.limelight.limelightOnOff();};
-    Grain donepoop = new Grain(poopBrainetc, noTC, poopBrainetc);
-    Robot.mill.addGrain(donepoop);
-
-
-    // TURRET
-    // Procedure turretmanual = () -> {HAL.turret.move(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
-    // Grain t = new Grain(turretmanual,noTC,turretmanual);
-    // Robot.mill.addGrain(t);
-
-
-    // TURRET VISION
-    // Procedure zeroTurret = () -> {HAL.turret.zeroTurret();};
-    // Grain GzeroTurret = new Grain (zeroTurret, noTC, zeroTurret);
-    // Robot.mill.addGrain(GzeroTurret);
+    // Button delayfeed = new JoystickButton(driver, Gamepad.BUTTON_X);
+    // delayfeed.whenPressed(new DelayFeed(0.5));
 
 
     // DEPLOYMENT
-    Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY(), operator.getLeftY());};
-    Procedure deploymentL = () ->{HAL.deployment.setSpeedL(operator.getLeftY());};
-    Procedure deploymentR = () ->{HAL.deployment.setSpeedR(operator.getRightY());};
-
+    // Procedure deployment = () ->{HAL.deployment.setSpeed(operator.getRightY(), operator.getLeftY());};
+    // Procedure deploymentL = () ->{HAL.deployment.setSpeedL(operator.getLeftY());};
+    // Procedure deploymentR = () ->{HAL.deployment.setSpeedR(operator.getRightY());};
     //Grain gDeploymentL = new Grain(deploymentL, noTC, deploymentL);
-    Grain gDeploymentR = new Grain(deploymentR, noTC, deploymentR);
-    Grain gDeployment = new Grain(deploymentL, noTC, deploymentL);
-    Robot.mill.addGrain(gDeployment);
-    Robot.mill.addGrain(gDeploymentR);
-
-
+    // Grain gDeploymentR = new Grain(deploymentR, noTC, deploymentR);
+    // Grain gDeployment = new Grain(deploymentL, noTC, deploymentL);
+    // Robot.mill.addGrain(gDeployment);
+    // Robot.mill.addGrain(gDeploymentR);
     // Robot.mill.addGrain(gDeploymentL);
     
     }
 
 
     public void listener(){
+        TC releasedX = () -> {return !(driver.getButtonStateX());};
+        TC releasedB = ()->{return !(driver.getButtonStateB());};
+        TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
+        TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
+        TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
+        TC releasedY = () -> {return (!driver.getButtonStateY());};
+        TC releasedA = ()->{return !(driver.getButtonStateA());};
+
+        TC releasedDUP = () ->{return !operator.getDPadUp();};
+        TC releaseStart = () -> {return !driver.getRawButtonPressed(8);};
+        TC releaseBack = () -> {return !driver.getRawButtonPressed(7);};
+        TC releasedminus = () -> {return !operator.getRawButton(9);};
+        TC releasedhome = () -> {return !operator.getRawButton(13);};
+        TC dRightRelease = () -> {return !operator.getDPadRight();};
+        TC releasedplus = () -> {return !operator.getRawButton(10);};
+
         // FEEDER
         Procedure feed = () ->{HAL.feeder.feed();};
         Procedure stopFeed = () -> {HAL.feeder.off();};
-        TC releasedRBump = () -> {return !(driver.getButtonStateRightBumper());};
         Procedure unfeed = () -> {HAL.feeder.unfeed();};
-        TC releasedLBump = ()->{return !(driver.getButtonStateLeftBumper());};
+        
         Grain gFeed = new Grain(feed, releasedRBump, stopFeed);
         Grain gUnfeed = new Grain(unfeed, releasedLBump, stopFeed);
 
-        Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
+        // Procedure intervalFeeder = () -> {HAL.feeder.interval_feed(0.5);};
         //Procedure delayFeeder = () -> {HAL.feeder.delay_feed(1.5);};
-        TC releasedX = () -> {return !(driver.getButtonStateX());};
-        TC releasedB = ()->{return !(driver.getButtonStateB());};
-        Grain gIntervalFeeder = new Grain(intervalFeeder, releasedRBump, stopFeed);
+        // Grain gIntervalFeeder = new Grain(intervalFeeder, releasedRBump, stopFeed);
         //Grain gDelayFeeder = new Grain(delayFeeder, releasedX, stopFeed);
 
 
@@ -116,7 +132,7 @@ public class OI {
         Procedure conveyorOff = () -> {HAL.conveyor.off();};
         Procedure conveyor1out = () -> {HAL.conveyor.out();};
         Procedure xConveyor = () -> {HAL.conveyor.fire();};
-        TC releasedLBump2 = ()->{return !(driver.getButtonStateLeftBumper());};
+
         Grain gConvey = new Grain(conveyor1, releasedRBump, conveyorOff);
         Grain gconveyout = new Grain(conveyor1out, releasedLBump2,conveyorOff);
         Grain xConveyorFire = new Grain(xConveyor, releasedX, conveyorOff);
@@ -127,14 +143,12 @@ public class OI {
         Procedure trigno = () -> {HAL.triggered.off();};
         Procedure triggerOut = () -> {HAL.triggered.out();};
         Procedure triggerOutSlow = () -> {HAL.triggered.outSlow();};
-        
-        Grain xTriggerFire = new Grain(trig, releasedX, trigno);
-        TC releasedY = () -> {return (!driver.getButtonStateY());};
         Procedure intervalTrigger = () -> {HAL.triggered.interval_trigger(0.5);};
+        
+        Grain xTriggerFire = new Grain(trig, releasedX, trigno);        
         Grain gIntervalTrigger = new Grain(intervalTrigger, releasedY, trigno);
         Grain gTriggerOut = new Grain(triggerOut, releasedLBump, trigno);
         Grain gTriggerOutSlow = new Grain (triggerOutSlow, releasedRBump, trigno);
-
 
 
         //FIRE
@@ -145,15 +159,13 @@ public class OI {
         // SHOOTER
         Procedure shooter = () -> {HAL.shoot.Run();};
         Procedure stop = () -> {HAL.shoot.stop();};
-
         Procedure shooterClose = () -> {HAL.shoot.shooterFire(Field.shooterClose);};
-        TC releasedA = ()->{return !(driver.getButtonStateA());};
+        
         Grain shoot = new Grain(shooter, releasedA, stop);
 
 
         // HOOD
         Procedure hoodmanual = () -> {HAL.hood.slowMoveUP();};
-        TC releasedDUP = () ->{return !operator.getDPadUp();};
         Procedure hoodoff = () -> {HAL.hood.off();};
 
         Procedure hoodmanualdown = () -> {HAL.hood.slowMoveDown();};
@@ -164,8 +176,7 @@ public class OI {
 
         //LIMELIGHT TURRET
         // Procedure limelightT = () -> {HAL.turret.limeTOn(.5*(driver.getLeftTrigger()-driver.getRightTrigger()));};
-        TC releaseStart = () -> {return !driver.getRawButtonPressed(8);};
-        TC releaseBack = () -> {return !driver.getRawButtonPressed(7);};
+        
         // Procedure limeoffT = () -> {HAL.turret.limeTOff(2);};
         // Grain GlimelightTOn = new Grain (limelightT, releaseBack, limelightT);
         // Grain GlimelightTOff = new Grain (limeoffT, releaseStart, limeoffT);
@@ -198,28 +209,42 @@ public class OI {
         Grain disengage = new Grain (retract, done, endClimb);
 
         
+        
         // Procedure spooltogg = () -> {HAL.spool.toggle();};
         // TC RTOperator = () -> {return (HAL.selfClimb.run);};
         // Procedure selfcease = () -> {HAL.selfClimb.stopClimb();};
         // Grain self = new Grain (selfclimb, releasedRightBumper2, selfcease);
         
-        Procedure spoolleft = () -> {HAL.spool.setL(0.5);};
-        TC releasedminus = () -> {return !operator.getRawButton(9);};
-        Procedure spoolLoff = () -> {HAL.spool.setL(0);};
-        Grain GspoolL = new Grain (spoolleft, releasedminus, spoolLoff);
+        // Procedure spoolleft = () -> {HAL.spool.setL(0.5);};
         
-        Procedure spoolright = () -> {HAL.spool.setR(0.5);};
-        TC releasedplus = () -> {return !operator.getRawButton(10);};
-        Procedure spoolRoff = () -> {HAL.spool.setR(0);};
-        Grain GspoolR = new Grain (spoolright, releasedplus, spoolRoff);
+        // Procedure spoolLoff = () -> {HAL.spool.setL(0);};
+        // Grain GspoolL = new Grain (spoolleft, releasedminus, spoolLoff);
+        
+        // Procedure spoolright = () -> {HAL.spool.setR(0.5);};
+        
+        // Procedure spoolRoff = () -> {HAL.spool.setR(0);};
+        // Grain GspoolR = new Grain (spoolright, releasedplus, spoolRoff);
 
-        Procedure spoolleftB = () -> {HAL.spool.setL(-0.5);};
+        // Procedure spoolleftB = () -> {HAL.spool.setL(-0.5);};
         TC releasedcircle = () -> {return !operator.getRawButton(14);};
-        Grain GspoolLB = new Grain (spoolleftB, releasedcircle, spoolLoff);
+        // Grain GspoolLB = new Grain (spoolleftB, releasedcircle, spoolLoff);
         
-        Procedure spoolrightB = () -> {HAL.spool.setR(-0.5);};
-        TC releasedhome = () -> {return !operator.getRawButton(13);};
-        Grain GspoolRB = new Grain (spoolrightB, releasedhome, spoolRoff);
+        // Procedure spoolrightB = () -> {HAL.spool.setR(-0.5);};
+       
+        // Grain GspoolRB = new Grain (spoolrightB, releasedhome, spoolRoff);
+
+        //DEPLOYMENY
+        Procedure  deploymentL = () -> {HAL.deployment.setSpeedL(-1);};
+        Procedure  deploymentR = () -> {HAL.deployment.setSpeedR(-1);};
+        Procedure  deploymentLBack = () -> {HAL.deployment.setSpeedL(1);};
+        Procedure  deploymentRBack = () -> {HAL.deployment.setSpeedR(1);};
+        Procedure deploymentStopL = () ->{HAL.deployment.setSpeedL(0);};
+        Procedure deploymentStopR = () ->{HAL.deployment.setSpeedR(0);};
+
+        Grain gDeploymentL = new Grain(deploymentL, releasedminus, deploymentStopL);
+        Grain gDeploymentR = new Grain(deploymentR, releasedplus, deploymentStopR);
+        Grain gDeploymentLBack = new Grain(deploymentLBack, releasedcircle, deploymentStopL);
+        Grain gDeploymentRBack = new Grain(deploymentRBack, releasedhome, deploymentStopR);
         
         //BUDDYCLIMB
         // Procedure buddyclimb = () -> {HAL.buddyClimb.prepClimb();};
@@ -258,7 +283,7 @@ public class OI {
 
         //Color Wheel
         Procedure wheelGo = () -> {HAL.wheelofFortune.wheelie();};
-        TC dRightRelease = () -> {return !operator.getDPadRight();};
+        
         Procedure endWheel = () -> {HAL.wheelofFortune.off();};
         Grain wheelMove = new Grain (wheelGo, dRightRelease,endWheel);
 
@@ -379,29 +404,33 @@ public class OI {
         
         if(operator.getRawButton(9)){
           
-            Robot.mill.addGrain(GspoolL);
+            //Robot.mill.addGrain(GspoolL);
+            Robot.mill.addGrain(gDeploymentL);
           }
           
         if(operator.getRawButton(10)){
           
-            Robot.mill.addGrain(GspoolR);
+            Robot.mill.addGrain(gDeploymentR);
           }
 
           if(operator.getRawButton(14)){
           
-            Robot.mill.addGrain(GspoolLB);
+            Robot.mill.addGrain(gDeploymentLBack);
           }
           
         if(operator.getRawButton(13)){
           
-            Robot.mill.addGrain(GspoolRB);
+            Robot.mill.addGrain(gDeploymentRBack);
           }
+
         if(operator.getButtonStateA()){
            Robot.mill.addGrain(gTest);
         }
         
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_X)){
+            HAL.drive.handOff();
             Robot.mill.addGrain(disengage);
+            
         }
 
         // if(operator.getRawButtonPressed(9)){
@@ -409,7 +438,8 @@ public class OI {
         // }
 
         if(operator.getRawButtonPressed(Gamepad2.BUTTON_Y)){
-            Field.handJob = true;
+            //Field.handJob = true;
+            HAL.drive.handOff();
             Robot.mill.addGrain(engage);
             
         }

@@ -30,7 +30,7 @@ public class Spoolers{
     }
 
     public void setR(double speedR){
-        spoolR.set(-speedR);
+        spoolR.set(speedR);
     }
 
     public void setB(double speedB){

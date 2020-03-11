@@ -14,7 +14,8 @@ public class Deployment{
     public static WPI_TalonSRX deploymentL = new WPI_TalonSRX(RobotMap.deployment2Port);
 
     public Deployment(){
-
+        deploymentL.setSensorPhase(true);
+        // deploymentR.setSensorPhase(true);
     }
 
     public static enum DeploymentPreset{
@@ -25,6 +26,7 @@ public class Deployment{
         public double deploymentPosition;
         private DeploymentPreset(double deploymentPosition){
         this.deploymentPosition = deploymentPosition;
+        
         }
     }
 
@@ -76,7 +78,7 @@ public class Deployment{
     }
     
     public void setSpeedR(double speed){
-        if(getRDeployPosition()>=107000){
+        if(getRDeployPosition()>=110000){
             if(speed>0){
                 deploymentR.set(speed/2);
             }

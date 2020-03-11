@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import frc.robot.RobotMap;
 import frc.robot.ninjaLib.FollowTrajectory2;
+import frc.robot.ninjaLib.Gamepad;
+import frc.robot.ninjaLib.Gamepad2;
 import frc.robot.Field;
 import frc.robot.HAL;
 import frc.robot.ninjaLib.HelperCommand;
@@ -80,15 +82,19 @@ public class Drivetrain{
 		drive.tankDrive(leftValue, rightValue, false);
   }
   
+  public boolean blah(){
+    return Field.handJob;
+  }
+
   public void arcade(double move, double turn){
 
     drive.arcadeDrive(move,turn);
-    if(Field.spooltoggled){
-      spool.setB(move);
-    }
-    else{
-      spool.off();
-    }
+    // if(Field.spooltoggled){
+    //   spool.setB(move);
+    // }
+    // else{
+    //   spool.off();
+    // }
 
   }
 
@@ -226,6 +232,30 @@ public class Drivetrain{
       
       help.start();
       
+  }
+
+  public void handOff()
+  {
+    if (Field.handJob == false)
+    {
+      Field.handJob = true;
+    }
+    else if (Field.handJob == true)
+    {
+      Field.handJob = false;
+    }
+  }
+
+  public void drive(Gamepad driver, Gamepad2 operator)
+  {
+    if (Field.handJob == false)
+    {
+      drive.arcadeDrive(driver.getRightX(), -driver.getLeftY());
+    }
+    else if (Field.handJob == true)
+    {
+      drive.tankDrive(-operator.getLeftY(), operator.getRightY());
+    }
   }
 
   public void endTest(){

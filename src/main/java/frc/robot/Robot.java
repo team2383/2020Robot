@@ -1,8 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.auto.LimeAuto;
-import frc.robot.auto.BaselineAuto;
+// import frc.robot.auto.LimeAuto;
+// import frc.robot.auto.BaselineAuto;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,7 +29,7 @@ public class Robot extends TimedRobot{
    HAL.limelight.setPipeline(1);
 
    SmartDashboard.putData("AUTO CHOOSER", autoChooser);
-  autoChooser.addOption("Left Simple", new BaselineAuto(false));
+  // autoChooser.addOption("Left Simple", new BaselineAuto(false));
   // autoChooser.addOption("Lime Only", new LimeAuto());
  }
 
@@ -55,6 +55,7 @@ public class Robot extends TimedRobot{
     SmartDashboard.putBoolean("Conveyor On?", Field.operatorCool);
     SmartDashboard.putNumber("Right Deployment", HAL.deployment.getRDeployPosition());
     SmartDashboard.putNumber("Left Deployment", HAL.deployment.getLDeployPosition());
+    SmartDashboard.putBoolean("HJ Toggle", HAL.drive.blah());
     // SmartDashboard.getNumber("kP", Field.shooter_kP);
     // SmartDashboard.getNumber("kI", Field.shooter_kI);
     // SmartDashboard.getNumber("kD", Field.shooter_kD);
