@@ -214,7 +214,7 @@ public double getClosedLoopError(){
         shoot(0.6);
         break;
       case FAST:
-        shoot(0.8);
+        shoot(1.0);
         break;
       case LIME:
         LimeS();
